@@ -1,18 +1,18 @@
 from rest_framework import serializers 
-from .models import Documento, ImagemRaioX, ImagemRessonancia
+from .models import MultiModal, RaioX, Ressonancia
 
-class DocumentoSerializer(serializers.ModelSerializer):
+class MultiModalSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Documento
+        model = MultiModal
         fields = '__all__'
         
-class ImagemRaioXSerializer(serializers.ModelSerializer):
+class RaioXSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ImagemRaioX
+        model = RaioX
         fields = '__all__'
         
-class ImagemRessonanciaSerializer(serializers.ModelSerializer):
+class RessonanciaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ImagemRessonancia
+        model = Ressonancia
         fields = '__all__'
     
