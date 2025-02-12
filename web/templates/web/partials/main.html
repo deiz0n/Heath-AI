@@ -1,0 +1,29 @@
+{% load static %}
+
+<main class="main-container">
+  <section id="section-sobre">
+    <div id="section-conteudo">
+      <h3>
+        O Heath-<span>AI</span> permite o diagnóstico de lesões de forma rápida
+        e segura atráves da <span>Inteligençia Artificial</span>.
+      </h3>
+      <img
+        id="section-imagem"
+        src="{% static 'web/assets/images/ia-icon.png' %}"
+        alt="IA Icon"
+      />
+      <p>Utilizamos algoritmos robustos de Machine Learning e Redes Neurais.</p>
+    </div>
+  </section>
+
+  <div id="main-conteudo">
+    <div id="conteudo">
+      <h2 id="main-titulo">
+        Ao clicar em <span>iniciar</span>, <br />
+        você deveria selecionar as imagens de <span>Raio X</span> <br />
+        e posteriomente, as de <span>Ressonância</span>
+      </h2>
+      <button id="main-btn">Iniciar envio</button>
+    </div>
+  </div>
+</main>

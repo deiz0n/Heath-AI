@@ -68,3 +68,88 @@ body {
     border-color: #0360D9;
     transition: .3s all ease-in-out;
 }
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#section-sobre {
+    background-color: #E1EEFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#section-conteudo {
+    padding-block: 2rem;
+    position: relative;
+    display: flex;
+    width: max-content;
+    flex-direction: column;
+}
+
+#section-conteudo h3 {
+    width: 600px;
+    margin: 0 auto;
+    font-size: 28px;
+    color: #2E2E2E;
+}
+
+#section-conteudo h3 span {
+    color: #0360D9;
+}
+
+#section-imagem {
+    position: absolute;
+    top: 4.4rem;
+    right: 1.5rem;
+    width: 78px;
+    height: 73px;
+}
+
+#section-conteudo p {
+    width: max-content;
+    font-size: 14px;
+    font-weight: bold;
+    color: #656565;
+}
+
+#main-conteudo {
+    margin-top: 3.6rem;
+    display: flex;
+    justify-content: center;
+}
+
+#conteudo {
+    width: max-content;
+    text-align: center;
+}
+
+#main-titulo { 
+    font-weight: 600;
+    font-size: 28px;
+    color: #2E2E2E;
+}
+
+#main-titulo span {
+    color: #0360D9;
+}
+
+#main-btn {
+    margin-top: 2.3rem;
+    background-color: #0360D9;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'IBM Plex Sans';
+    padding: 0.7rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#main-btn:hover {
+    background-color: #0346A2;
+    transition: .3s all ease-in-out;
+}
