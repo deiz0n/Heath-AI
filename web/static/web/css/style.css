@@ -28,6 +28,13 @@ body {
     color: #2E2E2E;
 }
 
+#selecionado {
+    color: #0360D9;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid #0360D9;
+    font-weight: 600;
+}
+
 #navbar-container ul li:hover {
     color: #0360D9;
     padding-bottom: 0.3rem;
