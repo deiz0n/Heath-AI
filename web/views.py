@@ -56,3 +56,6 @@ def buscar_multi_modais(request):
     documentos = MultiModal.objects.all()
     serializer = MultiModalSerializer(documentos, many=True)
     return Response(serializer.data)
+
+def pagina_inicial(request):
+    return render(request, 'web/pages/pagina-inicial.html')
