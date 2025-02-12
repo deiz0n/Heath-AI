@@ -1,3 +1,70 @@
-* body {
-    color: red;
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'IBM Plex Sans';
+}
+
+.header-container {
+    position: relative;
+    display: flex;
+    padding-top: 1.7rem;
+    padding-inline: 3rem;
+    justify-content: space-between;
+    align-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+}
+
+#navbar-container ul {
+    list-style: none;
+    display: flex;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+    gap: 4rem;
+    color: #2E2E2E;
+}
+
+#navbar-container ul li:hover {
+    color: #0360D9;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid #0360D9;
+    transition: .3s;
+    font-weight: 600;
+}
+
+#header-title {
+    top: -8px;
+    position: relative;
+    color: #2E2E2E;
+}
+
+#header-title span {
+    color: #0360D9;
+}
+
+#btn-sair a {
+    text-decoration: none;
+    color: #2E2E2E;
+    font-weight: 500;
+    border: 2px solid #2E2E2E;
+    padding: 0.4rem 1.3rem;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.icone-sair {
+    font-size: 22px;
+    position: relative;
+    bottom: -4px;
+    margin-left: 0.3rem;
+}
+
+#btn-sair a:hover {
+    color: #0360D9;
+    border-color: #0360D9;
+    transition: .3s all ease-in-out;
 }
