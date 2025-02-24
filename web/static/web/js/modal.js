@@ -24,6 +24,7 @@ btnIniciar.addEventListener('click', () => {
     modal.style.display = 'block';
     inputsFile[0].style.visibility = 'visible'
     titulosInput[0].style.visibility = 'visible'
+    labels[0].style.color = '#0360D9'
 })
 
 btnCancelar.addEventListener('click', () => {
@@ -60,6 +61,11 @@ inputsFile.forEach((input, index) => {
 
             // Desabilita o título atual
             titulosInput[index].style.visibility = 'hidden'
+
+            if (index < labels.length - 1) {
+                labels[index].style.color = '#2E2E2E'
+                labels[index + 1].style.color = '#0360D9'
+            }
             
             if (index < inputsFile.length - 1) {
                 // Desabilita o input atual
@@ -94,6 +100,7 @@ function fecharModal() {
         const icone = label.children[0]
         icone.textContent = 'access_time'
         icone.style.color = '#2E2E2E'
+        label.style.color = '#2E2E2E'
     })
     inputsFile.forEach(input => {
         input.value = ''
