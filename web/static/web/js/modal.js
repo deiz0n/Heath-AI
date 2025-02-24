@@ -22,10 +22,7 @@ const valoresInput = []
 
 
 btnIniciar.addEventListener('click', () => {
-    modal.style.display = 'block';
-    inputsFile[0].style.visibility = 'visible'
-    titulosInput[0].style.visibility = 'visible'
-    labels[0].style.color = '#0360D9'
+    iniciarModal()
 })
 
 btnCancelar.addEventListener('click', () => {
@@ -103,22 +100,7 @@ function atualizarStatusLabel(inputId) {
 }
 
 function fecharModal() {
-    labels.forEach(label => {
-        const icone = label.children[0]
-        icone.textContent = 'access_time'
-        icone.style.color = '#2E2E2E'
-        label.style.color = '#2E2E2E'
-    })
-    inputsFile.forEach(input => {
-        input.value = ''
-        input.style.visibility = 'hidden'
-    })
-    titulosInput.forEach(titulo => {
-        titulo.style.visibility = 'hidden';
-        titulo.textContent = 'Nenhum arquivo selecionado'
-    })
-    progresso.style.width = '0px'
-    tituloProgresso.textContent = '0'
+    resetarComponentesModal()
     modal.style.display = 'none'
 }
 
@@ -138,4 +120,30 @@ function atualizarBarraProgresso() {
 
         progresso.style.width = valorProgresso
     }
+}
+
+function resetarComponentesModal() {
+    labels.forEach(label => {
+        const icone = label.children[0]
+        icone.textContent = 'access_time'
+        icone.style.color = '#2E2E2E'
+        label.style.color = '#2E2E2E'
+    })
+    inputsFile.forEach(input => {
+        input.value = ''
+        input.style.visibility = 'hidden'
+    })
+    titulosInput.forEach(titulo => {
+        titulo.style.visibility = 'hidden';
+        titulo.textContent = 'Nenhum arquivo selecionado'
+    })
+    progresso.style.width = '0px'
+    tituloProgresso.textContent = '0'
+}
+
+function iniciarModal() {
+    modal.style.display = 'block';
+    inputsFile[0].style.visibility = 'visible'
+    titulosInput[0].style.visibility = 'visible'
+    labels[0].style.color = '#0360D9'
 }
