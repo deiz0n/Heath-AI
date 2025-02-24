@@ -20,6 +20,7 @@ const msgSucesso = document.querySelector('#mensagem-sucesso')
 
 const valoresInput = []
 
+
 btnIniciar.addEventListener('click', () => {
     modal.style.display = 'block';
     inputsFile[0].style.visibility = 'visible'
@@ -35,8 +36,16 @@ btnFecharModal.addEventListener('click', () => {
     fecharModal()
 }) 
 
-inputsFile.forEach((input, index) => {
-    input.addEventListener('change', (event) => {
+for (let index = 0; index < inputsFile.length; index ++) {
+    
+    btnAvancar.addEventListener('click', () => {
+        if (inputsFile[index].value == '') {
+            return
+        }
+    })
+    
+    inputsFile[index].addEventListener('change', (event) => {
+            
         console.log(`${event.target.id} OK!`);
         
         // Atualiza o título, indicando o arquivo selecionado
@@ -50,7 +59,6 @@ inputsFile.forEach((input, index) => {
         // Atualiza o ícone do label do input correspondente
         if (event.target.value) atualizarStatusLabel(event.target.id.replace('img-', ''));
 
-        // Atualiza a barra de progresso
         atualizarBarraProgresso()
 
         btnAvancar.addEventListener('click', () => {
@@ -69,7 +77,7 @@ inputsFile.forEach((input, index) => {
             
             if (index < inputsFile.length - 1) {
                 // Desabilita o input atual
-                input.style.visibility = 'hidden';
+                inputsFile[index].style.visibility = 'hidden';
                 
                 // Ativa o próximo título, input e customInput respectivamente
                 titulosInput[index + 1].style.visibility = 'visible';
@@ -80,11 +88,10 @@ inputsFile.forEach((input, index) => {
             if (index === inputsFile.length - 1) {
                 customInputAtual.style.display = 'none';
                 inputsFile[index].style.display = 'none'
-                
             }
         });
     });
-});
+};
 
 function atualizarStatusLabel(inputId) {    
     const label = document.querySelector(`#label-${inputId}`);
