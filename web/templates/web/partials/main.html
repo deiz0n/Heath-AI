@@ -16,6 +16,166 @@
     </div>
   </section>
 
+  <div class="modal">
+    <div id="modal-container">
+      <h5 id="modal-titulo">Selecione as imagens de <span>Raio X</span></h5>
+      <button><i class="btn-fechar material-icons">close</i></button>
+      <form id="form-container" action="#">
+        <div class="labels">
+          <ul>
+            <li id="label-pd-cima">
+              <i class="icone-pendente material-icons">access_time</i>
+              Pé direito: Cima
+            </li>
+            <li id="label-pd-lateral">
+              <i class="icone-pendente material-icons">access_time</i>
+              Pé direito: Lateral
+            </li>
+            <li id="label-pe-cima">
+              <i class="icone-pendente material-icons">access_time</i>
+              Pé esquerdo: Cima
+            </li>
+            <li id="label-pe-lateral">
+              <i class="icone-pendente material-icons">access_time</i>
+              Pé esquerdo: Lateral
+            </li>
+            <li id="label-ambos-cima">
+              <i class="icone-pendente material-icons">access_time</i>
+              Ambos: Cima
+            </li>
+          </ul>
+        </div>
+
+        <div class="input-container">
+          <input
+            type="file"
+            id="img-pd-cima"
+            name="img-pd-cima"
+            required
+            hx-trigger="change"
+            hx-target="#label-pd-cima"
+            hx-swap="outerHTML"
+          />
+          <p id="mensagem-sucesso">
+            <span
+              ><i class="icone-sucesso material-icons">check_circle</i> As
+              imagens foram carregadas com sucesso</span
+            >
+          </p>
+          <div class="custom-input">
+            <img
+              id="icone-upload"
+              src="{% static 'web/assets/images/upload-icon.svg' %}"
+              alt=""
+            />
+            Selecione o arquivo
+          </div>
+          <p class="valor-input">Nenhum arquivo selecionado</p>
+        </div>
+
+        <div class="input-container">
+          <input
+            type="file"
+            id="img-pd-lateral"
+            name="img-pd-lateral"
+            required
+            hx-trigger="change"
+            hx-target="#label-pd-lateral"
+            hx-swap="outerHTML"
+          />
+          <div class="custom-input secundario">
+            <img
+              id="icone-upload"
+              src="{% static 'web/assets/images/upload-icon.svg' %}"
+              alt=""
+            />
+            Selecione o arquivo
+          </div>
+          <p class="valor-input">Nenhum arquivo selecionado</p>
+        </div>
+
+        <div class="input-container">
+          <input
+            type="file"
+            id="img-pe-cima"
+            name="img-pe-cima"
+            required
+            hx-trigger="change"
+            hx-target="#label-pe-cima"
+            hx-swap="outerHTML"
+          />
+          <div class="custom-input secundario">
+            <img
+              id="icone-upload"
+              src="{% static 'web/assets/images/upload-icon.svg' %}"
+              alt=""
+            />
+            Selecione o arquivo
+          </div>
+          <p class="valor-input">Nenhum arquivo selecionado</p>
+        </div>
+
+        <div class="input-container">
+          <input
+            type="file"
+            id="img-pe-lateral"
+            name="img-pe-lateral"
+            required
+            hx-trigger="change"
+            hx-target="#label-pe-lateral"
+            hx-swap="outerHTML"
+          />
+          <div class="custom-input secundario">
+            <img
+              id="icone-upload"
+              src="{% static 'web/assets/images/upload-icon.svg' %}"
+              alt=""
+            />
+            Selecione o arquivo
+          </div>
+          <p class="valor-input">Nenhum arquivo selecionado</p>
+        </div>
+
+        <div class="input-container">
+          <input
+            type="file"
+            id="img-ambos-cima"
+            name="img-ambos-cima"
+            required
+            hx-trigger="change"
+            hx-target="#label-ambos-cima"
+            hx-swap="outerHTML"
+          />
+          <div class="custom-input secundario">
+            <img
+              id="icone-upload"
+              src="{% static 'web/assets/images/upload-icon.svg' %}"
+              alt=""
+            />
+            Selecione o arquivo
+          </div>
+          <p class="valor-input">Nenhum arquivo selecionado</p>
+        </div>
+
+        <div class="btn-container">
+          <button id="btn-cancelar">Cancelar</button>
+          <button
+            id="btn-avancar"
+            hx-trigger="click"
+            hx-target="#progresso-barra"
+          >
+            Avançar
+          </button>
+        </div>
+
+        <div id="progresso-barra">
+          <p id="valor-progresso">Progresso: <span>0</span>%</p>
+          <div id="progresso"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="main-conteudo">
     <div id="container-conteudo-main">
       <h2 id="main-titulo">
@@ -23,7 +183,9 @@
         você deveria selecionar as imagens de <span>Raio X</span> <br />
         e posteriomente, as de <span>Ressonância</span>
       </h2>
-      <button id="main-btn">Iniciar envio</button>
+      <button id="main-btn" hx-trigger="click" hx-target=".modal">
+        Iniciar envio
+      </button>
     </div>
   </div>
 </main>
