@@ -51,7 +51,6 @@
             type="file"
             id="img-pd-cima"
             name="img-pd-cima"
-            required
             hx-trigger="change"
             hx-target="#label-pd-cima"
             hx-swap="outerHTML"
@@ -78,7 +77,6 @@
             type="file"
             id="img-pd-lateral"
             name="img-pd-lateral"
-            required
             hx-trigger="change"
             hx-target="#label-pd-lateral"
             hx-swap="outerHTML"
@@ -99,7 +97,6 @@
             type="file"
             id="img-pe-cima"
             name="img-pe-cima"
-            required
             hx-trigger="change"
             hx-target="#label-pe-cima"
             hx-swap="outerHTML"
@@ -120,7 +117,6 @@
             type="file"
             id="img-pe-lateral"
             name="img-pe-lateral"
-            required
             hx-trigger="change"
             hx-target="#label-pe-lateral"
             hx-swap="outerHTML"
@@ -141,7 +137,6 @@
             type="file"
             id="img-ambos-cima"
             name="img-ambos-cima"
-            required
             hx-trigger="change"
             hx-target="#label-ambos-cima"
             hx-swap="outerHTML"
@@ -158,7 +153,13 @@
         </div>
 
         <div class="btn-container">
-          <button id="btn-cancelar">Cancelar</button>
+          <button
+            id="btn-cancelar"
+            hx-trigger="click"
+            hx-target="#modal-container"
+          >
+            Cancelar
+          </button>
           <button
             id="btn-avancar"
             hx-trigger="click"
