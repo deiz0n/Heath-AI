@@ -150,6 +150,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     padding: 1rem;
     border-radius: 20px;
+    display: none;
 }
 
 #modal-opcoes-container h5 {
@@ -198,7 +199,7 @@ body {
     transition: all 300ms ease-in-out;
 }
 
-#modal-container {
+#modal-raiox-container {
     z-index: 2;
     position: fixed;
     border: 1px solid #0360D9;

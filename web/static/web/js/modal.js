@@ -2,8 +2,10 @@ const btnIniciar = document.querySelector('#main-btn');
 const btnCancelar = document.querySelector('#btn-cancelar');
 const btnAvancar = document.querySelector('#btn-avancar');
 const btnFecharModal = document.querySelector('.btn-fechar');
+const btnIniciarModalRaioX = document.querySelector('#btn-modal-raiox')
 
-const modal = document.querySelector('#modal-container');
+const modalOpcoes = document.querySelector('#modal-opcoes-container');
+const modalRaioX = document.querySelector('#modal-raiox-container');
 
 const inputsFile = document.querySelectorAll('.input-container input[type="file"]');
 const labels = document.querySelectorAll('[id^="label"]')
@@ -19,16 +21,21 @@ const tituloProgresso = document.querySelector('#valor-progresso span')
 const msgSucesso = document.querySelector('#mensagem-sucesso')
 
 const valoresInput = []
-let indiceAtual = 0; // Controla o índice do input atual
+let indiceAtual = 0;
 let progressoAtualizado = false;
 
 btnIniciar.addEventListener('click', () => {
-    iniciarModal()
+    modalOpcoes.style.display = 'block'
 })
 
 btnFecharModal.addEventListener('click', () => {
+    console.log('fechar')
     fecharModal()
 }) 
+
+btnIniciarModalRaioX.addEventListener('click', () => {
+    iniciarModal()
+})
 
 function atualizarStatusLabel(inputId) {    
     const label = document.querySelector(`#label-${inputId}`);
@@ -41,7 +48,8 @@ function atualizarStatusLabel(inputId) {
 
 function fecharModal() {
     resetarComponentesModal()
-    modal.style.display = 'none'
+    modalOpcoes.style.display = 'none'
+    modalRaioX.style.display = 'none'
 }
 
 function atualizarBarraProgresso() {
@@ -152,7 +160,8 @@ function resetarComponentesModal() {
 }
 
 function iniciarModal() {
-    modal.style.display = 'block';
+    modalRaioX.style.display = 'block';
+    
     resetarComponentesModal(); // Reseta tudo primeiro
     
     indiceAtual = 0; // Inicia com o primeiro input
@@ -177,6 +186,10 @@ function iniciarModal() {
         percorrerElementos();
         window.eventListenersSet = true;
     }
+}
+
+function fecharModalInicial() {
+    modalOpcoes.style.display = 'none';
 }
 
 function percorrerElementos() {
