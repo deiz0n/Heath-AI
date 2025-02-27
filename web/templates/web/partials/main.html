@@ -16,6 +16,25 @@
     </div>
   </section>
 
+  <div class="modal">
+    <div id="modal-opcoes-container">
+      <div style="display: flex">
+        <button style="border: none">
+          <i class="btn-fechar material-icons">close</i>
+        </button>
+        <h5 class="modal-titulo">Selecione uma das opções para envio:</h5>
+      </div>
+
+      <nav id="opcoes">
+        <ul>
+          <li><button>Raio-X</button></li>
+          <li><button>Ressonância</button></li>
+          <li><button>Ambos</button></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
   {% include "web/partials/modal.html" %}
 
   <div id="main-conteudo">

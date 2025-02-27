@@ -143,6 +143,61 @@ body {
     position: relative;
 }
 
+#modal-opcoes-container {
+    z-index: 2;
+    position: fixed;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+    border-radius: 20px;
+}
+
+#modal-opcoes-container h5 {
+    top: 0;
+    font-size: 20px;
+    margin-bottom: 1.5rem;
+    margin-right: 4rem;
+}
+
+#modal-opcoes-container i {
+    margin-right: 0.7rem;
+    margin-top: 1.1rem;
+}
+#opcoes {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.3rem;
+}
+
+#opcoes ul {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+#opcoes ul li {
+    width: max-content;
+}
+
+#opcoes button {
+    border: none;
+    background-color: #fff;
+    padding: 0.5rem 1rem;
+    border: 1.4px solid #2E2E2E;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#opcoes button:hover {
+    color: #fff;
+    background-color: #4087ea;
+    transition: all 300ms ease-in-out;
+}
+
 #modal-container {
     z-index: 2;
     position: fixed;
@@ -155,14 +210,14 @@ body {
     display: none;
 }
 
-#modal-titulo {
+.modal-titulo {
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 0.8rem;
     color: #2E2E2E;
 }
 
-#modal-titulo span {
+.modal-titulo span {
     color: #0360D9;
 }
 
