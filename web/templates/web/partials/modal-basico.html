@@ -29,6 +29,10 @@
             <i class="icone-pendente material-icons">access_time</i>
             Ambos: Cima
           </li>
+          <li id="label-prontuario">
+            <i class="icone-pendente material-icons">access_time</i>
+            Prontuário
+          </li>
         </ul>
       </div>
 
@@ -136,6 +140,18 @@
           Selecione o arquivo
         </div>
         <p class="valor-input">Nenhum arquivo selecionado</p>
+      </div>
+
+      <div class="input-container">
+        <textarea
+          placeholder="Digite o prontuário (Opcional)" 
+          name="img-prontuario" 
+          id="img-prontuario"
+          hx-trigger="change"
+          hx-target="#label-prontuario"
+          hx-swap="outerHTML"
+          >
+        </textarea>
       </div>
 
       <div class="btn-container">
