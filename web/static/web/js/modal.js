@@ -3,9 +3,12 @@ const btnCancelar = document.querySelector('#btn-cancelar');
 const btnAvancar = document.querySelector('#btn-avancar');
 const btnFecharModal = document.querySelector('.btn-fechar');
 const btnIniciarModalRaioX = document.querySelector('#btn-modal-raiox')
+const btnIniciarModalRessoncia = document.querySelector('#btn-modal-ressonancia')
 
 const modalOpcoes = document.querySelector('#modal-opcoes-container');
 const modalRaioX = document.querySelector('#modal-raiox-container');
+
+const inputContainer = document.querySelector('.input-container')
 
 const inputsFile = document.querySelectorAll('.input-container input, textarea');
 const labels = document.querySelectorAll('[id^="label"]')
@@ -33,7 +36,13 @@ btnFecharModal.addEventListener('click', () => {
     fecharModal()
 })
 
-btnIniciarModalRaioX.addEventListener('click', () => {
+btnIniciarModalRaioX.addEventListener('click', (e) => {
+    atualizarTituloModal(e.target.textContent)
+    iniciarModal()
+})
+
+btnIniciarModalRessoncia.addEventListener('click', (e) => {
+    atualizarTituloModal(e.target.textContent)
     iniciarModal()
 })
 
@@ -154,9 +163,9 @@ function resetarComponentesModal() {
     valoresInput.length = 0; // Limpa o array de valores
 
     // Esconde a mensagem de sucesso
-    if (msgSucesso) {
-        msgSucesso.style.visibility = 'hidden';
-    }
+    // if (msgSucesso) {
+    //     msgSucesso.style.visibility = 'hidden';
+    // }
 }
 
 function iniciarModal() {
@@ -252,7 +261,9 @@ function percorrerElementos() {
 
             console.log(`Agora no índice ${indiceAtual}`);
         } else {
-            console.log('Todos os inputs foram preenchidos:', valoresInput);
+            msgSucesso.style.visibility = 'visible'
+            inputContainer.style.visibility = 'hidden';
+            ocultarTodosOsInputs()
         }
     });
 
@@ -293,4 +304,9 @@ function percorrerElementos() {
             console.log(`Agora no índice ${indiceAtual}`);
         }
     });
+}
+
+function atualizarTituloModal(titulo) {
+    const tituloGenerio = document.querySelector('.modal-titulo span')
+    tituloGenerio.textContent = titulo
 }
