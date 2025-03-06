@@ -286,21 +286,6 @@ body {
     left: 0;
 }
 
-.input-container textarea {
-    position: absolute;
-    width: 400px;
-    height: 200px;
-    resize: none;
-    padding: 0.3rem;
-    top: -2.8rem;
-    left: -4.7rem;
-    visibility: hidden;
-    z-index: 2;
-    border-radius: 5px;
-    font-size: 18px;
-    font-family: 'IBM Plex Sans';
-}
-
 .custom-input {
     border: 1px solid #2E2E2E;
     border-radius: 20px;

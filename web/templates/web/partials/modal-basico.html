@@ -29,10 +29,6 @@
             <i class="icone-pendente material-icons">access_time</i>
             Ambos: Cima
           </li>
-          <li id="label-prontuario">
-            <i class="icone-pendente material-icons">access_time</i>
-            Prontuário
-          </li>
         </ul>
       </div>
 
@@ -142,18 +138,6 @@
         <p class="valor-input">Nenhum arquivo selecionado</p>
       </div>
 
-      <div class="input-container">
-        <textarea
-          placeholder="Digite o prontuário (Opcional)" 
-          name="img-prontuario" 
-          id="img-prontuario"
-          hx-trigger="change"
-          hx-target="#label-prontuario"
-          hx-swap="outerHTML"
-          >
-        </textarea>
-      </div>
-
       <div class="btn-container">
         <button
           id="btn-cancelar"
@@ -172,7 +156,7 @@
       </div>
 
       <div id="progresso-barra">
-        <p id="valor-progresso">Progresso: <span>0</span>%</p>
+        <p id="valor-progresso">Etapa: <span>1</span>/5</p>
         <div id="progresso"></div>
       </div>
     </form>
