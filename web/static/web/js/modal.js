@@ -214,7 +214,12 @@ function percorrerElementosModalBasico(valor) {
         e.preventDefault();
 
         if (!inputsFile[indiceAtual].value) {
-            alert('Por favor, selecione um arquivo antes de avançar.');
+            nomeArquivo[indiceAtual].innerText = "Selecione um arquivo antes de avançar";
+
+            setTimeout(() => {
+                nomeArquivo[indiceAtual].innerText = "Nenhum arquivo selecionado"
+            }, 1000);
+
             return;
         }
 
@@ -237,8 +242,7 @@ function percorrerElementosModalBasico(valor) {
 
             console.log(`Agora no índice ${indiceAtual}`);
         } else {
-            window.alert('Imagens foram carregadas com sucesso')
-            fecharModal()
+
         }
     });
 
