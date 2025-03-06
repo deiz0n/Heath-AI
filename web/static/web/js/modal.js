@@ -64,24 +64,24 @@ function fecharModal() {
     modalRaioX.style.display = 'none'
 }
 
-function atualizarBarraProgresso(valor) {
+function atualizarBarraProgresso() {
     const valorLaguraBarraProgresso = parseFloat(larguraBarraProgresso.replace('px', ''));
 
-    const porcentagem = Math.min(100, (indiceAtual + 1) * valor);
+    const porcentagem = Math.min(100, (indiceAtual + 1) * 20);
     const larguraProgresso = (valorLaguraBarraProgresso * porcentagem) / 100;
 
     progresso.style.width = `${larguraProgresso}px`;
-    tituloProgresso.textContent = `${porcentagem}`;
+    tituloProgresso.textContent = indiceAtual + 1;
 }
 
-function diminuirBarraProgresso(valor) {
+function diminuirBarraProgresso() {
     const valorLaguraBarraProgresso = parseFloat(larguraBarraProgresso.replace('px', ''));
 
-    const porcentagem = Math.max(0, indiceAtual * valor);
+    const porcentagem = Math.max(0, indiceAtual * 20);
     const larguraProgresso = (valorLaguraBarraProgresso * porcentagem) / 100;
 
     progresso.style.width = `${larguraProgresso}px`;
-    tituloProgresso.textContent = `${porcentagem}`;
+    tituloProgresso.textContent = indiceAtual;
 }
 
 function ocultarTodosOsInputs() {
@@ -204,7 +204,7 @@ function percorrerElementosModalBasico(valor) {
                 valoresInput[index] = event.target.value;
             }
 
-            atualizarBarraProgresso(valor);
+            atualizarBarraProgresso();
 
             atualizarStatusLabel(event.target.id.replace('img-', ''));
         });
@@ -259,7 +259,7 @@ function percorrerElementosModalBasico(valor) {
 
             atualizarLabels();
 
-            diminuirBarraProgresso(valor);
+            diminuirBarraProgresso();
 
             if (indiceAtual === 0) {
                 btnCancelar.setAttribute('data-action', 'fechar');
