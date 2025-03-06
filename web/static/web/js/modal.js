@@ -154,7 +154,7 @@ function resetarComponentesModal() {
     tituloProgresso.textContent = '0'
     indiceAtual = 0; //
     valoresInput.length = 0;
-
+    btnCancelar.innerText = 'Cancelar';
 }
 
 function iniciarModalBasico() {
@@ -213,11 +213,12 @@ function percorrerElementosModalBasico(valor) {
     btnAvancar.addEventListener('click', (e) => {
         e.preventDefault();
 
-        if (!inputsFile[indiceAtual].value && inputsFile[indiceAtual].tagName != 'TEXTAREA') {
+        if (!inputsFile[indiceAtual].value) {
             alert('Por favor, selecione um arquivo antes de avançar.');
-            console.log(inputsFile[indiceAtual].tagName)
             return;
         }
+
+        atualizarNomeBtnCancelar(indiceAtual + 1);
 
         console.log(`Avançando do índice ${indiceAtual} para ${indiceAtual + 1}`);
 
@@ -246,6 +247,8 @@ function percorrerElementosModalBasico(valor) {
 
         const action = btnCancelar.getAttribute('data-action');
 
+        atualizarNomeBtnCancelar(indiceAtual - 1);
+
         if (action === 'fechar' || indiceAtual === 0) {
             fecharModal();
         } else {
@@ -273,4 +276,10 @@ function percorrerElementosModalBasico(valor) {
 function atualizarTituloModal(titulo) {
     const tituloGenerio = document.querySelector('.modal-titulo span')
     tituloGenerio.textContent = titulo
+}
+
+function atualizarNomeBtnCancelar(indice) {
+    console.log(indice)
+    if (indice != 0) btnCancelar.innerText = 'Voltar';
+    if (indice === 0) btnCancelar.innerText = 'Cancelar';
 }
