@@ -255,15 +255,6 @@ body {
     list-style: none;
 }
 
-#mensagem-sucesso {
-    color: #2E2E2E;
-    font-size: 20px;
-    font-weight: 500;
-    display: flex;
-    text-align: center;
-    display: none;
-}
-
 .icone-sucesso {
     color: #4CAF50;
     font-size: 24px;

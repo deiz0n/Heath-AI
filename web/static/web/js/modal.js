@@ -23,8 +23,6 @@ const estiloBarraProgresso = window.getComputedStyle(progresso.parentElement);
 const larguraBarraProgresso = estiloBarraProgresso.getPropertyValue('width');
 const tituloProgresso = document.querySelector('#valor-progresso span');
 
-const msgSucesso = document.querySelector('#mensagem-sucesso');
-
 const valoresInput = [];
 let indiceAtual = 0;
 let progressoAtualizado = false;
@@ -155,6 +153,7 @@ function resetarComponentesModal() {
     indiceAtual = 0; //
     valoresInput.length = 0;
     btnCancelar.innerText = 'Cancelar';
+    btnAvancar.innerText = 'Avançar';
 }
 
 function iniciarModalBasico() {
@@ -242,7 +241,7 @@ function percorrerElementosModalBasico(valor) {
 
             console.log(`Agora no índice ${indiceAtual}`);
         } else {
-
+            mostrarMenssagemSucesso();
         }
     });
 
@@ -286,4 +285,13 @@ function atualizarNomeBtnCancelar(indice) {
     console.log(indice)
     if (indice != 0) btnCancelar.innerText = 'Voltar';
     if (indice === 0) btnCancelar.innerText = 'Cancelar';
+}
+
+function mostrarMenssagemSucesso() {
+    btnAvancar.innerText = 'Concluir';
+    nomeArquivo[indiceAtual].innerText = 'Todos os arquivos foram carregados';
+    inputsFile.forEach(input => {
+        input.value = '';
+        input.style.visibility = 'hidden';
+    })
 }
