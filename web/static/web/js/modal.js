@@ -5,10 +5,12 @@ const btnFecharModal = document.querySelector('.btn-fechar');
 const btnIniciarModalRaioX = document.querySelector('#btn-modal-raiox');
 const btnIniciarModalRessoncia = document.querySelector('#btn-modal-ressonancia');
 const btnIniciarModalAmbos = document.querySelector('#btn-modal-ambos');
+const btnConcluir = document.querySelector('#btn-concluir')
 
 const modalOpcoes = document.querySelector('#modal-opcoes-container');
 const modalRaioX = document.querySelector('#modal-raiox-container');
 const modalAmbos = document.querySelector('#modal-raiox-container');
+const modalProntuario = document.querySelector('#modal-prontuario-container');
 
 const inputContainer = document.querySelector('.input-container');
 
@@ -185,7 +187,11 @@ function fecharModalInicial() {
     modalRaioX.style.display = 'none';
 }
 
-function percorrerElementosModalBasico(valor) {
+function formatarNomeAequivo(arquivo) {
+    return arquivo.split('\\').pop();
+}
+
+function percorrerElementosModalBasico() {
     // Configurar event listeners para os inputs
     inputsFile.forEach((input, index) => {
         input.addEventListener('change', (event) => {
@@ -193,7 +199,7 @@ function percorrerElementosModalBasico(valor) {
 
             const tituloInput = nomeArquivo[index];
             if (tituloInput) {
-                const fileName = event.target.value.split('\\').pop();
+                const fileName = formatarNomeAequivo(event.target.value);
                 tituloInput.textContent = fileName || 'Nenhum arquivo selecionado';
             }
 
@@ -242,6 +248,7 @@ function percorrerElementosModalBasico(valor) {
             console.log(`Agora no índice ${indiceAtual}`);
         } else {
             mostrarMenssagemSucesso();
+            iniciarModalProntuario();
         }
     });
 
@@ -293,5 +300,34 @@ function mostrarMenssagemSucesso() {
     inputsFile.forEach(input => {
         input.value = '';
         input.style.visibility = 'hidden';
+    })
+}
+
+function iniciarModalProntuario() {
+    const nomeArquivo = document.querySelector('#valor-input-prontuario');
+    const inputProntuario = document.querySelector('#input-prontuario');
+
+    modalRaioX.style.display = 'none';
+    modalProntuario.style.display = 'block';
+    nomeArquivo.style.visibility = 'visible';
+
+    inputProntuario.addEventListener('change', () => {
+        nomeArquivo.innerText = formatarNomeAequivo(inputProntuario.value) || 'Nenhum arquivo selecionado';
+    });
+
+    btnConcluir.addEventListener('click', () => {
+        valoresInput.push(inputProntuario.value);
+        console.log(valoresInput);
+        modalProntuario.style.display = 'none';
+        console.log('Aguardando o envio dos arquivos...');
+        fecharModal();
+    })
+
+    btnCancelar.addEventListener('click', () => {
+        valoresInput.push(inputProntuario.value);
+        console.log(valoresInput);
+        modalProntuario.style.display = 'none';
+        console.log('Aguardando o envio dos arquivos...');
+        fecharModal();
     })
 }
