@@ -1,0 +1,40 @@
+{% load static %}
+
+<div class="modal">
+    <div id="modal-prontuario">
+      <h5 class="modal-titulo">
+        Selecione o arquivo do <span>Prontuário</span>
+      </h5>
+      <button style="border: none;">
+        <i class="btn-fechar material-icons">close</i>
+      </button>
+      <div id="input-container-prontuario">
+        <input type="file" id="input-prontuario" name="input-prontuario">
+        <div class="custom-input">
+          <img
+            id="icone-upload"
+            src="{% static 'web/assets/images/upload-icon.svg' %}"
+            alt=""
+          />
+          Selecione o arquivo
+        </div>
+      </div>
+      <p class="valor-input">Nenhum arquivo selecionado</p>
+      <div class="btn-container">
+        <button
+          id="btn-cancelar"
+          hx-trigger="click"
+          hx-target="#modal-container"
+        >
+          Cancelar
+        </button>
+        <button
+          id="btn-concluir"
+          hx-trigger="click"
+          hx-target=".modal"
+        >
+          Concluir
+        </button>
+      </div>
+    </div>
+  </div>
