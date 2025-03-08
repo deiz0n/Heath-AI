@@ -389,7 +389,7 @@ body {
     border-radius: 20px;
 }
 
-#modal-prontuario {
+#modal-prontuario-container {
     z-index: 2;
     position: fixed;
     background-color: #ffffff;
@@ -402,12 +402,12 @@ body {
     display: none;
 }
 
-#modal-prontuario h5 {
+#modal-prontuario-container h5 {
     font-size: 22px;
     margin-bottom: 2.7rem;
 }
 
-#modal-prontuario span {
+#modal-prontuario-container span {
     color: #0360D9;
 }
 
