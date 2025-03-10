@@ -9,7 +9,6 @@ const btnConcluir = document.querySelector('#btn-concluir')
 
 const modalOpcoes = document.querySelector('#modal-opcoes-container');
 const modalRaioX = document.querySelector('#modal-raiox-container');
-const modalAmbos = document.querySelector('#modal-raiox-container');
 const modalProntuario = document.querySelector('#modal-prontuario-container');
 
 const inputContainer = document.querySelector('.input-container');
@@ -25,10 +24,27 @@ const estiloBarraProgresso = window.getComputedStyle(progresso.parentElement);
 const larguraBarraProgresso = estiloBarraProgresso.getPropertyValue('width');
 const tituloProgresso = document.querySelector('#valor-progresso span');
 
+const valoresInputModalAmbos = [];
 const valoresInput = [];
 let indiceAtual = 0;
 let progressoAtualizado = false;
 
+// Acompanha em qual etapa do fluxo "Ambos" estamos
+let ambosCurrentStage = "";
+
+// Variável para armazenar o tipo de modal atual
+let tipoModalAtual = null;
+
+const tipoModal = {
+    RaioX: 'RaioX',
+    Ressonancia: 'Ressonancia',
+    Ambos: 'Ambos'
+};
+
+// Armazenar funções de manipulação de eventos para remoção posterior
+let avancarHandler = null;
+let regredirHandler = null;
+let inputHandlers = [];
 
 btnIniciar.addEventListener('click', () => {
     modalOpcoes.style.display = 'block'
@@ -41,12 +57,23 @@ btnFecharModal.addEventListener('click', () => {
 
 btnIniciarModalRaioX.addEventListener('click', (e) => {
     atualizarTituloModal(e.target.textContent);
-    iniciarModalBasico();
+    tipoModalAtual = tipoModal.RaioX;
+    ambosCurrentStage = "";
+    iniciarModalBasico(tipoModalAtual);
 })
 
 btnIniciarModalRessoncia.addEventListener('click', (e) => {
     atualizarTituloModal(e.target.textContent);
-    iniciarModalBasico();
+    tipoModalAtual = tipoModal.Ressonancia;
+    ambosCurrentStage = "";
+    iniciarModalBasico(tipoModalAtual);
+})
+
+btnIniciarModalAmbos.addEventListener('click', () => {
+    atualizarTituloModal('Raio-X');
+    tipoModalAtual = tipoModal.Ambos;
+    ambosCurrentStage = "RaioX";
+    iniciarModalBasico(tipoModalAtual);
 })
 
 function atualizarStatusLabel(inputId) {
@@ -62,6 +89,13 @@ function fecharModal() {
     resetarComponentesModal()
     modalOpcoes.style.display = 'none'
     modalRaioX.style.display = 'none'
+
+    // Resetamos o estado do fluxo "Ambos" e o tipo de modal
+    ambosCurrentStage = "";
+    tipoModalAtual = null;
+
+    // Removemos todos os event listeners
+    removerEventos();
 }
 
 function atualizarBarraProgresso() {
@@ -150,16 +184,26 @@ function resetarComponentesModal() {
         }
     });
 
+    // Na transição do fluxo "Ambos", preservamos alguns estados
+    if (tipoModalAtual !== tipoModal.Ambos || ambosCurrentStage === "") {
+        removerEventos();
+        valoresInput.length = 0;
+    }
+
     progresso.style.width = '0px'
     tituloProgresso.textContent = '0'
-    indiceAtual = 0; //
-    valoresInput.length = 0;
+    indiceAtual = 0;
     btnCancelar.innerText = 'Cancelar';
     btnAvancar.innerText = 'Avançar';
+
+    if (valoresInputModalAmbos.length === 11) valoresInput.length = 0;
 }
 
-function iniciarModalBasico() {
+function iniciarModalBasico(modalTipo) {
     modalRaioX.style.display = 'block';
+
+    // Removemos os event listeners existentes antes de configurar novos
+    removerEventos();
 
     resetarComponentesModal();
 
@@ -175,11 +219,8 @@ function iniciarModalBasico() {
         btnCancelar.setAttribute('data-action', 'fechar');
     }
 
-    // Configura os event listeners uma única vez
-    if (!window.eventListenersSet) {
-        percorrerElementosModalBasico(16.66);
-        window.eventListenersSet = true;
-    }
+    // Configura novos event listeners para o tipo de modal atual
+    percorrerElementosModalBasico(modalTipo);
 }
 
 function fecharModalInicial() {
@@ -191,11 +232,15 @@ function formatarNomeAequivo(arquivo) {
     return arquivo.split('\\').pop();
 }
 
-function percorrerElementosModalBasico() {
+function percorrerElementosModalBasico(modalTipo) {
+    // Limpa os manipuladores antigos
+    inputHandlers = [];
+
     // Configurar event listeners para os inputs
     inputsFile.forEach((input, index) => {
-        input.addEventListener('change', (event) => {
+        const inputHandler = (event) => {
             console.log(`Mudança no input ${index}: ${event.target.id}`);
+            console.log("Tipo de modal atual:", modalTipo);
 
             const tituloInput = nomeArquivo[index];
             if (tituloInput) {
@@ -212,75 +257,22 @@ function percorrerElementosModalBasico() {
             atualizarBarraProgresso();
 
             atualizarStatusLabel(event.target.id.replace('img-', ''));
-        });
+        };
+
+        // Armazenar o manipulador para remoção posterior
+        inputHandlers.push({ element: input, handler: inputHandler, type: 'change' });
+
+        // Adicionar o event listener
+        input.addEventListener('change', inputHandler);
     });
 
-    btnAvancar.addEventListener('click', (e) => {
-        e.preventDefault();
+    // Configurar o event listener para o botão Avançar
+    avancarHandler = (e) => avancar(e, modalTipo);
+    btnAvancar.addEventListener('click', avancarHandler);
 
-        if (!inputsFile[indiceAtual].value) {
-            nomeArquivo[indiceAtual].innerText = "Selecione um arquivo antes de avançar";
-
-            setTimeout(() => {
-                nomeArquivo[indiceAtual].innerText = "Nenhum arquivo selecionado"
-            }, 1000);
-
-            return;
-        }
-
-        atualizarNomeBtnCancelar(indiceAtual + 1);
-
-        console.log(`Avançando do índice ${indiceAtual} para ${indiceAtual + 1}`);
-
-        if (indiceAtual < inputsFile.length - 1) {
-            ocultarTodosOsInputs();
-
-            indiceAtual++;
-
-            mostrarInputAtual();
-
-            atualizarLabels();
-
-            if (btnCancelar) {
-                btnCancelar.setAttribute('data-action', 'voltar');
-            }
-
-            console.log(`Agora no índice ${indiceAtual}`);
-        } else {
-            mostrarMenssagemSucesso();
-            iniciarModalProntuario();
-        }
-    });
-
-    btnCancelar.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        const action = btnCancelar.getAttribute('data-action');
-
-        atualizarNomeBtnCancelar(indiceAtual - 1);
-
-        if (action === 'fechar' || indiceAtual === 0) {
-            fecharModal();
-        } else {
-            console.log(`Voltando do índice ${indiceAtual} para ${indiceAtual - 1}`);
-
-            ocultarTodosOsInputs();
-
-            indiceAtual--;
-
-            mostrarInputAtual();
-
-            atualizarLabels();
-
-            diminuirBarraProgresso();
-
-            if (indiceAtual === 0) {
-                btnCancelar.setAttribute('data-action', 'fechar');
-            }
-
-            console.log(`Agora no índice ${indiceAtual}`);
-        }
-    });
+    // Configurar o event listener para o botão Cancelar
+    regredirHandler = (e) => regredir(e);
+    btnCancelar.addEventListener('click', regredirHandler);
 }
 
 function atualizarTituloModal(titulo) {
@@ -303,7 +295,7 @@ function mostrarMenssagemSucesso() {
     })
 }
 
-function iniciarModalProntuario() {
+function iniciarModalProntuario(modal) {
     const nomeArquivo = document.querySelector('#valor-input-prontuario');
     const inputProntuario = document.querySelector('#input-prontuario');
 
@@ -311,23 +303,169 @@ function iniciarModalProntuario() {
     modalProntuario.style.display = 'block';
     nomeArquivo.style.visibility = 'visible';
 
-    inputProntuario.addEventListener('change', () => {
+    // Remover listeners antigos do inputProntuario
+    const oldProntuarioListeners = getEventListeners(inputProntuario, 'change');
+    if (oldProntuarioListeners && oldProntuarioListeners.length > 0) {
+        oldProntuarioListeners.forEach(listener => {
+            inputProntuario.removeEventListener('change', listener);
+        });
+    }
+
+    const prontuarioHandler = () => {
         nomeArquivo.innerText = formatarNomeAequivo(inputProntuario.value) || 'Nenhum arquivo selecionado';
+    };
+
+    inputProntuario.addEventListener('change', prontuarioHandler);
+
+    // Remover listeners antigos dos botões
+    if (btnConcluir) {
+        const oldConcluirListeners = getEventListeners(btnConcluir, 'click');
+        if (oldConcluirListeners && oldConcluirListeners.length > 0) {
+            oldConcluirListeners.forEach(listener => {
+                btnConcluir.removeEventListener('click', listener);
+            });
+        }
+
+        btnConcluir.addEventListener('click', () => {
+            if (modal === tipoModal.RaioX || modal === tipoModal.Ressonancia) valoresInput.push(inputProntuario.value);
+            else valoresInputModalAmbos.push(inputProntuario.value);
+
+            modalProntuario.style.display = 'none';
+            console.log('Aguardando o envio dos arquivos...');
+            fecharModal();
+        });
+    }
+
+    if (btnCancelar) {
+        // Remover listener antigo
+        if (regredirHandler) {
+            btnCancelar.removeEventListener('click', regredirHandler);
+        }
+
+        btnCancelar.addEventListener('click', () => {
+            valoresInput.push(inputProntuario.value);
+            console.log(valoresInput);
+            modalProntuario.style.display = 'none';
+            console.log('Aguardando o envio dos arquivos...');
+            fecharModal();
+        });
+    }
+}
+
+function getEventListeners(element, type) {
+    return [];
+}
+
+function avancar(e, modalTipo) {
+    e.preventDefault();
+
+    if (!inputsFile[indiceAtual].value) {
+        nomeArquivo[indiceAtual].innerText = "Selecione um arquivo antes de avançar";
+
+        setTimeout(() => {
+            nomeArquivo[indiceAtual].innerText = "Nenhum arquivo selecionado"
+        }, 1000);
+
+        return;
+    }
+
+    atualizarNomeBtnCancelar(indiceAtual + 1);
+
+    console.log(`Avançando do índice ${indiceAtual} para ${indiceAtual + 1}`);
+    console.log("Tipo de modal atual:", modalTipo);
+
+    if (indiceAtual < inputsFile.length - 1) {
+        ocultarTodosOsInputs();
+
+        indiceAtual++;
+
+        mostrarInputAtual();
+
+        atualizarLabels();
+
+        if (btnCancelar) {
+            btnCancelar.setAttribute('data-action', 'voltar');
+        }
+
+        console.log(`Agora no índice ${indiceAtual}`);
+    } else {
+        if (modalTipo === tipoModal.Ambos) {
+
+            if (ambosCurrentStage === "RaioX") {
+                // Primeira etapa do "Ambos" está completa (RaioX)
+                // Transição para a segunda etapa (Ressonancia)
+                console.log("Transicionando de RaioX para Ressonancia no fluxo Ambos");
+                ambosCurrentStage = "Ressonancia";
+                atualizarTituloModal('Ressonância');
+
+                // Reiniciamos o componente para o próximo estágio
+                valoresInputModalAmbos.push(...valoresInput);
+                resetarComponentesModal();
+                mostrarInputAtual();
+                atualizarLabels();
+                console.log("Valores do fluxo Ambos:", valoresInputModalAmbos);
+                // Note que estamos mantendo modalTipo como tipoModal.Ambos
+            } else {
+                // Ambas as etapas concluídas, mostrar prontuário
+                valoresInputModalAmbos.push(...valoresInput);
+                mostrarMenssagemSucesso();
+                iniciarModalProntuario(modalTipo);
+                console.log(valoresInputModalAmbos);
+            }
+        } else if (modalTipo === tipoModal.RaioX || modalTipo === tipoModal.Ressonancia) {
+            mostrarMenssagemSucesso();
+            iniciarModalProntuario(modalTipo);
+        }
+    }
+}
+
+function regredir(e) {
+    e.preventDefault();
+
+    const action = btnCancelar.getAttribute('data-action');
+
+    atualizarNomeBtnCancelar(indiceAtual - 1);
+
+    if (action === 'fechar' || indiceAtual === 0) {
+        fecharModal();
+    } else {
+        console.log(`Voltando do índice ${indiceAtual} para ${indiceAtual - 1}`);
+
+        ocultarTodosOsInputs();
+
+        indiceAtual--;
+
+        mostrarInputAtual();
+
+        atualizarLabels();
+
+        diminuirBarraProgresso();
+
+        if (indiceAtual === 0) {
+            btnCancelar.setAttribute('data-action', 'fechar');
+        }
+
+        console.log(`Agora no índice ${indiceAtual}`);
+    }
+}
+
+function removerEventos() {
+    // Remover os event listeners de avanço e retrocesso
+    if (avancarHandler) {
+        btnAvancar.removeEventListener('click', avancarHandler);
+        avancarHandler = null;
+    }
+
+    if (regredirHandler) {
+        btnCancelar.removeEventListener('click', regredirHandler);
+        regredirHandler = null;
+    }
+
+    inputHandlers.forEach(({ element, handler, type }) => {
+        element.removeEventListener(type, handler);
     });
 
-    btnConcluir.addEventListener('click', () => {
-        valoresInput.push(inputProntuario.value);
-        console.log(valoresInput);
-        modalProntuario.style.display = 'none';
-        console.log('Aguardando o envio dos arquivos...');
-        fecharModal();
-    })
+    inputHandlers = [];
 
-    btnCancelar.addEventListener('click', () => {
-        valoresInput.push(inputProntuario.value);
-        console.log(valoresInput);
-        modalProntuario.style.display = 'none';
-        console.log('Aguardando o envio dos arquivos...');
-        fecharModal();
-    })
+    window.eventListenersSet = false;
 }
