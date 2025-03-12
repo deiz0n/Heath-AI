@@ -15,7 +15,8 @@ def criar_multi_modal(request):
             'img_pd_lateral': request.data.get('raio_x[img_pd_lateral]'),
             'img_pe_cima': request.data.get('raio_x[img_pe_cima]'),
             'img_pe_lateral': request.data.get('raio_x[img_pe_lateral]'),
-            'img_ambos_cima': request.data.get('raio_x[img_ambos_cima]')
+            'img_ambos_cima': request.data.get('raio_x[img_ambos_cima]'),
+            'prontuario': request.data.get('raio_x[prontuario]')
         }
         
         ressonancia_data = {
@@ -23,7 +24,8 @@ def criar_multi_modal(request):
             'img_pd_lateral': request.data.get('ressonancia[img_pd_lateral]'),
             'img_pe_cima': request.data.get('ressonancia[img_pe_cima]'),
             'img_pe_lateral': request.data.get('ressonancia[img_pe_lateral]'),
-            'img_ambos_cima': request.data.get('ressonancia[img_ambos_cima]')
+            'img_ambos_cima': request.data.get('ressonancia[img_ambos_cima]'),
+            'prontuario': request.data.get('ressonancia[prontuario]')
         }
 
         raio_x_serializer = RaioXSerializer(data=raio_x_data)
