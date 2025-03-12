@@ -1,11 +1,13 @@
+import { ExameBasico, ExameCompleto } from "./tipo-modal.js";
+
 const btnIniciar = document.querySelector('#main-btn');
-const btnCancelar = document.querySelector('#btn-cancelar');
+let btnCancelar = document.querySelector('#btn-cancelar');
 const btnAvancar = document.querySelector('#btn-avancar');
 const btnFecharModal = document.querySelector('.btn-fechar');
 const btnIniciarModalRaioX = document.querySelector('#btn-modal-raiox');
 const btnIniciarModalRessoncia = document.querySelector('#btn-modal-ressonancia');
 const btnIniciarModalAmbos = document.querySelector('#btn-modal-ambos');
-const btnConcluir = document.querySelector('#btn-concluir')
+let btnConcluir = document.querySelector('#btn-concluir')
 
 const modalOpcoes = document.querySelector('#modal-opcoes-container');
 const modalRaioX = document.querySelector('#modal-raiox-container');
@@ -19,7 +21,6 @@ const nomeArquivo = document.querySelectorAll('.valor-input');
 
 const progresso = document.querySelector('#progresso');
 const estiloValorProgresso = window.getComputedStyle(progresso);
-const larguraValorProgresso = estiloValorProgresso.getPropertyValue('width');
 const estiloBarraProgresso = window.getComputedStyle(progresso.parentElement);
 const larguraBarraProgresso = estiloBarraProgresso.getPropertyValue('width');
 const tituloProgresso = document.querySelector('#valor-progresso span');
@@ -27,13 +28,26 @@ const tituloProgresso = document.querySelector('#valor-progresso span');
 const valoresInputModalAmbos = [];
 const valoresInput = [];
 let indiceAtual = 0;
-let progressoAtualizado = false;
 
 // Acompanha em qual etapa do fluxo "Ambos" estamos
 let ambosCurrentStage = "";
 
 // Variável para armazenar o tipo de modal atual
 let tipoModalAtual = null;
+
+// Objeto para controle de fluxo do modal "Ambos"
+const fluxoAmbos = {
+    etapaAtual: "",
+    dadosRaioX: [],
+    dadosRessonancia: [],
+    dadosProntuario: "",
+    limpar() {
+        this.etapaAtual = "";
+        this.dadosRaioX = [];
+        this.dadosRessonancia = [];
+        this.dadosProntuario = "";
+    }
+};
 
 const tipoModal = {
     RaioX: 'RaioX',
@@ -47,6 +61,7 @@ let regredirHandler = null;
 let inputHandlers = [];
 
 btnIniciar.addEventListener('click', () => {
+    // Limpar o console para um novo fluxo
     modalOpcoes.style.display = 'block'
 })
 
@@ -56,23 +71,30 @@ btnFecharModal.addEventListener('click', () => {
 })
 
 btnIniciarModalRaioX.addEventListener('click', (e) => {
+    // Limpar o console para um novo fluxo
     atualizarTituloModal(e.target.textContent);
     tipoModalAtual = tipoModal.RaioX;
     ambosCurrentStage = "";
+    fluxoAmbos.limpar();
     iniciarModalBasico(tipoModalAtual);
 })
 
 btnIniciarModalRessoncia.addEventListener('click', (e) => {
+    // Limpar o console para um novo fluxo
     atualizarTituloModal(e.target.textContent);
     tipoModalAtual = tipoModal.Ressonancia;
     ambosCurrentStage = "";
+    fluxoAmbos.limpar();
     iniciarModalBasico(tipoModalAtual);
 })
 
 btnIniciarModalAmbos.addEventListener('click', () => {
+    // Limpar o console para um novo fluxo
     atualizarTituloModal('Raio-X');
     tipoModalAtual = tipoModal.Ambos;
     ambosCurrentStage = "RaioX";
+    fluxoAmbos.etapaAtual = "RaioX";
+    fluxoAmbos.limpar();
     iniciarModalBasico(tipoModalAtual);
 })
 
@@ -85,17 +107,35 @@ function atualizarStatusLabel(inputId) {
     }
 }
 
-function fecharModal() {
-    resetarComponentesModal()
-    modalOpcoes.style.display = 'none'
-    modalRaioX.style.display = 'none'
+function limparTodosOsEstados() {
+    // Resetar componentes visuais
+    resetarComponentesModal();
 
-    // Resetamos o estado do fluxo "Ambos" e o tipo de modal
+    // Resetar estado do fluxo
     ambosCurrentStage = "";
     tipoModalAtual = null;
+    fluxoAmbos.limpar();
 
-    // Removemos todos os event listeners
+    // Limpar arrays de valores
+    valoresInput.length = 0;
+    valoresInputModalAmbos.length = 0;
+
+    // Resetar índice
+    indiceAtual = 0;
+
+    // Remover todos os event listeners
     removerEventos();
+    limparEventosModalProntuario();
+}
+
+function fecharModal() {
+    // Ocultar todos os modais
+    modalOpcoes.style.display = 'none';
+    modalRaioX.style.display = 'none';
+    modalProntuario.style.display = 'none';
+
+    // Limpar todos os estados
+    limparTodosOsEstados();
 }
 
 function atualizarBarraProgresso() {
@@ -299,56 +339,109 @@ function iniciarModalProntuario(modal) {
     const nomeArquivo = document.querySelector('#valor-input-prontuario');
     const inputProntuario = document.querySelector('#input-prontuario');
 
+    // Reset display state
     modalRaioX.style.display = 'none';
     modalProntuario.style.display = 'block';
     nomeArquivo.style.visibility = 'visible';
 
-    // Remover listeners antigos do inputProntuario
-    const oldProntuarioListeners = getEventListeners(inputProntuario, 'change');
-    if (oldProntuarioListeners && oldProntuarioListeners.length > 0) {
-        oldProntuarioListeners.forEach(listener => {
-            inputProntuario.removeEventListener('change', listener);
-        });
-    }
+    // Limpar completamente os event listeners existentes
+    limparEventosModalProntuario();
 
+    // Adicionar o handler para mudança de arquivo
     const prontuarioHandler = () => {
         nomeArquivo.innerText = formatarNomeAequivo(inputProntuario.value) || 'Nenhum arquivo selecionado';
     };
-
     inputProntuario.addEventListener('change', prontuarioHandler);
 
-    // Remover listeners antigos dos botões
-    if (btnConcluir) {
-        const oldConcluirListeners = getEventListeners(btnConcluir, 'click');
-        if (oldConcluirListeners && oldConcluirListeners.length > 0) {
-            oldConcluirListeners.forEach(listener => {
-                btnConcluir.removeEventListener('click', listener);
-            });
+    // Criar um novo handler para o botão concluir
+    const concluirHandler = () => {
+        // Remove o event listener para evitar múltiplas chamadas
+        btnConcluir.removeEventListener('click', concluirHandler);
+
+        // Adiciona o valor do prontuário e registra o tipo de exame
+        if (modal === tipoModal.Ambos) {
+            valoresInputModalAmbos.push(inputProntuario.value);
+            fluxoAmbos.dadosProntuario = inputProntuario.value;
+
+            const [img_pd_cima_raiox, img_pd_lateral_raiox, img_pe_cima_raiox, img_pe_lateral_raiox, img_ambos_raiox] = valoresInputModalAmbos.slice(0, 5);
+            const raiox = new ExameBasico(null, img_pd_cima_raiox, img_pd_lateral_raiox, img_pe_cima_raiox, img_pe_lateral_raiox, img_ambos_raiox, null);
+
+            const [img_pd_cima_ressonancia, img_pd_lateral_ressonancia, img_pe_cima_ressonancia, img_pe_lateral_ressonancia, img_ambos_ressonancia] = valoresInputModalAmbos.slice(5, 10);
+            const ressonancia = new ExameBasico(null, img_pd_cima_ressonancia, img_pd_lateral_ressonancia, img_pe_cima_ressonancia, img_pe_lateral_ressonancia, img_ambos_ressonancia, null);
+
+            const exameCompleto = new ExameCompleto(raiox, ressonancia, valoresInputModalAmbos[valoresInputModalAmbos.length - 1]);
+
+            console.log(exameCompleto);
+
+            console.log(`tipo de exame enviado: ${modal} (Ambos - RaioX e Ressonância)`);
+        } else {
+            console.log(inputProntuario.value)
+
+            const [img_pd_cima, img_pd_lateral, img_pe_cima, img_pe_lateral, img_ambos] = valoresInput;
+
+            const exameBasico = new ExameBasico(modal, img_pd_cima, img_pd_lateral, img_pe_cima, img_pe_lateral, img_ambos, inputProntuario.value);
+
+            console.log(exameBasico);
         }
 
-        btnConcluir.addEventListener('click', () => {
-            if (modal === tipoModal.RaioX || modal === tipoModal.Ressonancia) valoresInput.push(inputProntuario.value);
-            else valoresInputModalAmbos.push(inputProntuario.value);
+        console.log('Aguardando o envio dos arquivos...');
 
-            modalProntuario.style.display = 'none';
-            console.log('Aguardando o envio dos arquivos...');
-            fecharModal();
-        });
+        // Ocultar o modal antes de limpar os estados
+        modalProntuario.style.display = 'none';
+
+        // Limpar todos os estados antes de iniciar um novo fluxo
+        limparTodosOsEstados();
+    };
+
+    // Criar um novo handler para o botão cancelar
+    const cancelarHandler = () => {
+        // Imediatamente remover o event listener para evitar múltiplas chamadas
+        btnCancelar.removeEventListener('click', cancelarHandler);
+
+
+        modalProntuario.style.display = 'none';
+        limparTodosOsEstados();
+    };
+
+    // Adicionar os novos handlers
+    btnConcluir.addEventListener('click', concluirHandler);
+    btnCancelar.addEventListener('click', cancelarHandler);
+}
+
+if (btnCancelar) {
+    // Remover listener antigo
+    if (regredirHandler) {
+        btnCancelar.removeEventListener('click', regredirHandler);
+    }
+
+    btnCancelar.addEventListener('click', () => {
+        // Limpa logs anteriores antes de imprimir o atual
+
+
+        modalProntuario.style.display = 'none';
+        fecharModal();
+    });
+}
+
+function limparEventosModalProntuario() {
+    const inputProntuario = document.querySelector('#input-prontuario');
+
+    // Clonar e substituir os elementos para remover TODOS os event listeners
+    if (btnConcluir) {
+        const novoBtnConcluir = btnConcluir.cloneNode(true);
+        btnConcluir.parentNode.replaceChild(novoBtnConcluir, btnConcluir);
+        btnConcluir = novoBtnConcluir;
     }
 
     if (btnCancelar) {
-        // Remover listener antigo
-        if (regredirHandler) {
-            btnCancelar.removeEventListener('click', regredirHandler);
-        }
+        const novoBtnCancelar = btnCancelar.cloneNode(true);
+        btnCancelar.parentNode.replaceChild(novoBtnCancelar, btnCancelar);
+        btnCancelar = novoBtnCancelar;
+    }
 
-        btnCancelar.addEventListener('click', () => {
-            valoresInput.push(inputProntuario.value);
-            console.log(valoresInput);
-            modalProntuario.style.display = 'none';
-            console.log('Aguardando o envio dos arquivos...');
-            fecharModal();
-        });
+    if (inputProntuario) {
+        const novoInputProntuario = inputProntuario.cloneNode(true);
+        inputProntuario.parentNode.replaceChild(novoInputProntuario, inputProntuario);
     }
 }
 
@@ -390,27 +483,31 @@ function avancar(e, modalTipo) {
         console.log(`Agora no índice ${indiceAtual}`);
     } else {
         if (modalTipo === tipoModal.Ambos) {
-
             if (ambosCurrentStage === "RaioX") {
                 // Primeira etapa do "Ambos" está completa (RaioX)
+                // Salva os dados do RaioX no objeto de fluxo
+                fluxoAmbos.dadosRaioX = [...valoresInput];
+
                 // Transição para a segunda etapa (Ressonancia)
                 console.log("Transicionando de RaioX para Ressonancia no fluxo Ambos");
                 ambosCurrentStage = "Ressonancia";
+                fluxoAmbos.etapaAtual = "Ressonancia";
                 atualizarTituloModal('Ressonância');
 
-                // Reiniciamos o componente para o próximo estágio
+                // Armazena valores atuais e reseta para o próximo fluxo
                 valoresInputModalAmbos.push(...valoresInput);
+                valoresInput.length = 0;
+
+                // Reinicia o componente para o próximo estágio
                 resetarComponentesModal();
                 mostrarInputAtual();
                 atualizarLabels();
-                console.log("Valores do fluxo Ambos:", valoresInputModalAmbos);
-                // Note que estamos mantendo modalTipo como tipoModal.Ambos
             } else {
                 // Ambas as etapas concluídas, mostrar prontuário
+                fluxoAmbos.dadosRessonancia = [...valoresInput];
                 valoresInputModalAmbos.push(...valoresInput);
                 mostrarMenssagemSucesso();
                 iniciarModalProntuario(modalTipo);
-                console.log(valoresInputModalAmbos);
             }
         } else if (modalTipo === tipoModal.RaioX || modalTipo === tipoModal.Ressonancia) {
             mostrarMenssagemSucesso();
@@ -466,6 +563,4 @@ function removerEventos() {
     });
 
     inputHandlers = [];
-
-    window.eventListenersSet = false;
 }
