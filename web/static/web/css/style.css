@@ -201,15 +201,15 @@ body {
 }
 
 #modal-raiox-container {
-    z-index: 2;
-    position: fixed;
-    border: 1px solid #0360D9;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    padding: 1rem;
-    width: 700px;
-    border-radius: 20px;
-    display: none;
+    background-color: white;
+    width: 90%;
+    height: 370px;
+    max-width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 10;
+    position: absolute;
 }
 
 .modal-titulo {
@@ -293,7 +293,8 @@ body {
 }
 
 .valor-input {
-    visibility: hidden;
+    margin-left: 1rem;
+    width: 400px;
     text-align: center;
 }
 
@@ -301,10 +302,6 @@ body {
     background-color: #d1d1d1;
     color: #0346A2;
     transition: .3s all ease-in-out;
-}
-
-.secundario {
-    visibility: hidden;
 }
 
 #icone-upload {
@@ -436,6 +433,10 @@ body {
     margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
+}
+
+.btn-container button[type=submit] {
+    margin-top: 0;
 }
 
 #main-conteudo {
