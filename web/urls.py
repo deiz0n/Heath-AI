@@ -1,9 +1,8 @@
 from django.urls import path
 
-from .views import criar_multi_modal, buscar_multi_modais, pagina_inicial
+from .views import pagina_inicial, upload_raio_x
 
 urlpatterns = [
-    path('documentos/criar/', criar_multi_modal),
-    path('documentos/', buscar_multi_modais),
-    path('', pagina_inicial)
+    path('', pagina_inicial, name='home'),
+    path('upload-raiox/', upload_raio_x, name='upload-raiox')
 ]
