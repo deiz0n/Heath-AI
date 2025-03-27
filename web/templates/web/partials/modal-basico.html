@@ -1,12 +1,17 @@
 {% load static %}
 
 <div class="modal">
-  <div id="modal-raiox-container">
-    <h5 class="modal-titulo">
-      Selecione as imagens de <span>{nome_exame}</span>
-    </h5>
-    <button><i class="btn-fechar material-icons">close</i></button>
-    <form id="form-container" action="#">
+  <div style="display: none;" id="modal-raiox-container">
+    <form class="form"  method="post" enctype="multipart/form-data" action="{% url 'upload-raiox' %}">
+      {% csrf_token %} 
+    
+      <div class="modal-header">
+        <h5 class="modal-titulo">
+          Selecione as imagens de <span>Raio X</span>
+        </h5>
+        <button><i id="btn-close-modal" class="btn-fechar material-icons">close</i></button>
+      </div>
+
       <div class="labels">
         <ul>
           <li id="label-pd-cima">
@@ -32,11 +37,12 @@
         </ul>
       </div>
 
-      <div class="input-container">
+    
+      <div class="form-step active" data-step="0">
         <input
           type="file"
-          id="img-pd-cima"
-          name="img-pd-cima"
+          id="raio_x_img_pd_cima"
+          name="raio_x_img_pd_cima"
           hx-trigger="change"
           hx-target="#label-pd-cima"
           hx-swap="outerHTML"
@@ -52,11 +58,11 @@
         <p class="valor-input">Nenhum arquivo selecionado</p>
       </div>
 
-      <div class="input-container">
+      <div class="form-step" data-step="1">
         <input
           type="file"
-          id="img-pd-lateral"
-          name="img-pd-lateral"
+          id="raio_x_img_pd_lateral"
+          name="raio_x_img_pd_lateral"
           hx-trigger="change"
           hx-target="#label-pd-lateral"
           hx-swap="outerHTML"
@@ -72,11 +78,11 @@
         <p class="valor-input">Nenhum arquivo selecionado</p>
       </div>
 
-      <div class="input-container">
+      <div class="form-step" data-step="2">
         <input
           type="file"
-          id="img-pe-cima"
-          name="img-pe-cima"
+          id="raio_x_img_pe_cima"
+          name="raio_x_img_pe_cima"
           hx-trigger="change"
           hx-target="#label-pe-cima"
           hx-swap="outerHTML"
@@ -92,11 +98,11 @@
         <p class="valor-input">Nenhum arquivo selecionado</p>
       </div>
 
-      <div class="input-container">
+      <div class="form-step" data-step="3">
         <input
           type="file"
-          id="img-pe-lateral"
-          name="img-pe-lateral"
+          id="raio_x_img_pe_lateral"
+          name="raio_x_img_pe_lateral"
           hx-trigger="change"
           hx-target="#label-pe-lateral"
           hx-swap="outerHTML"
@@ -112,11 +118,11 @@
         <p class="valor-input">Nenhum arquivo selecionado</p>
       </div>
 
-      <div class="input-container">
+      <div class="form-step" data-step="4">
         <input
           type="file"
-          id="img-ambos-cima"
-          name="img-ambos-cima"
+          id="raio_x_img_ambos_cima"
+          name="raio_x_img_ambos_cima"
           hx-trigger="change"
           hx-target="#label-ambos-cima"
           hx-swap="outerHTML"
@@ -132,27 +138,18 @@
         <p class="valor-input">Nenhum arquivo selecionado</p>
       </div>
 
-      <div class="btn-container">
-        <button
-          id="btn-cancelar"
-          hx-trigger="click"
-          hx-target="#modal-container"
-        >
-          Cancelar
-        </button>
-        <button
-          id="btn-avancar"
-          hx-trigger="click"
-          hx-target="#progresso-barra"
-        >
-          Avançar
-        </button>
-      </div>
+      <div class="modal-footer">
+        <div id="modal-footer-btns">
+            <button type="button" class="btn-secondary" id="prev-step">Fechar</button>
+            <button type="button" class="btn-primary" id="next-step">Avançar</button>
 
-      <div id="progresso-barra">
-        <p id="valor-progresso">Etapa: <span>1</span>/5</p>
-        <div id="progresso"></div>
+            <button type="submit" class="btn-primary" id="submit-form" style="display: none;">Enviar</button>
+        </div>
+
+        <p id="progress-title">Etapa <span>0</span>/5</p>
+        <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+        </div>
       </div>
-    </form>
   </div>
 </div>
