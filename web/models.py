@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.db import models
 import uuid
 
+from django.contrib.postgres.fields import ArrayField
 
 class RaioX(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -15,13 +16,16 @@ class RaioX(models.Model):
     def __str__(self):
         return str(self.id)
 
+class ImagensRessonancia(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    imagem = models.ImageField(upload_to="imagens/ressonancia")
+    
+    def __str__(self):
+        return str(self.id)
+
 class Ressonancia(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    img_pd_cima = models.ImageField(upload_to="imagens/ressonancia/")
-    img_pd_lateral = models.ImageField(upload_to="imagens/ressonancia/")
-    img_pe_cima = models.ImageField(upload_to="imagens/ressonancia/")
-    img_pe_lateral = models.ImageField(upload_to="imagens/ressonancia/")
-    img_ambos_cima = models.ImageField(upload_to="imagens/ressonancia/")
+    imagens = models.ManyToManyField(ImagensRessonancia)
     prontuario = models.FileField(upload_to="prontuario/ressonancia", default="Prontuário não informado", null=True)
     
     def __str__(self):
