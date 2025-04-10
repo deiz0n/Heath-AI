@@ -1,31 +1,46 @@
 import { startModal } from "./modal-utils.js";
 
-const btnStartRaioX = document.querySelector('#btn-modal-raiox');
-const btnStartRessonancia = document.querySelector('#open-modal-ressonancia');
-const btnStartAmbos = document.querySelector('#open-modal-ambos');
+const btnIniciar = document.querySelector('#main-btn');
+const btn2D = document.querySelector('#btn-2d');
+const btn3D = document.querySelector('#btn-3d');
+const btnStartRaioX = document.querySelectorAll('.btn-modal-raiox');
+const btnStartRessonancia = document.querySelectorAll('.btn-modal-ressonancia');
+const btnStartAmbos = document.querySelector('#btn-modal-ambos');
 const btnStartProntuario = document.querySelector('#next-step');
 const formComponent = document.querySelector('.form');
 
 const modalRaioX = document.querySelector('#modal-raiox-container');
+
+const initModalTipoVisualizacao = () => {
+    const modal = document.querySelector('#modal-tipo-imagem-container');
+    modal.style.display = 'block';
+}
+
+const initModalOpcoes3D = (typeModal) => {
+    const modal = document.querySelector('#modal-opcoes-container');
+    modal.style.display = 'block';
+    closeCurrentModal(typeModal);
+}
+
+const initModalOpcoes2D = (typeModal) => {
+    const modal = document.querySelector('#modal-opcoes-2d-container');
+    modal.style.display = 'block';
+    closeCurrentModal(typeModal);
+}
 
 const initModalRaioX = () => {
     const tipoModal = 'raiox'
     startModal(tipoModal);
 }
 
-const initModalRessonancia = () => {
-    const typeContent = 'content-ressonancia';
-    const typeModal = 'ressonancia'
-
-    renderTemplate(startModalRessonancia(), typeContent);
-    startModal(typeModal);
+const initModalRessonancia = (typeModal) => {
+    const modal = document.querySelector('#modal-ressonancia-container');
+    modal.style.display = 'block';
+    closeCurrentModal(typeModal);
 }
 
 const initModalAmbos = () => {
-    const typeContent = 'content-ambos';
     const typeModal = 'ambos'
-
-    renderTemplate(startModalAmbos(), typeContent);
     startModal(typeModal);
 }
 
@@ -35,17 +50,21 @@ export const initModalProntuario = (typeModal) => {
     closeCurrentModal(typeModal)
 }
 
-btnStartRaioX.addEventListener('click', () => {
-    console.log('alo')
-    initModalRaioX();
-});
+btnIniciar.addEventListener('click', initModalTipoVisualizacao);
+
+btn3D.addEventListener('click', () => initModalOpcoes3D('tipo-imagem'));
+
+btn2D.addEventListener('click', () => initModalOpcoes2D('tipo-imagem'));
+
+btnStartRaioX.forEach(btn => btn.addEventListener('click', initModalRaioX));
+
+btnStartRessonancia.forEach(btn => btn.addEventListener('click', initModalRessonancia));
+
+btnStartAmbos.addEventListener('click', initModalAmbos);
 
 function closeCurrentModal(typeModal) {
     const modal = document.querySelector(`#modal-${typeModal}-container`);
     modal.style.display = 'none';
 }
 
-// btnStartRessonancia.addEventListener('click', initModalRessonancia);
-
-// btnStartAmbos.addEventListener('click', initModalAmbos);
 

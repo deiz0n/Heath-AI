@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 
-from .models import RaioX
+from .models import RaioX, Ressonancia, ImagensRessonancia
 
 def upload_raio_x(request):
     
     try:
         files = request.FILES
         
-        if'raio_x_img_pd_cima' in files:
+        if 'raio_x_img_pd_cima' in files:
             novo_raiox = RaioX()
 
             novo_raiox.img_pd_cima = files['raio_x_img_pd_cima']
@@ -21,12 +21,37 @@ def upload_raio_x(request):
 
             novo_raiox.save()
             
-            return redirect('home')
+            return render(request, 'web/pages/pagina-inicial.html')
 
     except Exception as e:
-        print(f"Erro ao processar formulário: {str(e)}")  # Para depuração
+        print(f"Erro ao processar formulário: {str(e)}")
         return render(request, 'web/pages/pagina-inicial.html')
 
+
+def upload_ressonancia(request):
+    try:
+        files = request.FILES
+
+        if 'imagens_ressonancia' in files:
+            nova_ressonancia = Ressonancia.objects.create()
+
+            imagens = [
+                ImagensRessonancia(ressonancia=nova_ressonancia, imagem=imagem)
+                for imagem in files.getlist('imagens_ressonancia')
+            ]
+            ImagensRessonancia.objects.bulk_create(imagens)
+
+            if 'prontuario' in files:
+                nova_ressonancia.prontuario = files['prontuario']
+                nova_ressonancia.save()
+
+            return render(request, 'web/pages/pagina-inicial.html')
+
+    except Exception as e:
+        print(f"Erro ao processar formulário: {str(e)}") 
+        return render(request, 'web/pages/pagina-inicial.html')
+
+    
 
 def pagina_inicial(request):
     return render(request, 'web/pages/pagina-inicial.html')

@@ -1,15 +1,15 @@
 // import { ExameBasico, ExameCompleto } from "./tipo-modal.js";
 
-const btnIniciar = document.querySelector('#main-btn');
-// let btnCancelar = document.querySelector('#btn-cancelar');
-// const btnAvancar = document.querySelector('#btn-avancar');
-// const btnFecharModal = document.querySelector('.btn-fechar');
-// const btnIniciarModalRaioX = document.querySelector('#btn-modal-raiox');
-// const btnIniciarModalRessoncia = document.querySelector('#btn-modal-ressonancia');
-// const btnIniciarModalAmbos = document.querySelector('#btn-modal-ambos');
-// let btnConcluir = document.querySelector('#btn-concluir')
+// const btnIniciar = document.querySelector('#main-btn');
+// // let btnCancelar = document.querySelector('#btn-cancelar');
+// // const btnAvancar = document.querySelector('#btn-avancar');
+// // const btnFecharModal = document.querySelector('.btn-fechar');
+// // const btnIniciarModalRaioX = document.querySelector('#btn-modal-raiox');
+// // const btnIniciarModalRessoncia = document.querySelector('#btn-modal-ressonancia');
+// // const btnIniciarModalAmbos = document.querySelector('#btn-modal-ambos');
+// // let btnConcluir = document.querySelector('#btn-concluir')
 
-const modalOpcoes = document.querySelector('#modal-opcoes-container');
+// const modalOpcoes = document.querySelector('#modal-opcoes-container');
 // const modalRaioX = document.querySelector('#modal-raiox-container');
 // const modalProntuario = document.querySelector('#modal-prontuario-container');
 
@@ -60,10 +60,10 @@ const modalOpcoes = document.querySelector('#modal-opcoes-container');
 // let regredirHandler = null;
 // let inputHandlers = [];
 
-btnIniciar.addEventListener('click', () => {
-    // Limpar o console para um novo fluxo
-    modalOpcoes.style.display = 'block'
-})
+// btnIniciar.addEventListener('click', () => {
+//     // Limpar o console para um novo fluxo
+//     modalOpcoes.style.display = 'block'
+// })
 
 // btnFecharModal.addEventListener('click', () => {
 //     console.log('fechar');
