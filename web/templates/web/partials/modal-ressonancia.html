@@ -3,7 +3,8 @@
 <div class="modal">
    <div style="display: none" id="modal-ressonancia-container">
       <form class="form"  method="post" enctype="multipart/form-data" action="{% url 'upload-ressonancia' %}">
-          <h5 class="modal-titulo">
+         {% csrf_token %} 
+        <h5 class="modal-titulo">
             Selecione os arquivo da <span>Ressonância</span>
           </h5>
           <button style="border: none;">
@@ -13,16 +14,16 @@
             <input type="file" id="input-ressonancia" name="imagens_ressonancia" multiple>
             <div id="custom-input-ressonancia">
               <img
-                id="icone-upload"
+                class="icone-upload"
                 src="{% static 'web/assets/images/upload-icon.svg' %}"
                 alt=""
               />
               Selecione o arquivo
             </div>
           </div>
-          <p id="valor-input-ressonancia" class="valor-input">Nenhum arquivo selecionado</p>
+          <p id="valor-input-ressonancia" class="valor-input"><span>0</span> Arquivos selecionados</p>
           <div class="btn-container">
-            <button type="submit" class="btn-primary" id="submit-form">Enviar</button>
+            <button type="submit" class="btn-primary" id="btn-submit-ressonancia">Enviar</button>
           </div>
       </form>
   </div>

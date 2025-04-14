@@ -3,13 +3,13 @@
 <div class="modal">
   <div style="display: none;" id="modal-raiox-container">
     <form class="form"  method="post" enctype="multipart/form-data" action="{% url 'upload-raiox' %}">
-      {% csrf_token %} 
-    
+      {% csrf_token %}
+
       <div class="modal-header">
         <h5 class="modal-titulo">
           Selecione as imagens de <span>Raio X</span>
         </h5>
-        <button><i id="btn-close-modal" class="btn-fechar material-icons">close</i></button>
+        <button><i id="btn-close-raiox" class="btn-fechar material-icons">close</i></button>
       </div>
 
       <div class="labels">
@@ -37,7 +37,6 @@
         </ul>
       </div>
 
-    
       <div class="form-step active" data-step="0">
         <input
           type="file"
@@ -49,13 +48,13 @@
         />
         <div class="custom-input">
           <img
-            id="icone-upload"
+            class="icone-upload"
             src="{% static 'web/assets/images/upload-icon.svg' %}"
             alt=""
           />
           Selecione o arquivo
         </div>
-        <p class="valor-input">Nenhum arquivo selecionado</p>
+        <p class="input-value-raiox">Nenhum arquivo selecionado</p>
       </div>
 
       <div class="form-step" data-step="1">
@@ -69,13 +68,13 @@
         />
         <div class="custom-input secundario">
           <img
-            id="icone-upload"
+            class="icone-upload"
             src="{% static 'web/assets/images/upload-icon.svg' %}"
             alt=""
           />
           Selecione o arquivo
         </div>
-        <p class="valor-input">Nenhum arquivo selecionado</p>
+        <p class="input-value-raiox">Nenhum arquivo selecionado</p>
       </div>
 
       <div class="form-step" data-step="2">
@@ -89,13 +88,13 @@
         />
         <div class="custom-input secundario">
           <img
-            id="icone-upload"
+            class="icone-upload"
             src="{% static 'web/assets/images/upload-icon.svg' %}"
             alt=""
           />
           Selecione o arquivo
         </div>
-        <p class="valor-input">Nenhum arquivo selecionado</p>
+        <p class="input-value-raiox">Nenhum arquivo selecionado</p>
       </div>
 
       <div class="form-step" data-step="3">
@@ -109,13 +108,13 @@
         />
         <div class="custom-input secundario">
           <img
-            id="icone-upload"
+            class="icone-upload"
             src="{% static 'web/assets/images/upload-icon.svg' %}"
             alt=""
           />
           Selecione o arquivo
         </div>
-        <p class="valor-input">Nenhum arquivo selecionado</p>
+        <p class="input-value-raiox">Nenhum arquivo selecionado</p>
       </div>
 
       <div class="form-step" data-step="4">
@@ -129,21 +128,21 @@
         />
         <div class="custom-input secundario">
           <img
-            id="icone-upload"
+            class="icone-upload"
             src="{% static 'web/assets/images/upload-icon.svg' %}"
             alt=""
           />
           Selecione o arquivo
         </div>
-        <p class="valor-input">Nenhum arquivo selecionado</p>
+        <p class="input-value-raiox">Nenhum arquivo selecionado</p>
       </div>
 
       <div class="modal-footer">
         <div id="modal-footer-btns">
-            <button type="button" class="btn-secondary" id="prev-step">Fechar</button>
-            <button type="button" class="btn-primary" id="next-step">Avançar</button>
+          <button type="button" class="btn-secondary" id="btn-prev-step-raiox">Fechar</button>
+          <button type="button" class="btn-primary" id="btn-next-step-raiox">Avançar</button>
 
-            <button type="submit" class="btn-primary" id="submit-form" style="display: none;">Enviar</button>
+            <button type="submit" class="btn-primary" id="btn-submit-raiox" style="display: none;">Enviar</button>
         </div>
 
         <p id="progress-title">Etapa <span>0</span>/5</p>
@@ -151,5 +150,6 @@
             <div class="progress" id="progress-bar"></div>
         </div>
       </div>
+    </form>
   </div>
 </div>

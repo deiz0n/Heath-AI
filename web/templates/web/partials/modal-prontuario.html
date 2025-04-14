@@ -1,28 +1,28 @@
 {% load static %}
 
 <div class="modal">
-   <div id="modal-prontuario-container">
-      <h5 class="modal-titulo">
-        Selecione o arquivo do <span>Prontuário</span>
-      </h5>
-      <button style="border: none;">
-        <i class="btn-fechar material-icons">close</i>
-      </button>
-      <div id="input-container-prontuario">
-        <input type="file" id="input-prontuario" name="prontuario">
-        <div id="custom-input-prontuario">
-          <img
-            id="icone-upload"
-            src="{% static 'web/assets/images/upload-icon.svg' %}"
-            alt=""
-          />
-          Selecione o arquivo
+      <div id="modal-prontuario-container">
+          <h5 class="modal-titulo">
+          Selecione o arquivo do <span>Prontuário</span>
+        </h5>
+        <button style="border: none;">
+          <i class="btn-fechar material-icons">close</i>
+        </button>
+        <div id="input-container-prontuario">
+          <input type="file" id="input-prontuario" name="prontuario">
+          <div id="custom-input-prontuario">
+            <img
+              class="icone-upload"
+              src="{% static 'web/assets/images/upload-icon.svg' %}"
+              alt=""
+            />
+            Selecione o arquivo
+          </div>
         </div>
-      </div>
-      <p id="valor-input-prontuario" class="valor-input">Nenhum arquivo selecionado</p>
-      <div class="btn-container">
-        <button type="submit" class="btn-primary" id="submit-form">Enviar</button>
-      </div>
+        <p id="valor-input-prontuario" class="valor-input">Nenhum arquivo selecionado</p>
+        <div class="btn-container">
+          <button type="submit" class="btn-primary" id="btn-submit-prontuario">Enviar</button>
+        </div>
     </form>
   </div>
 </div>
