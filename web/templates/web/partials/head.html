@@ -27,12 +27,14 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="{% static 'web/css/style.css' %}" />
-      <link rel="stylesheet" href="{% static 'web/css/header.css' %}">
-    <link rel="stylesheet" href="{% static 'web/css/modais.css' %}" />
+    <link rel="stylesheet" href="{% static 'web/css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'web/css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/modais.css' %}"/>
 
-    <script type="module"  src="{% static 'web/js/modal.js' %}" defer></script>
-    <script type="module"  src="{% static 'web/js/script.js' %}" defer></script>
-    <script type="module"  src="{% static 'web/js/modal-utils.js' %}" defer></script>
+    <script type="module" src="{% static 'web/js/styles.js' %}" defer></script>
+    {% comment %} <script type="module" src="{% static "web/js/modal-raiox.js"%}" defer></script> {% endcomment %}
+    <script type="module" src="{% static 'web/js/script.js' %}" defer></script>
+    <script type="module" src="{% static 'web/js/modal-ressonancia.js' %}" defer></script>
+{#    <script type="module" src="{% static 'web/js/modal-utils.js' %}" defer></script>#}
   </head>
 </html>

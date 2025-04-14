@@ -86,7 +86,7 @@
     border: none;
 }
 
-#modal-footer-btns {
+.modal-footer-btns {
     position: absolute;
     right: 0;
     margin-right: 20px;
@@ -188,7 +188,8 @@
 
 .custom-input,
 #custom-input-prontuario,
-#custom-input-ressonancia {
+#custom-input-ressonancia,
+#custom-input-ambos {
     border: 1px solid #2E2E2E;
     border-radius: 20px;
     padding: 0.5rem 1rem;
@@ -207,7 +208,9 @@
 }
 
 #custom-input-prontuario,
-#custom-input-ressonancia {
+#custom-input-ressonancia,
+#custom-input-ambos,
+#input-value-ambos {
     margin: 0;
 }
 
@@ -224,7 +227,8 @@
 }
 
 #valor-input-prontuario,
-#valor-input-ressonancia {
+#valor-input-ressonancia,
+#input-value-ambos {
     margin-bottom: 2rem;
 }
 
