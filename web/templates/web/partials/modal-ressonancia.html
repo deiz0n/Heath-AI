@@ -1,30 +1,56 @@
 {% load static %}
 
-<div class="modal">
-   <div style="display: none" id="modal-ressonancia-container">
-      <form class="form"  method="post" enctype="multipart/form-data" action="{% url 'upload-ressonancia' %}">
-         {% csrf_token %} 
+<form class="form"  method="post" enctype="multipart/form-data" action="{% url 'upload-ressonancia' %}">
+  {% csrf_token %} 
+  <div class="modal">
+      <div style="display: none" id="modal-ressonancia-container">
         <h5 class="modal-titulo">
             Selecione os arquivos da <span>Ressonância</span>
-          </h5>
-          <button style="border: none;">
-            <i class="btn-fechar material-icons">close</i>
-          </button>
-          <div id="input-container-ressonancia">
-            <input type="file" id="input-ressonancia" name="imagens_ressonancia" multiple>
-            <div id="custom-input-ressonancia">
-              <img
-                class="icone-upload"
-                src="{% static 'web/assets/images/upload-icon.svg' %}"
-                alt=""
-              />
-              Selecione o arquivo
-            </div>
+        </h5>
+        <button style="border: none;">
+          <i class="btn-fechar material-icons">close</i>
+        </button>
+        <div id="input-container-ressonancia">
+          <input type="file" id="input-ressonancia" name="imagens_ressonancia" multiple>
+          <div id="custom-input-ressonancia">
+            <img
+              class="icone-upload"
+              src="{% static 'web/assets/images/upload-icon.svg' %}"
+              alt=""
+            />
+            Selecione o arquivo
           </div>
-          <p id="valor-input-ressonancia" class="valor-input"><span>0</span> Arquivos selecionados</p>
-          <div class="btn-container">
-            <button type="submit" class="btn-primary" id="btn-submit-ressonancia">Enviar</button>
+        </div>
+        <p id="valor-input-ressonancia" class="valor-input"><span>0</span> Arquivos selecionados</p>
+        <div class="btn-container">
+          <button type="button" class="btn-primary" id="btn-next-step-ressonancia">Avançar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal">
+      <div style="display: none;" id="modal-prontuario-container-ressonancia">
+        <h5 class="modal-titulo">
+          Selecione o arquivo do <span>Prontuário</span>
+        </h5>
+        <button style="border: none;">
+          <i class="btn-fechar material-icons">close</i>
+        </button>
+        <div id="input-container-prontuario-ressonancia">
+          <input type="file" id="input-prontuario-ressonancia" name="prontuario">
+          <div class="custom-input-prontuario">
+            <img
+              class="icone-upload"
+              src="{% static 'web/assets/images/upload-icon.svg' %}"
+              alt=""
+            />
+            Selecione o arquivo
           </div>
-      </form>
-  </div>
-</div>
+        </div>
+        <p id="valor-input-prontuario" class="valor-input">Nenhum arquivo selecionado</p>
+        <div class="btn-container">
+          <button type="submit" class="btn-primary" id="btn-submit-ressonancia">Enviar</button>
+        </div>
+      </div>
+    </div>
+</form>

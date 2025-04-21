@@ -1,9 +1,10 @@
 {% load static %}
 
-<div class="modal">
-  <div style="display: none;" id="modal-ambos-container">
-    <form class="form"  method="post" enctype="multipart/form-data" action="{% url "upload-multi-modal" %}">
-      {% csrf_token %} 
+<form class="form"  method="post" enctype="multipart/form-data" action="{% url "upload-multi-modal" %}">
+  {% csrf_token %} 
+  <div class="modal">
+      <div style="display: none;" id="modal-ambos-container">
+    
     
       <div class="modal-header">
         <h5 class="modal-titulo">
@@ -170,6 +171,32 @@
             <div class="progress" id="progress-bar"></div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
-</div>
+
+  <div class="modal">
+    <div style="display: none;" id="modal-prontuario-container-ambos">
+      <h5 class="modal-titulo">
+        Selecione o arquivo do <span>Prontuário</span>
+      </h5>
+      <button style="border: none;">
+        <i class="btn-fechar material-icons">close</i>
+      </button>
+      <div id="input-container-prontuario-ambos">
+        <input type="file" id="input-prontuario-ambos" name="prontuario">
+        <div class="custom-input-prontuario">
+          <img
+            class="icone-upload"
+            src="{% static 'web/assets/images/upload-icon.svg' %}"
+            alt=""
+          />
+          Selecione o arquivo
+        </div>
+      </div>
+      <p id="valor-input-prontuario" class="valor-input">Nenhum arquivo selecionado</p>
+      <div class="btn-container">
+        <button type="submit" class="btn-primary" id="btn-submit-ressonancia">Enviar</button>
+      </div>
+    </div>
+  </div>
+</form>
