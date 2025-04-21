@@ -62,8 +62,7 @@ def upload_multi_modal(request):
                 img_pd_lateral=files.get('ambos_img_pd_lateral'),
                 img_pe_cima=files.get('ambos_img_pe_cima'),
                 img_pe_lateral=files.get('ambos_img_pe_lateral'),
-                img_ambos_cima=files.get('ambos_img_ambos_cima'),
-                prontuario=files.get('prontuario')
+                img_ambos_cima=files.get('ambos_img_ambos_cima')
             )
 
             nova_ressonancia = Ressonancia.objects.create()
