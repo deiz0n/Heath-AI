@@ -8,6 +8,7 @@ import {
 
 export function startModalAmbos() {
     const modalAmbos = document.querySelector('#modal-ambos-container');
+    const modalProntuarioAmbos = document.querySelector('#modal-prontuario-container-ambos');
 
     const labels = document.querySelectorAll('#modal-ambos-container [id^="label"]');
     const inputs = document.querySelectorAll('#modal-ambos-container input[type=file]');
@@ -79,6 +80,9 @@ export function startModalAmbos() {
         if (currentStep === totalSteps) {
             updateVisibilityButtons(currentStep);
 
+            btnNextStep.removeEventListener('click', nextElement);
+            btnNextStep.addEventListener('click', initModalProntuario);
+
             fileNames[fileNames.length - 1].innerText = 'Todos os arquivos foram selecionados';
         } else {
             updateTextButtons();
@@ -88,9 +92,9 @@ export function startModalAmbos() {
 
     const updateVisibilityButtons = () => {
         if (currentStep === 6) {
-            btnNextStep.style.display = 'none';
-            btnPrevStep.style.display = 'none';
-            btnSubmit.style.display = 'block';
+            // btnNextStep.style.display = 'none';
+            // btnPrevStep.style.display = 'none';
+            // btnSubmit.style.display = 'block';
         }
         //     btnNextStep.style.display = 'block'; // Restaurar visibilidade
         //     btnPrevStep.style.display = 'block'; // Restaurar visibilidade
@@ -219,5 +223,10 @@ export function startModalAmbos() {
 
             updateProgress();
         }
+    }
+
+    function initModalProntuario() {
+        modalProntuarioAmbos.style.display = 'block';
+        modalAmbos.style.display = 'none';
     }
 };

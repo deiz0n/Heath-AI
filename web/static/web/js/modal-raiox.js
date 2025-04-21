@@ -1,3 +1,4 @@
+import { initModalProntuario } from "./script.js"
 import {
     colorBlack,
     colorBlue,
@@ -8,6 +9,7 @@ import {
 
 export function startModalRaioX() {
     const modalRaioX = document.querySelector('#modal-raiox-container');
+    const modalProntuarioRaioX = document.querySelector('#modal-prontuario-container-raiox');
 
     const labels = document.querySelectorAll('#modal-raiox-container [id^="label"]');
     const inputs = document.querySelectorAll('#modal-raiox-container input[type=file]');
@@ -25,6 +27,8 @@ export function startModalRaioX() {
     const steps = document.querySelectorAll('#modal-raiox-container .form-step');
     const totalSteps = steps.length;
     let currentStep = 0;
+
+    console.log(modalProntuarioRaioX)
 
     initModal();
 
@@ -64,6 +68,9 @@ export function startModalRaioX() {
         if (currentStep === totalSteps) {
             updateVisibilityButtons(currentStep);
 
+            btnNextStep.removeEventListener('click', nextElement);
+            btnNextStep.addEventListener('click', initModalProntuario)
+
             fileNames[fileNames.length - 1].innerText = 'Todos os arquivos foram selecionados';
         } else {
             updateTextButtons();
@@ -72,7 +79,7 @@ export function startModalRaioX() {
     };
 
     const updateVisibilityButtons = () => {
-        if (currentStep === 5) {
+        if (currentStep > 5) {
             btnNextStep.style.display = 'none';
             btnPrevStep.style.display = 'none';
             btnSubmit.style.display = 'block';
@@ -92,7 +99,7 @@ export function startModalRaioX() {
     };
 
     const showCurrentInput = (index) => {
-        if (index < inputs.length) {
+        if (index < inputs.length - 1) {
             const input = inputs[index];
             input.style.visibility = 'visible';
         }
@@ -177,7 +184,7 @@ export function startModalRaioX() {
             showCurrentInput(currentStep);
             updateCurrentLabelIcon(currentStep);
 
-            if (stepProgressValue < inputs.length) {
+            if (stepProgressValue < inputs.length - 1) {
                 stepProgressValue++;
                 valueProgress.innerHTML = `${stepProgressValue}`;
             }
@@ -201,5 +208,10 @@ export function startModalRaioX() {
 
             updateProgress();
         }
+    }
+
+    function initModalProntuario() {
+        modalProntuarioRaioX.style.display = 'block';
+        modalRaioX.style.display = 'none';
     }
 }
