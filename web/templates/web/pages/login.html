@@ -1,54 +1,11 @@
 {% include "web/partials/head.html" %}
     <div id="main-container-login">
         <div id="container-esquerdo">
-           <div id="container-esquerdo-header">
-                <h1>Heath-<span>AI</span></h1>
-           </div>
+            {% include "web/partials/header-principal.html" %}
 
-           <div id="container-esquerdo-main">
-                <form action="">
-                    {% csrf_token %}
+            {% include "web/partials/main-login.html" %}
 
-                    <h2>Bem-vindo(a)</h2>
-                    <p id="container-esquerdo-descricao">
-                        Entre com seu email e senha para acessar sua conta
-                    </p>
-
-                    <div class="container-esquerdo-input">
-                        <label for="email">Email</label>
-                        <input type="text" id="email">
-                    </div>
-
-                    <div id="input-senha" class="container-esquerdo-input">
-                        <label for="senha">Senha</label>
-                        <input type="password" id="senha">
-                    </div>
-
-                    <div id="container-senha">
-                        <div id="container-mostrar-senha">
-                            <input type="checkbox" name="mostrar-senha" id="mostrar-senha">
-                            <label for="mostrar-senha">Mostrar senha</label>
-                        </div>
-
-                        <a id="link-recuperar-senha" href="#">Esqueceu sua senha?</a>
-                    </div>
-    
-                    <button type="submit">Entrar</button>
-                    
-                    <p id="link-cadastro">
-                        Não possui uma conta? 
-                        <span>
-                            <a href="#">Cadastre-se</a>
-                        </span>
-                    </p>
-                </form>
-           </div>
-
-           <div id="container-esquerdo-footer">
-                <p>
-                    &copy; 2025 Heath-AI. Todos os direitos reservados
-                </p>
-           </div>
+            {% include "web/partials/footer-principal.html" %} 
            
         </div>
         <div id="container-direito">

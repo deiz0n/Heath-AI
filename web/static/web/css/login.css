@@ -36,13 +36,13 @@ body {
     color: #0360D9;
 }
 
-#container-esquerdo-main {
+#container-esquerdo-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#container-esquerdo-main h2 {
+#container-esquerdo-section h2 {
     text-align: center;
     font-size: 30px;
 }
@@ -120,7 +120,7 @@ body {
     color: #0346A2;
 }
 
-#container-esquerdo-main button[type=submit] {
+#container-esquerdo-section button[type=submit] {
     width: 60%;
     height: 30px;
     margin: 0 auto;
@@ -136,7 +136,7 @@ body {
     cursor: pointer;
 }
 
-#container-esquerdo-main button[type=submit]:hover {
+#container-esquerdo-section button[type=submit]:hover {
     background-color: #0346A2;
 }
 
