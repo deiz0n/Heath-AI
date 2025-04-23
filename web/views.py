@@ -86,3 +86,6 @@ def upload_multi_modal(request):
 
 def pagina_inicial(request):
     return render(request, 'web/pages/pagina-inicial.html')
+
+def login(request):
+    return render(request, 'web/pages/login.html')
