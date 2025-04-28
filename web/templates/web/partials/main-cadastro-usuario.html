@@ -1,0 +1,66 @@
+<section id="container-esquerdo-cadastro-section">
+    <form action="">
+        {% csrf_token %}
+        
+        <h2>Crie uma conta</h2>
+
+        <div class="container-input-cadastro">
+            <div class="container-input-bloco">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" required>
+            </div>
+
+            <div class="container-input-bloco">
+                <label for="sobrenome">Sobrenome</label>
+                <input type="text" name="sobrenome" required>
+            </div>
+        </div>
+
+        <div class="container-input-cadastro">
+            <div class="container-inline">
+                <label for="crm">CRM</label>
+                <input type="text" name="crm" id="crm" required>
+            
+                <label for="cpf">CPF</label>
+                <input type="text" name="cpf" id="cpf" required>
+            
+                <label for="data-aniversario">Data de <br> aniversário</label>
+                <input type="date" name="data-aniversario" id="data-aniversario" required>
+            </div>
+        </div>
+
+        <div class="container-input-cadastro">
+            <div class="container-input-bloco">
+                <label for="email">Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="container-input-bloco">
+                <label for="confirmar-email">Confirmar Email</label>
+                <input type="confirmar-email" name="confirmar-email" required>
+            </div>
+        </div>
+
+        <div class="container-input-cadastro">
+            <div class="container-input-bloco">
+                <label for="senha-cadastro">Senha</label>
+                <input type="password" name="senha-cadastro" required>
+            </div>
+
+            <div class="container-input-bloco">
+                <label for="confirmar-senha">Confirmar Senha</label>
+                <input type="password" name="confirmar-senha" required>
+            </div>
+        </div>
+
+        <button type="submit">Cadastre-se</button>
+
+        <p id="link-login">
+            Já possui uma conta? Faça
+            <span>
+                <a href="{% url 'login' %}">login</a>
+            </span>
+        </p>
+    </form>
+
+</section>
