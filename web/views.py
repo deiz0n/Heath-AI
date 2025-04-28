@@ -89,3 +89,6 @@ def pagina_inicial(request):
 
 def login(request):
     return render(request, 'web/pages/login.html')
+
+def cadastro_usuario(request):
+    return render(request, 'web/pages/cadastro-usuario.html')
