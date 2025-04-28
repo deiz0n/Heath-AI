@@ -9,12 +9,12 @@
 
         <div class="container-esquerdo-input">
             <label for="email">Email</label>
-            <input type="text" id="email">
+            <input type="email" id="email" required>
         </div>
 
         <div id="input-senha" class="container-esquerdo-input">
             <label for="senha">Senha</label>
-            <input type="password" id="senha">
+            <input type="password" id="senha" required>
         </div>
 
         <div id="container-senha">
@@ -31,7 +31,7 @@
         <p id="link-cadastro">
             Não possui uma conta? 
             <span>
-                <a href="#">Cadastre-se</a>
+                <a href="{% url 'cadastro-usuario' %}">Cadastre-se</a>
             </span>
         </p>
     </form>
