@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100vh;
+}
+
+#main-container-cadastro-usuario {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    background-color: #0360D9;
+}
+
+#main-container-cadastro-usuario h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 2rem;
+}
+
+#container-esquerdo-cadastro-section {
+    margin-inline: 2rem;
+}
+
+.container-input-cadastro {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.container-inline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.container-inline label {
+    font-size: 20px;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.container-inline input,
+.container-input-bloco input {
+    height: 30px;
+    border: 1.4px solid #bfbfbf;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px;
+    font-size: 15px;
+    transition: .3s all ease-in-out;
+}
+
+.container-inline input:focus,
+.container-input-bloco input:focus {
+    border-color: #0360D9;
+}
+
+.container-inline input {
+    width: 20%;
+}
+
+.container-input-bloco {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.container-input-bloco label {
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+
+.container-input-bloco input {
+    min-width: 100%;
+}
+
+#container-esquerdo-cadastro-section button[type=submit] {
+    width: 40%;
+    height: 35px;
+    margin: 3rem auto 0 auto;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #0360D9;
+    border: none;
+    border-radius: 5px;
+    display: block;
+    transition: .3s all ease-in-out;
+    cursor: pointer;
+}
+
+#container-esquerdo-cadastro-section button[type=submit]:hover {
+    background-color: #0346A2;
+}
+
+#link-login {
+    margin: 5px auto 5rem auto;
+    width: 60%;
+    text-align: center;
+    color: #7B7B7B;
+    font-weight: 500;
+}
+
+#link-login span a {
+    cursor: pointer;
+    transition: .3s all ease-in-out;
+    color: #0360D9;
+    text-decoration: none;
+}
+
+#link-login span a:hover {
+    color: #0346A2;
+}
