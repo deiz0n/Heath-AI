@@ -14,13 +14,13 @@ body {
     height: 100%;
 }
 
-#container-esquerdo,
-#container-direito {
+.container-esquerdo,
+.container-direito {
     width: 50%;
     height: 100%;
 }
 
-#container-esquerdo {
+.container-esquerdo {
     background-color: #fff;
     color: #2E2E2E;
 }
@@ -167,6 +167,6 @@ body {
     font-weight: 500;
 }
 
-#container-direito {
+.container-direito {
     background-color: #0360D9;
 }
