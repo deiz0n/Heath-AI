@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico
 
@@ -36,24 +37,21 @@ def criar_usuario(request):
     
 
 def iniciar_sessao(request):
-    try:
-        if request.method == "POST":
-            username = request.POST.get("email")
-            password = request.POST.get("senha")
-            user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-            else:
-                return redirect('login') 
-            
-        return redirect('login')
+    if request.method == "POST":
+        email = request.POST.get("email")
+        senha = request.POST.get("senha")
+        
+        usuario = authenticate(request, username=email, password=senha)
     
-    except Exception as e:
-        print(f"Erro ao processar formulário: {str(e)}")
-        return render(request, 'web/pages/login.html')
 
+        if usuario is not None:
+            login(request, usuario)
+            return redirect('home')
+        else:
+            messages.error(request=request, message='Credenciais inválidas. Tente novamente')
+            return redirect('login') 
+        
+    return redirect('login')
     
         
 @login_required

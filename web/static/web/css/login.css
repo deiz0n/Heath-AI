@@ -71,6 +71,10 @@ body {
     margin-bottom: 2px;
 }
 
+.container-esquerdo-input label.error {
+    color: #f33b3b;
+}
+
 .container-esquerdo-input input {
     height: 30px;
     border: 1.4px solid #bfbfbf;
@@ -83,6 +87,10 @@ body {
 
 .container-esquerdo-input input:focus {
     border-color: #0360D9;
+}
+
+.container-esquerdo-input input.error {
+    border-color: #f33b3b;
 }
 
 #container-senha {
@@ -110,7 +118,7 @@ body {
     color: #0360D9;
     width: max-content;
     font-size: 15px;
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
     cursor: pointer;
     transition: .3s all ease-in-out;
     text-decoration: none;
@@ -120,17 +128,27 @@ body {
     color: #0346A2;
 }
 
+.message {
+    width: 60%;
+    margin: 0 auto;
+}
+
+#message-error {
+    color: #f33b3b;
+    font-weight: bold;
+    font-size: 15px;
+}
+
 #container-esquerdo-section button[type=submit] {
     width: 60%;
     height: 30px;
-    margin: 0 auto;
+    margin: 4rem auto 0 auto;
     color: #fff;
     font-size: 16px;
     font-weight: 500;
     background-color: #0360D9;
     border: none;
     border-radius: 5px;
-    margin: 0 auto;
     display: block;
     transition: .3s all ease-in-out;
     cursor: pointer;
@@ -141,7 +159,7 @@ body {
 }
 
 #link-cadastro {
-    margin: 5px auto 6rem auto;
+    margin: 5px auto 3rem auto;
     width: 60%;
     text-align: center;
     color: #7B7B7B;

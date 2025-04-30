@@ -8,24 +8,43 @@
         </p>
 
         <div class="container-esquerdo-input">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <label class="{% if messages %}error{% endif %}" for="email">Email</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="{% if messages %}error{% endif %}" 
+                required
+            >
         </div>
 
         <div id="input-senha" class="container-esquerdo-input">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" required>
+            <label class="{% if messages %}error{% endif %}" for="senha">Senha</label>
+            <input 
+                type="password" 
+                id="senha" 
+                name="senha" 
+                class="{% if messages %}error{% endif %}" 
+                required>
         </div>
 
         <div id="container-senha">
             <div id="container-mostrar-senha">
-                <input type="checkbox" name="mostrar-senha" id="mostrar-senha">
+                <input  type="checkbox" name="mostrar-senha" id="mostrar-senha">
                 <label for="mostrar-senha">Mostrar senha</label>
             </div>
 
             <a id="link-recuperar-senha" href="#">Esqueceu sua senha?</a>
         </div>
 
+         {% if messages %}
+            <div class="message">
+                {% for message in messages %}
+                    <p id="message-error">{{message}}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         <button type="submit">Entrar</button>
         
         <p id="link-cadastro">
