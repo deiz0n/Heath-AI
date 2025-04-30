@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.db import models
 import uuid
+from cpf_field.models import CPFField
 
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth.models import User
 
 class RaioX(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -31,16 +33,32 @@ class Ressonancia(models.Model):
     def __str__(self):
         return str(self.id)
 
+class Clinico(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    nome = models.CharField(null=False, blank=False)
+    sobrenome = models.CharField(null=False, blank=False)
+    cpf = CPFField('cpf')
+    crm = models.CharField(null=False, blank=False, unique=True)
+    data_aniversario = models.DateField(null=False)
+    email = models.EmailField(null=False, blank=False, error_messages='Email inválido. Tente novamente')
+    senha = models.CharField(null=False, blank=False)
+
+    def __str__(self):
+        return str(f'{self.id} - {self.nome}')
+
 class MultiModal(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    raio_x = models.OneToOneField(RaioX, on_delete=models.CASCADE, related_name='multimodal')
-    ressonancia = models.OneToOneField(Ressonancia, on_delete=models.CASCADE, related_name='multimodal')
+    raio_x = models.OneToOneField(RaioX, on_delete=models.CASCADE, related_name='multimodal', null=True)
+    ressonancia = models.OneToOneField(Ressonancia, on_delete=models.CASCADE, related_name='multimodal', null=True)
     data = models.DateTimeField(auto_now_add=True)
     prontuario = models.FileField(upload_to="prontuario/geral", default="Prontuário não informado", null=True)
+    clinico = models.ForeignKey(Clinico, on_delete=models.CASCADE, related_name='exames', null=True, blank=False)
     
     def __str__(self):
         return str(self.id)
-
+    
+    
 admin.site.register(MultiModal)
 admin.site.register(RaioX)
 admin.site.register(Ressonancia)
+admin.site.register(Clinico)
