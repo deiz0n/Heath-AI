@@ -1,5 +1,5 @@
 <section id="container-esquerdo-cadastro-section">
-    <form action="">
+    <form method="post" action="{% url "criar-usuario" %}">
         {% csrf_token %}
         
         <h2>Crie uma conta</h2>
@@ -24,8 +24,8 @@
                 <label for="cpf">CPF</label>
                 <input type="text" name="cpf" id="cpf" required>
             
-                <label for="data-aniversario">Data de <br> aniversário</label>
-                <input type="date" name="data-aniversario" id="data-aniversario" required>
+                <label for="data_aniversario">Data de <br> aniversário</label>
+                <input type="date" name="data_aniversario" id="data-aniversario" required>
             </div>
         </div>
 
