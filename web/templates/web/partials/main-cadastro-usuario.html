@@ -1,5 +1,5 @@
 <section id="container-esquerdo-cadastro-section">
-    <form method="post" action="{% url "criar-usuario" %}">
+    <form hx-post="{% url 'criar-usuario' %}" hx-target="#form-cadastro-usuario-container">
         {% csrf_token %}
         
         <h2>Crie uma conta</h2>
@@ -7,52 +7,145 @@
         <div class="container-input-cadastro">
             <div class="container-input-bloco">
                 <label for="nome">Nome</label>
-                <input type="text" name="nome" required>
+                <input 
+                    type="text" 
+                    name="nome" 
+                    value="{{ form_data.nome|default:'' }}"
+                    required
+                    >
             </div>
 
             <div class="container-input-bloco">
                 <label for="sobrenome">Sobrenome</label>
-                <input type="text" name="sobrenome" required>
+                <input
+                    type="text"
+                    name="sobrenome" 
+                    value="{{ form_data.sobrenome|default:'' }}"
+                    required
+                >
             </div>
         </div>
 
         <div class="container-input-cadastro">
             <div class="container-inline">
                 <label for="crm">CRM</label>
-                <input type="text" name="crm" id="crm" required>
+                <input 
+                    type="text" 
+                    name="crm" 
+                    id="crm" 
+                    value="{{ form_data.crm|default:'' }}"
+                    class="{% if messages %}
+                                {% for message in messages %}
+                                    {% if 'crm-invalido' in message.extra_tags  or 'crm-existente' in message.extra_tags  %}
+                                        error
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}"
+                    required
+                >
             
                 <label for="cpf">CPF</label>
-                <input type="text" name="cpf" id="cpf" required>
+                <input type="text" 
+                    name="cpf" 
+                    id="cpf" 
+                    value="{{ form_data.cpf|default:'' }}"
+                    class="{% if messages %}
+                                {% for message in messages %}
+                                    {% if 'cpf-invalido' in message.extra_tags  or 'cpf-existente' in message.extra_tags %}
+                                        error
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}"
+                    required
+                >
             
                 <label for="data_aniversario">Data de <br> aniversário</label>
-                <input type="date" name="data_aniversario" id="data-aniversario" required>
+                <input
+                    type="date"
+                    name="data_aniversario" 
+                    id="data-aniversario" 
+                    value="{{ form_data.data_aniversario|default:'' }}" 
+                    required
+                >
             </div>
         </div>
 
         <div class="container-input-cadastro">
             <div class="container-input-bloco">
                 <label for="email">Email</label>
-                <input type="email" name="email" required>
+                <input 
+                    type="email" 
+                    name="email" 
+                    value="{{ form_data.email|default:'' }}" 
+                    class="{% if messages %}
+                                {% for message in messages %}
+                                    {% if 'email-existente' in message.extra_tags  or 'email-nao-coincidem' in message.extra_tags  %}
+                                        error
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}"
+                    required
+                >
             </div>
 
             <div class="container-input-bloco">
-                <label for="confirmar-email">Confirmar Email</label>
-                <input type="confirmar-email" name="confirmar-email" required>
+                <label for="confirmar_email">Confirmar Email</label>
+                <input 
+                    type="email" 
+                    name="confirmar_email" 
+                    value="{{ form_data.confirmar_email|default:'' }}"
+                    class="{% if messages %}
+                                {% for message in messages %}
+                                    {% if 'email-existente' in message.extra_tags  or 'email-nao-coincidem' in message.extra_tags  %}
+                                        error
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}"
+                    required
+                >
             </div>
         </div>
 
         <div class="container-input-cadastro">
             <div class="container-input-bloco">
-                <label for="senha-cadastro">Senha</label>
-                <input type="password" name="senha-cadastro" required>
+                <label for="senha_cadastro">Senha</label>
+                <input
+                    type="password"
+                    name="senha_cadastro"
+                    class="{% if messages %}
+                            {% for message in messages %}
+                                {% if 'senha-invalida' in message.extra_tags or 'senhas-nao-coincidem' in message.extra_tags  %}
+                                    error
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}"
+                    required>
             </div>
 
             <div class="container-input-bloco">
-                <label for="confirmar-senha">Confirmar Senha</label>
-                <input type="password" name="confirmar-senha" required>
+                <label for="confirmar_senha">Confirmar Senha</label>
+                <input
+                    type="password"
+                    name="confirmar_senha"
+                    class="{% if messages %}
+                        {% for message in messages %}
+                            {% if 'senha-invalida' in message.extra_tags or 'senhas-nao-coincidem' in message.extra_tags  %}
+                                error
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}"
+                    required>
             </div>
         </div>
 
+        {% if messages %}
+            <div id="message-cadastro">
+                {% for message in messages %}
+                    <p class="message-error">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         <button type="submit">Cadastre-se</button>
 
         <p id="link-login">
@@ -62,5 +155,4 @@
             </span>
         </p>
     </form>
-
 </section>
