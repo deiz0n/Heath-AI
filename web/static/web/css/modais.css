@@ -67,7 +67,6 @@
     padding: 15px 20px;
     height: 80px;
     width: 95%;
-    position: absolute;
     bottom: 0;
 }
 
@@ -89,7 +88,7 @@
 .modal-footer-btns {
     position: absolute;
     right: 0;
-    margin-right: 20px;
+    margin: 10px 20px 0 0;
 }
 
 #btn-close-modal {
@@ -166,6 +165,13 @@
 
 .form-step.active {
     display: block;
+}
+
+.form-step.active.ressonancia {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
 }
 
 .form-group {
@@ -264,7 +270,7 @@
     position: relative;
     width: 390px;
     text-align: center;
-    bottom: -2.9rem;
+    bottom: -3.7rem;
 }
 
 .progress-bar {
