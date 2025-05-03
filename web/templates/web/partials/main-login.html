@@ -1,5 +1,5 @@
 <section id="container-esquerdo-section">
-    <form method="post" action="{% url 'iniciar-sessao' %}">
+    <form hx-post="{% url 'iniciar-sessao' %}" hx-target="#form-login-container">
         {% csrf_token %}
 
         <h2>Bem-vindo(a)</h2>
@@ -8,7 +8,7 @@
         </p>
 
         <div class="container-esquerdo-input">
-            <label class="{% if messages %}error{% endif %}" for="email">Email</label>
+            <label for="email">Email</label>
             <input 
                 type="email" 
                 id="email" 
@@ -19,7 +19,7 @@
         </div>
 
         <div id="input-senha" class="container-esquerdo-input">
-            <label class="{% if messages %}error{% endif %}" for="senha">Senha</label>
+            <label for="senha">Senha</label>
             <input 
                 type="password" 
                 id="senha" 
@@ -38,9 +38,9 @@
         </div>
 
          {% if messages %}
-            <div class="message">
+            <div id="message-login">
                 {% for message in messages %}
-                    <p id="message-error">{{message}}</p>
+                    <p class="message-error">{{message}}</p>
                 {% endfor %}
             </div>
         {% endif %}
@@ -50,7 +50,7 @@
         <p id="link-cadastro">
             Não possui uma conta? 
             <span>
-                <a href="{% url 'cadastro-usuario' %}">Cadastre-se</a>
+                <a href="{% url 'cadastro_usuario' %}">Cadastre-se</a>
             </span>
         </p>
     </form>
