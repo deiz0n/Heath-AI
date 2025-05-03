@@ -4,36 +4,54 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpResponse
 
 from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico
 
 def criar_usuario(request):
-    try:
-        if request.method == 'POST':    
-            clinico = Clinico.objects.create(
-                nome=request.POST.get('nome'),
-                sobrenome=request.POST.get('sobrenome'),
-                cpf=request.POST.get('cpf'),
-                crm=request.POST.get('crm'),
-                data_aniversario=request.POST.get('data_aniversario'),
-                email=request.POST.get('email'),
-                senha=make_password(request.POST.get('senha'))
-            )
+    if request.method == 'POST':    
+        form_data = request.POST
+
+        if Clinico.objects.filter(crm=form_data.get('crm')).exists():
+            messages.error(request=request, message='Este CRM já está sendo utilizado', extra_tags='crm-existente')
+            return render(request, 'web/partials/main-cadastro-usuario.html', {'form_data': form_data})
+
+        if Clinico.objects.filter(cpf=form_data.get('cpf')).exists():
+            messages.error(request=request, message='Este CPF já está sendo utilizado', extra_tags='cpf-existente')
+            return render(request, 'web/partials/main-cadastro-usuario.html', {'form_data': form_data})
+
+        if Clinico.objects.filter(email=form_data.get('email')).exists():
+            messages.error(request=request, message='Este email já está sendo utilizado', extra_tags='email-existente')
+            return render(request, 'web/partials/main-cadastro-usuario.html', {'form_data': form_data})
+
+        if form_data.get('email') != form_data.get('confirmar_email'):
+            messages.error(request=request, message='Os emails não coincidem', extra_tags='email-nao-coincidem')
+            return render(request, 'web/partials/main-cadastro-usuario.html', {'form_data': form_data})
+
+        if form_data.get('senha_cadastro') != form_data.get('confirmar_senha'):
+            messages.error(request=request, message='As senhas não coincidem', extra_tags='senhas-nao-coincidem')
+            return render(request, 'web/partials/main-cadastro-usuario.html', {'form_data': form_data})
+
+        clinico = Clinico.objects.create(
+            nome=form_data.get('nome'),
+            sobrenome=form_data.get('sobrenome'),
+            cpf=form_data.get('cpf'),
+            crm=form_data.get('crm'),
+            data_aniversario=form_data.get('data_aniversario'),
+            email=form_data.get('confirmar_email'),
+            senha=make_password(form_data.get('confirmar_senha'))
+        )
             
-            user = User.objects.create_user(
-                username=clinico.email,
-                password=request.POST.get('senha-cadastro'),
-                email=clinico.email
-            )
-                        
-            clinico.save()
-            return redirect('login')
-        else:
-            return redirect('login')    
-        
-    except Exception as e:
-        print(f"Erro ao processar formulário: {str(e)}")
-        return render(request, 'web/pages/login.html')
+        user = User.objects.create_user(
+            username=clinico.email,
+            password=form_data.get('senha-cadastro'),
+            email=clinico.email
+        )
+                    
+        clinico.save()
+        return redirect('login')
+    else:
+        return redirect('cadastro_usuario')
     
 
 def iniciar_sessao(request):
@@ -42,16 +60,17 @@ def iniciar_sessao(request):
         senha = request.POST.get("senha")
         
         usuario = authenticate(request, username=email, password=senha)
-    
 
         if usuario is not None:
             login(request, usuario)
-            return redirect('home')
+            response = HttpResponse()
+            response['HX-Redirect'] = '/pagina-inicial/'
+            return response
         else:
             messages.error(request=request, message='Credenciais inválidas. Tente novamente')
-            return redirect('login') 
-        
-    return redirect('login')
+            return render(request, 'web/partials/main-login.html')
+
+    return render(request, 'web/pages/login.html')
     
         
 @login_required
