@@ -42,6 +42,11 @@ body {
     gap: 0.9rem;
 }
 
+.container-inline input.error {
+    border-color: #f33b3b;
+    background-color: #ffe6e6;
+}
+
 .container-inline label {
     font-size: 20px;
     margin-right: 0;
@@ -57,6 +62,11 @@ body {
     padding: 5px;
     font-size: 15px;
     transition: .3s all ease-in-out;
+}
+
+.container-input-bloco input.error {
+    border-color: #f33b3b;
+    background-color: #ffe6e6;
 }
 
 .container-inline input:focus,
@@ -83,10 +93,15 @@ body {
     min-width: 100%;
 }
 
+#message-cadastro {
+    text-align: center;
+    margin-top: 1rem;
+}
+
 #container-esquerdo-cadastro-section button[type=submit] {
     width: 40%;
     height: 35px;
-    margin: 3rem auto 0 auto;
+    margin: 2rem auto 0 auto;
     color: #fff;
     font-size: 16px;
     font-weight: 500;
@@ -103,7 +118,7 @@ body {
 }
 
 #link-login {
-    margin: 5px auto 5rem auto;
+    margin: 5px auto 4rem auto;
     width: 60%;
     text-align: center;
     color: #7B7B7B;
