@@ -1,7 +1,7 @@
-<section id="container-esquerdo-cadastro-section">
+<section id="container-esquerdo-cadastro-section" {% if msg_sucesso %}cadastro_realizado="true"{% endif %} >
     <form hx-post="{% url 'criar-usuario' %}" hx-target="#form-cadastro-usuario-container">
         {% csrf_token %}
-        
+
         <h2>Crie uma conta</h2>
 
         <div class="container-input-cadastro">
@@ -68,6 +68,11 @@
                     required
                 >
             </div>
+
+            {% comment %}
+                Em caso de sucesso, um modal de mensagem de sucesso irá aparecer
+            {% endcomment %}
+            {% include "global/partials/modal-menssagem-sucesso.html" %}
         </div>
 
         <div class="container-input-cadastro">

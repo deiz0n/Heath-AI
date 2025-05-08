@@ -1,0 +1,29 @@
+#modal-msg-sucesso-container {
+    z-index: 2;
+    position: relative;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+    border-radius: 20px;
+}
+
+#main-container-msg-sucesso {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#main-container-msg-sucesso i {
+    font-size: 40px;
+}
+
+#main-container-msg-sucesso p {
+    font-size: 20px;
+    margin-inline: 2rem;
+}
+
+#btn-msg-sucesso {
+    padding: 0.5rem 2rem;
+}

@@ -49,7 +49,14 @@ def criar_usuario(request):
         )
                     
         clinico.save()
-        return redirect('login')
+        return render(
+            request,
+            'web/partials/main-cadastro-usuario.html',
+            context={
+              "msg_sucesso": True,
+              "mensagem": 'Cadastro realizado com sucesso!'
+            }
+        )
     else:
         return redirect('cadastro_usuario')
     
