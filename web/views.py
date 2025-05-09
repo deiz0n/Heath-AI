@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
@@ -173,6 +173,12 @@ def upload_multi_modal(request):
 @login_required
 def pagina_inicial(request):
     return render(request, 'web/pages/pagina-inicial.html')
+
+def logout_view(request):
+    logout(request)
+    response = HttpResponse()
+    response['HX-Redirect'] = '/'
+    return response
 
 def login_view(request):
     return render(request, 'web/pages/login.html')
