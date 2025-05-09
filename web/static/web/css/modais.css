@@ -51,9 +51,12 @@
 }
 
 .modal {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#modal-msg-sucesso {
     transform: translateY(-30px);
     opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 #modal-backdrop-msg-sucesso.show .modal {
