@@ -44,7 +44,7 @@ def criar_usuario(request):
             
         user = User.objects.create_user(
             username=clinico.email,
-            password=form_data.get('senha-cadastro'),
+            password=form_data.get('confirmar_senha'),
             email=clinico.email
         )
                     
@@ -65,8 +65,11 @@ def iniciar_sessao(request):
     if request.method == "POST":
         email = request.POST.get("email")
         senha = request.POST.get("senha")
-        
+
+        print(f'Email: {email} | Senha: {senha}')
+
         usuario = authenticate(request, username=email, password=senha)
+        print(str(usuario))
 
         if usuario is not None:
             login(request, usuario)
