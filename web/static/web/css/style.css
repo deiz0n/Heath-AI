@@ -141,6 +141,10 @@ body {
     position: absolute;
 }
 
+#modal-ambos-container {
+    transition: width 0.5s ease-in-out;
+}
+
 .modal-titulo {
     font-size: 26px;
     font-weight: bold;

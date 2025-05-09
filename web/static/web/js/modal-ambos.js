@@ -24,7 +24,7 @@ export function startModalAmbos() {
     let stepProgressValue = parseInt(valueProgress.innerHTML) || 0;
 
     const steps = document.querySelectorAll('#modal-ambos-container .form-step');
-    const totalSteps = steps.length;
+    const totalSteps = steps.length - 1;
     let currentStep = 0;
 
     initModal();
@@ -69,9 +69,29 @@ export function startModalAmbos() {
     const updateVisibilityLabels = (index) => {
         const labelsContainer = document.querySelector('#modal-ambos-container .labels')
 
-        if (index > 4) labelsContainer.style.visibility = 'hidden';
-        if (index <= 4 && labelsContainer.style.visibility === 'hidden') labelsContainer.style.visibility = 'visible';
+        if (index > 4) labelsContainer.style.display = 'none';
+        if (index <= 4 && labelsContainer.style.display === 'none') labelsContainer.style.display = 'block';
     };
+
+    const updateVisibilityProgressBar = (index) => {
+        const progressTitle = document.querySelector('#modal-ambos-container #progress-title');
+        const progressBarContainer = document.querySelector('#modal-ambos-container .progress-bar')
+
+        if (index > 4) {
+            progressTitle.style.display = 'none';
+            progressBarContainer.style.display = 'none';
+        }
+
+        if (index <= 4 && progressTitle.style.display === 'none') {
+            progressTitle.style.display = 'block';
+            progressBarContainer.style.display = 'block';
+        }
+    }
+
+    const updateWidthModal = (index) => {
+        if (index > 4) modalAmbos.style.width = '55%';
+        if (index <= 4) modalAmbos.style.width = '90%';
+    }
 
     const updateProgress = () => {
         const percent = (currentStep / totalSteps) * 100;
@@ -129,6 +149,9 @@ export function startModalAmbos() {
         const activeStep = document.querySelector(`#modal-ambos-container .form-step[data-step="${step}"]`);
 
         if (activeStep) activeStep.classList.add('active');
+
+        if (step > 4) activeStep.classList.add('ressonancia')
+        if (step <= 4) activeStep.classList.remove('ressonancia')
 
         if (step >= steps.length) {
             const lastStep = steps[steps.length - 1];
@@ -195,7 +218,9 @@ export function startModalAmbos() {
             showCurrentInput(currentStep);
             updateCurrentLabelIcon(currentStep);
             updateTitleModal(currentStep);
-            // updateVisibilityLabels(currentStep);
+            updateVisibilityLabels(currentStep);
+            updateVisibilityProgressBar(currentStep);
+            updateWidthModal(currentStep);
 
             if (stepProgressValue < inputs.length) {
                 stepProgressValue++;
@@ -214,7 +239,9 @@ export function startModalAmbos() {
             showCurrentStep(currentStep);
             showCurrentInput(currentStep)
             updateTitleModal(currentStep);
-            // updateVisibilityLabels(currentStep);
+            updateVisibilityLabels(currentStep);
+            updateVisibilityProgressBar(currentStep);
+            updateWidthModal(currentStep);
 
             if (stepProgressValue >= 1) {
                 stepProgressValue--;
@@ -229,4 +256,4 @@ export function startModalAmbos() {
         modalProntuarioAmbos.style.display = 'block';
         modalAmbos.style.display = 'none';
     }
-};
+}
