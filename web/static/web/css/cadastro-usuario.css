@@ -1,9 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 html,
 body {
     height: 100vh;
@@ -56,7 +50,7 @@ body {
 .container-inline input,
 .container-input-bloco input {
     height: 30px;
-    border: 1.4px solid #bfbfbf;
+    border: 1px solid #bfbfbf;
     border-radius: 5px;
     outline: none;
     padding: 5px;
