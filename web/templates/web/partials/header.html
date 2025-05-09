@@ -10,6 +10,9 @@
   </nav>
 
   <div id="btn-sair">
-    <a href="#">Sair<i class="icone-sair material-icons">exit_to_app</i></a>
+      <form hx-post="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Sair<i class="icone-sair material-icons">exit_to_app</i></button>
+      </form>
   </div>
 </header>
