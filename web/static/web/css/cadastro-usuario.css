@@ -116,7 +116,7 @@ body {
 }
 
 #link-login {
-    margin: 5px auto 4rem auto;
+    margin: 5px auto 0 auto;
     width: 60%;
     text-align: center;
     color: #7B7B7B;

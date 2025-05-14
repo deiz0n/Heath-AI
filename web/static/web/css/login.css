@@ -160,7 +160,7 @@ body {
 }
 
 #link-cadastro {
-    margin: 5px auto 3rem auto;
+    margin: 5px auto 0 auto;
     width: 60%;
     text-align: center;
     color: #7B7B7B;
@@ -176,14 +176,6 @@ body {
 
 #link-cadastro span a:hover {
     color: #0346A2;
-}
-
-#container-esquerdo-footer p {
-    width: 60%;
-    margin: 0 auto;
-    text-align: center;
-    color: #7B7B7B;
-    font-weight: 500;
 }
 
 .container-direito {

@@ -1,0 +1,9 @@
+#container-esquerdo-footer p {
+    position: absolute;
+    width: 50%;
+    bottom: 0;
+    margin: 0 auto 1rem auto;
+    text-align: center;
+    color: #7B7B7B;
+    font-weight: 500;
+}
