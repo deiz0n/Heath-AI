@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import pagina_inicial, upload_raio_x, upload_ressonancia, upload_multi_modal, login_view, cadastro_usuario, criar_usuario, iniciar_sessao, logout_view
+from .views import pagina_inicial, upload_multi_modal, login_view, cadastro_usuario, criar_usuario, iniciar_sessao, logout_view
 
 urlpatterns = [
     path('', login_view, name='login'),
@@ -9,7 +9,5 @@ urlpatterns = [
     path('cadastro-usuario/', cadastro_usuario, name='cadastro_usuario'),
     path('iniciar-sessao/', iniciar_sessao, name='iniciar-sessao'),
     path('encerrar-sessao/', logout_view, name='logout'),
-    path('upload-raiox/', upload_raio_x, name='upload-raiox'),
-    path('upload-ressonancia/', upload_ressonancia, name='upload-ressonancia'),
     path('upload-multi-modal/', upload_multi_modal, name='upload-multi-modal')
 ]

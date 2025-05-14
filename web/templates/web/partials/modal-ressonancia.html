@@ -1,6 +1,6 @@
 {% load static %}
 
-<form class="form"  method="post" enctype="multipart/form-data" action="{% url 'upload-ressonancia' %}">
+<form class="form"  method="post" enctype="multipart/form-data" action="{% url 'upload-multi-modal' %}">
   {% csrf_token %} 
   <div class="modal">
       <div style="display: none" id="modal-ressonancia-container">
