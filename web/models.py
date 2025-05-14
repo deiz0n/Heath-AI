@@ -3,7 +3,6 @@ from django.db import models
 import uuid
 from cpf_field.models import CPFField
 
-from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 
 class RaioX(models.Model):
@@ -40,7 +39,7 @@ class Clinico(models.Model):
     cpf = CPFField('cpf')
     crm = models.CharField(null=False, blank=False, unique=True)
     data_aniversario = models.DateField(null=False)
-    email = models.EmailField(null=False, blank=False, error_messages='Email inválido. Tente novamente')
+    email = models.EmailField(null=False, blank=False)
     senha = models.CharField(null=False, blank=False)
 
     def __str__(self):
@@ -56,8 +55,7 @@ class MultiModal(models.Model):
     
     def __str__(self):
         return str(self.id)
-    
-    
+
 admin.site.register(MultiModal)
 admin.site.register(RaioX)
 admin.site.register(Ressonancia)
