@@ -19,7 +19,7 @@ class RessonanciaForm(ModelForm):
 class ClinicoForm(ModelForm):
     class Meta:
         model = Clinico
-        fields = ["nome", "sobrenome", "cpf", "crm", "data_aniversario", "email", "senha"]
+        fields = ["nome", "sobrenome", "cpf", "crm", "data_aniversario", "email"]
 
 class MultiModalForm(ModelForm):
     class Meta:
