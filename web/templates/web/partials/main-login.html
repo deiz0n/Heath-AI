@@ -1,5 +1,5 @@
 <section id="container-esquerdo-section">
-    <form hx-post="{% url 'iniciar-sessao' %}" hx-target="#form-login-container">
+    <form hx-post="{% url 'login' %}" hx-target="#form-login-container">
         {% csrf_token %}
 
         <h2>Bem-vindo(a)</h2>

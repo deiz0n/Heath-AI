@@ -39,7 +39,6 @@ class CreateUserView(View):
                 },
                 status=201
             )
-
         else:
             return render(
                 request,
@@ -135,27 +134,54 @@ class CreateUserView(View):
 
         return None
 
+class LoginRequestView(View):
+    def post(self, request):
+        data = request.POST
 
-def iniciar_sessao(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        senha = request.POST.get("senha")
+        email = data.get('email')
+        password = data.get('senha')
 
-        print(f'Email: {email} | Senha: {senha}')
+        user = authenticate(request, username=email, password=password)
 
-        usuario = authenticate(request, username=email, password=senha)
-        print(str(usuario))
-
-        if usuario is not None:
-            login(request, usuario)
+        if user is not None:
+            login(request, user)
             response = HttpResponse()
             response['HX-Redirect'] = '/pagina-inicial/'
             return response
         else:
-            messages.error(request=request, message='Credenciais inválidas. Tente novamente')
-            return render(request, 'web/partials/main-login.html')
+            messages.error(
+                request=request,
+                message='Credenciais inválidas. Tente novamente'
+            )
+            return render(
+                request,
+                'web/partials/main-login.html',
+                status=400
+            )
 
-    return render(request, 'web/pages/login.html')
+    def get(self, request):
+        return render(request, 'web/pages/login.html')
+
+# def iniciar_sessao(request):
+#     if request.method == "POST":
+#         email = request.POST.get("email")
+#         senha = request.POST.get("senha")
+#
+#         print(f'Email: {email} | Senha: {senha}')
+#
+#         usuario = authenticate(request, username=email, password=senha)
+#         print(str(usuario))
+#
+#         if usuario is not None:
+#             login(request, usuario)
+#             response = HttpResponse()
+#             response['HX-Redirect'] = '/pagina-inicial/'
+#             return response
+#         else:
+#             messages.error(request=request, message='Credenciais inválidas. Tente novamente')
+#             return render(request, 'web/partials/main-login.html')
+#
+#     return render(request, 'web/pages/login.html')
 
 @login_required
 def upload_multi_modal(request):
