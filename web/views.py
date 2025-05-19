@@ -12,6 +12,11 @@ from django.views import View
 from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico
 from .forms import ClinicianForm
 
+
+@login_required(login_url='/login/', redirect_field_name='next')
+def render_home(request):
+    return render(request, 'web/pages/pagina-inicial.html')
+
 class CreateUserView(View):
     def post(self, request):
         response = self.validate_user(request)
@@ -147,7 +152,7 @@ class LoginRequestView(View):
         if user is not None:
             login(request, user)
             response = HttpResponse()
-            response['HX-Redirect'] = '/pagina-inicial/'
+            response['HX-Redirect'] = '/home/'
             return response
         else:
             messages.error(
@@ -252,10 +257,6 @@ class UploadMultiModalRequest(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'web/pages/pagina-inicial.html')
-
-@login_required
-def pagina_inicial(request):
-    return render(request, 'web/pages/pagina-inicial.html')
 
 def logout_view(request):
     logout(request)
