@@ -1,22 +1,22 @@
 from django.forms import ModelForm
 from .models import RaioX, ImagensRessonancia, Ressonancia, Clinico, MultiModal
 
-class RaioXForm(ModelForm):
+class XRayForm(ModelForm):
     class Meta:
         model = RaioX
         fields = ["img_pd_cima", "img_pd_lateral", "img_pe_cima", "img_pe_lateral", "img_ambos_cima", "prontuario"]
 
-class ImagensRessonanciaForm(ModelForm):
+class ResonanceImagesForm(ModelForm):
     class Meta:
         model = ImagensRessonancia
         fields = ["imagem"]
 
-class RessonanciaForm(ModelForm):
+class ResonanceForm(ModelForm):
     class Meta:
         model = Ressonancia
         fields = ["imagens", "prontuario"]
 
-class ClinicoForm(ModelForm):
+class ClinicianForm(ModelForm):
     class Meta:
         model = Clinico
         fields = ["nome", "sobrenome", "cpf", "crm", "data_aniversario", "email"]
