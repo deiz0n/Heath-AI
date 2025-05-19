@@ -1,5 +1,5 @@
 <section id="container-esquerdo-cadastro-section" {% if msg_sucesso %}cadastro_realizado="true"{% endif %} >
-    <form hx-post="{% url 'criar-usuario' %}" hx-target="#form-cadastro-usuario-container">
+    <form hx-post="{% url 'create_user' %}" hx-target="#form-cadastro-usuario-container">
         {% csrf_token %}
 
         <h2>Crie uma conta</h2>
