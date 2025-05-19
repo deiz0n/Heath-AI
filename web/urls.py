@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import pagina_inicial, upload_multi_modal, login_view, cadastro_usuario, LoginRequestView, logout_view, CreateUserView
+from .views import pagina_inicial, UploadMultiModalRequest, login_view, cadastro_usuario, LoginRequestView, logout_view, CreateUserView
 
 urlpatterns = [
     path('', login_view, name='login_view'),
@@ -17,5 +17,9 @@ urlpatterns = [
         name='login'
     ),
     path('encerrar-sessao/', logout_view, name='logout'),
-    path('upload-multi-modal/', upload_multi_modal, name='upload-multi-modal')
+    path(
+        'upload-multi-modal/',
+        view=UploadMultiModalRequest.as_view(),
+        name='upload-multi-modal'
+    )
 ]

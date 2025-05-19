@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponse
 from django.views import View
@@ -162,37 +163,18 @@ class LoginRequestView(View):
     def get(self, request):
         return render(request, 'web/pages/login.html')
 
-# def iniciar_sessao(request):
-#     if request.method == "POST":
-#         email = request.POST.get("email")
-#         senha = request.POST.get("senha")
-#
-#         print(f'Email: {email} | Senha: {senha}')
-#
-#         usuario = authenticate(request, username=email, password=senha)
-#         print(str(usuario))
-#
-#         if usuario is not None:
-#             login(request, usuario)
-#             response = HttpResponse()
-#             response['HX-Redirect'] = '/pagina-inicial/'
-#             return response
-#         else:
-#             messages.error(request=request, message='Credenciais inválidas. Tente novamente')
-#             return render(request, 'web/partials/main-login.html')
-#
-#     return render(request, 'web/pages/login.html')
+class UploadMultiModalRequest(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'next'
 
-@login_required
-def upload_multi_modal(request):
-    if request.method == "POST":
+    def post(self, request):
         files = request.FILES
 
-        usuario = request.user
-        clinico = Clinico.objects.get(email=usuario.email)
+        user = request.user
+        clinician = Clinico.objects.get(email=user.email)
 
         if 'ambos_img_pd_cima' in files and 'ambos_ressonancia' in files:
-            novo_raiox = RaioX.objects.create(
+            x_ray = RaioX.objects.create(
                 img_pd_cima=files.get('ambos_img_pd_cima'),
                 img_pd_lateral=files.get('ambos_img_pd_lateral'),
                 img_pe_cima=files.get('ambos_img_pe_cima'),
@@ -200,22 +182,30 @@ def upload_multi_modal(request):
                 img_ambos_cima=files.get('ambos_img_ambos_cima')
             )
 
-            ressonancia = Ressonancia.objects.create()
-            imagens = [
-                ImagensRessonancia(ressonancia=ressonancia, imagem=imagem)
-                for imagem in files.getlist('ambos_ressonancia')
-            ]
-            ImagensRessonancia.objects.bulk_create(imagens)
+            resonance = Ressonancia.objects.create()
 
-            novo_multimodal = MultiModal.objects.create(
-                raio_x=novo_raiox,
-                ressonancia=ressonancia,
+            images = [
+                ImagensRessonancia(ressonancia=resonance, imagem=image)
+                for image in files.getlist('ambos_ressonancia')
+            ]
+            ImagensRessonancia.objects.bulk_create(images)
+
+            MultiModal.objects.create(
+                raio_x=x_ray,
+                ressonancia=resonance,
                 prontuario=files.get('prontuario'),
-                clinico=clinico
+                clinico=clinician
+            )
+
+            return render(
+                request,
+                'web/pages/pagina-inicial.html',
+                {'success': True},
+                status=201
             )
 
         if 'raio_x_img_pd_cima' in files:
-            raio_x = RaioX.objects.create(
+            x_ray = RaioX.objects.create(
                 img_pd_cima=files.get('raio_x_img_pd_cima'),
                 img_pd_lateral=files.get('raio_x_img_pd_lateral'),
                 img_pe_cima=files.get('raio_x_img_pe_cima'),
@@ -224,26 +214,44 @@ def upload_multi_modal(request):
                 prontuario=files.get('prontuario')
             )
 
-            raio_x.save()
+            x_ray.save()
+
+            return render(
+                request,
+                'web/pages/pagina-inicial.html',
+                {'success': True},
+                status=201
+            )
 
         if 'imagens_ressonancia' in files:
-            ressonancia = Ressonancia.objects.create()
+            resonance = Ressonancia.objects.create()
 
             images = [
-                ImagensRessonancia(ressonancia=ressonancia, imagem=image)
+                ImagensRessonancia(ressonancia=resonance, imagem=image)
                 for image in files.getlist('imagens_ressonancia')
             ]
             ImagensRessonancia.objects.bulk_create(images)
 
             if 'prontuario' in files:
-                ressonancia.prontuario = files['prontuario']
+                resonance.prontuario = files['prontuario']
 
-            ressonancia.save()
+            resonance.save()
 
-            return render(request, 'web/pages/pagina-inicial.html', {'success': True})
-    return render(request, 'web/pages/pagina-inicial.html')
+            return render(
+                request,
+                'web/pages/pagina-inicial.html',
+                {'success': True},
+                status=201
+            )
+        return render(
+            request,
+            'web/pages/pagina-inicial.html',
+            {'sucess': False},
+            status=400
+        )
 
-
+    def get(self, request):
+        return render(request, 'web/pages/pagina-inicial.html')
 
 @login_required
 def pagina_inicial(request):
