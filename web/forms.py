@@ -24,6 +24,6 @@ class ClinicoForm(ModelForm):
 class MultiModalForm(ModelForm):
     class Meta:
         model = MultiModal
-        fields = ["raio_x", "ressonancia", "data", "prontuario", "clinico"]
+        fields = ["raio_x", "ressonancia", "prontuario", "clinico"]
 
 
