@@ -189,7 +189,7 @@ class LoginRequestView(View):
             status=200
         )
 
-class UploadMultiModalRequest(LoginRequiredMixin, View):
+class UploadMultiModalRequestView(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'next'
 
