@@ -15,10 +15,24 @@ from .forms import ClinicianForm
 
 @login_required(login_url='/login/', redirect_field_name='next')
 def render_home(request):
-    return render(request, 'web/pages/pagina-inicial.html')
+    return render(
+        request,
+        'web/pages/pagina-inicial.html',
+        status=200
+    )
 
 def render_login(request):
-    return render(request, 'web/pages/login.html')
+    return render(
+        request,
+        'web/pages/login.html',
+        status=200
+    )
+
+def logout_view(request):
+    logout(request)
+    response = HttpResponse(status=204)
+    response['HX-Redirect'] = '/auth'
+    return response
 
 class CreateUserView(View):
     def post(self, request):
@@ -260,13 +274,6 @@ class UploadMultiModalRequest(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'web/pages/pagina-inicial.html')
-
-def logout_view(request):
-    logout(request)
-    response = HttpResponse()
-    response['HX-Redirect'] = '/'
-    return response
-
 
 def cadastro_usuario(request):
     return render(request, 'web/pages/cadastro-usuario.html')
