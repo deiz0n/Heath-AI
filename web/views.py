@@ -183,7 +183,11 @@ class LoginRequestView(View):
             )
 
     def get(self, request):
-        return render(request, 'web/pages/login.html')
+        return render(
+            request,
+            'web/pages/login.html',
+            status=200
+        )
 
 class UploadMultiModalRequest(LoginRequiredMixin, View):
     login_url = '/login/'
@@ -273,7 +277,11 @@ class UploadMultiModalRequest(LoginRequiredMixin, View):
         )
 
     def get(self, request):
-        return render(request, 'web/pages/pagina-inicial.html')
+        return render(
+            request,
+            'web/pages/pagina-inicial.html',
+            status=200
+        )
 
 def cadastro_usuario(request):
     return render(request, 'web/pages/cadastro-usuario.html')
