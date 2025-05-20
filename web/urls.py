@@ -20,6 +20,11 @@ urlpatterns = [
         name='home'
     ),
     path(
+        'logout',
+        logout_view,
+        name='logout'
+    ),
+    path(
         'create_user/',
         view=CreateUserView.as_view(),
         name='create_user'
@@ -30,7 +35,6 @@ urlpatterns = [
         view=LoginRequestView.as_view(),
         name='login'
     ),
-    path('encerrar-sessao/', logout_view, name='logout'),
     path(
         'upload-multi-modal/',
         view=UploadMultiModalRequest.as_view(),
