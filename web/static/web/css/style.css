@@ -63,7 +63,6 @@ body {
 }
 
 #modal-opcoes-container,
-#modal-tipo-imagem-container,
 #modal-opcoes-2d-container,
 #modal-ressonancia-container {
     z-index: 2;
@@ -76,7 +75,6 @@ body {
 }
 
 #modal-opcoes-container h5,
-#modal-tipo-imagem-container h5,
 #modal-opcoes-2d-container h5,
 #modal-ressonancia-container h5 {
     top: 0;
@@ -86,7 +84,6 @@ body {
 }
 
 #modal-opcoes-container i,
-#modal-tipo-imagem-container i,
 #modal-opcoes-2d-container i,
 #modal-ressonancia-container i {
     margin-right: 0.7rem;
@@ -112,7 +109,6 @@ body {
 }
 
 #opcoes button {
-    border: none;
     background-color: #fff;
     padding: 0.5rem 1rem;
     border: 1.4px solid #2E2E2E;

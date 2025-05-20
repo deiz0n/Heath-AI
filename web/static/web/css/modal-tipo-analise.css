@@ -1,0 +1,31 @@
+#modal-tipo-imagem-container {
+    z-index: 2;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+    border-radius: 20px;
+    transform: translateY(-30px);
+}
+
+#modal-tipo-imagem-container h5 {
+    top: 0;
+    font-size: 20px;
+    margin-bottom: 1.5rem;
+    margin-right: 4rem;
+}
+
+#modal-tipo-imagem-container i {
+    margin-right: 0.7rem;
+    margin-top: 1.1rem;
+}
+
+#modal-backdrop-tipo-analise.show {
+    opacity: 1;
+    pointer-events: auto;
+    position: fixed;
+}
+
+#modal-backdrop-tipo-analise.show .modal {
+    transform: translateY(0);
+    opacity: 1;
+}
