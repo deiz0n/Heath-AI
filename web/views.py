@@ -34,6 +34,13 @@ def logout_view(request):
     response['HX-Redirect'] = '/auth'
     return response
 
+def render_create_user(request):
+    return render(
+        request,
+        'web/pages/cadastro-usuario.html',
+        status=200
+    )
+
 class CreateUserView(View):
     def post(self, request):
         response = self.validate_user(request)
@@ -282,6 +289,3 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
             'web/pages/pagina-inicial.html',
             status=200
         )
-
-def cadastro_usuario(request):
-    return render(request, 'web/pages/cadastro-usuario.html')
