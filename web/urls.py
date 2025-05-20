@@ -1,9 +1,19 @@
+from django.shortcuts import redirect
 from django.urls import path
 
-from .views import render_home, UploadMultiModalRequest, login_view, cadastro_usuario, LoginRequestView, logout_view, CreateUserView
+from .views import render_home, UploadMultiModalRequest, render_login, cadastro_usuario, LoginRequestView, logout_view, CreateUserView
 
 urlpatterns = [
-    path('', login_view, name='login_view'),
+    path(
+        '',
+        lambda request: redirect('auth'),
+        name='redirect_login'
+    ),
+    path(
+        'auth',
+         render_login,
+         name='auth'
+    ),
     path(
         'home/',
         render_home,

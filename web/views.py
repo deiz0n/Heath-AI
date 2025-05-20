@@ -17,6 +17,9 @@ from .forms import ClinicianForm
 def render_home(request):
     return render(request, 'web/pages/pagina-inicial.html')
 
+def render_login(request):
+    return render(request, 'web/pages/login.html')
+
 class CreateUserView(View):
     def post(self, request):
         response = self.validate_user(request)
@@ -264,8 +267,6 @@ def logout_view(request):
     response['HX-Redirect'] = '/'
     return response
 
-def login_view(request):
-    return render(request, 'web/pages/login.html')
 
 def cadastro_usuario(request):
     return render(request, 'web/pages/cadastro-usuario.html')
