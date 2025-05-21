@@ -15,6 +15,12 @@ from .forms import ClinicianForm
 
 @login_required(login_url='/login/', redirect_field_name='next')
 def render_home(request):
+    if request.headers.get('Hx-Request') == 'true':
+        return render(
+            request,
+            'web/partials/main.html',
+            status=200
+        )
     return render(
         request,
         'web/pages/pagina-inicial.html',
@@ -41,10 +47,11 @@ def render_create_user(request):
         status=200
     )
 
-def render_dashbard(request):
+@login_required(login_url='/login/', redirect_field_name='next')
+def render_dashboard(request):
     return render(
         request,
-        'web/pages/dashboard',
+        'web/pages/dashboard.html',
         status=200
     )
 
