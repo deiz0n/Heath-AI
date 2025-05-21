@@ -1,6 +1,7 @@
 const btnStart = document.querySelector('#main-btn');
-const backgroundModal = document.querySelector('#modal-backdrop-tipo-analise');
-const modalAnalysisType = document.querySelector('#modal-tipo-imagem-container');
+
+export const modalAnalysisType = document.querySelector('#modal-tipo-imagem-container');
+export const backgroundModal = document.querySelector('#modal-backdrop');
 
 document.addEventListener('DOMContentLoaded', () => {
     assignListenersModal();
