@@ -45,6 +45,17 @@
     opacity: 0;
 }
 
+#modal-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+    position: fixed;
+}
+
+#modal-backdrop.show .modal {
+    transform: translateY(0);
+    opacity: 1;
+}
+
 #modal-backdrop-msg-sucesso.show {
     opacity: 1;
     pointer-events: auto;
