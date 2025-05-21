@@ -41,6 +41,13 @@ def render_create_user(request):
         status=200
     )
 
+def render_dashbard(request):
+    return render(
+        request,
+        'web/pages/dashboard',
+        status=200
+    )
+
 class CreateUserView(View):
     def post(self, request):
         response = self.validate_user(request)
