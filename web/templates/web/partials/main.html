@@ -1,38 +1,38 @@
 {% load static %}
 
-<main class="main-container">
-  <section id="section-sobre">
-    <div id="section-conteudo">
-      <h3>
-        O Heath-<span>AI</span> permite o diagnóstico de lesões de forma rápida
-        e segura atráves da <span>Inteligençia Artificial</span>.
-      </h3>
-      <img
-        id="section-imagem"
-        src="{% static 'web/assets/images/ia-icon.png' %}"
-        alt="IA Icon"
-      />
-      <p>Utilizamos algoritmos robustos de Machine Learning e Redes Neurais.</p>
-    </div>
-  </section>
 
-  {% include "web/partials/modal-tipo-analise.html" %} 
-  {% include "web/partials/modal-opcoes-2d.html" %}
-  {% include "web/partials/modal-opcoes-3d.html" %}
-  {% include "web/partials/modal-raiox.html" %}
-  {% include "web/partials/modal-ressonancia.html" %}
-  {% include "web/partials/modal-ambos.html" %}
+<section id="section-sobre">
+<div id="section-conteudo">
+  <h3>
+    O Heath-<span>AI</span> permite o diagnóstico de lesões de forma rápida
+    e segura atráves da <span>Inteligençia Artificial</span>.
+  </h3>
+  <img
+    id="section-imagem"
+    src="{% static 'web/assets/images/ia-icon.png' %}"
+    alt="IA Icon"
+  />
+  <p>Utilizamos algoritmos robustos de Machine Learning e Redes Neurais.</p>
+</div>
+</section>
 
-  <div id="main-conteudo">
-    <div id="container-conteudo-main">
-      <h2 id="main-titulo">
-        Ao clicar em <span>iniciar</span>, <br />
-        você deve selecionar as imagens de <span>Raio X</span> <br />
-        e posteriomente, as de <span>Ressonância</span>
-      </h2>
-      <button id="main-btn" hx-trigger="click" hx-target=".modal">
-        Iniciar envio
-      </button>
-    </div>
-  </div>
-</main>
+{% include "web/partials/modal-tipo-analise.html" %}
+{% include "web/partials/modal-opcoes-2d.html" %}
+{% include "web/partials/modal-opcoes-3d.html" %}
+{% include "web/partials/modal-raiox.html" %}
+{% include "web/partials/modal-ressonancia.html" %}
+{% include "web/partials/modal-ambos.html" %}
+
+<div id="main-conteudo">
+<div id="container-conteudo-main">
+  <h2 id="main-titulo">
+    Ao clicar em <span>iniciar</span>, <br />
+    você deve selecionar as imagens de <span>Raio X</span> <br />
+    e posteriomente, as de <span>Ressonância</span>
+  </h2>
+  <button id="main-btn" hx-trigger="click" hx-target=".modal">
+    Iniciar envio
+  </button>
+</div>
+</div>
+
