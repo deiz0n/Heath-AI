@@ -2,8 +2,8 @@ import { backgroundModal, modalAnalysisType } from "./modal-tipo-analise.js";
 import { closeCurrentModal } from "./script.js";
 
 const btn3d = document.querySelector('#btn-3d');
-const btnClose = document.querySelector('#modal-opcoes-container i');
-export const modalOptions3D = document.querySelector('#modal-opcoes-container');
+const btnClose = document.querySelector('#modal-opcoes-3d-container i');
+export const modalOptions3D = document.querySelector('#modal-opcoes-3d-container');
 
 if (btn3d) btn3d.addEventListener('click', openModalOptions3D);
 if (btnClose) btnClose.addEventListener('click', closeModalOptions3D);

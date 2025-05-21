@@ -1,4 +1,4 @@
-#modal-opcoes-container {
+#modal-opcoes-3d-container {
     z-index: 12;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
@@ -7,14 +7,14 @@
     transform: translateY(-30px);
 }
 
-#modal-opcoes-container h5 {
+#modal-opcoes-3d-container h5 {
     top: 0;
     font-size: 20px;
     margin-bottom: 1.5rem;
     margin-right: 4rem;
 }
 
-#modal-opcoes-container i {
+#modal-opcoes-3d-container i {
     margin-right: 0.7rem;
     margin-top: 1.1rem;
 }
