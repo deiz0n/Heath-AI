@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import path
 
-from .views import render_home, UploadMultiModalRequestView, render_login, render_create_user, LoginRequestView, logout_view, CreateUserView, render_dashbard
+from .views import render_home, UploadMultiModalRequestView, render_login, render_create_user, LoginRequestView, logout_view, CreateUserView, render_dashboard
 
 urlpatterns = [
     path(
@@ -20,7 +20,7 @@ urlpatterns = [
         name='home'
     ),
     path('dashboard/',
-         render_dashbard,
+         render_dashboard,
          name='dashboard'
     ),
     path(
