@@ -62,7 +62,6 @@ body {
     position: relative;
 }
 
-#modal-opcoes-2d-container,
 #modal-ressonancia-container {
     z-index: 2;
     position: fixed;
@@ -73,7 +72,6 @@ body {
     display: none;
 }
 
-#modal-opcoes-2d-container h5,
 #modal-ressonancia-container h5 {
     top: 0;
     font-size: 20px;
@@ -81,7 +79,6 @@ body {
     margin-right: 4rem;
 }
 
-#modal-opcoes-2d-container i,
 #modal-ressonancia-container i {
     margin-right: 0.7rem;
     margin-top: 1.1rem;

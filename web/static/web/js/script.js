@@ -2,7 +2,6 @@ import { startModalRaioX } from "./modal-raiox.js";
 import { startModalRessonancia } from "./modal-ressonancia.js";
 import { startModalAmbos } from "./modal-ambos.js";
 
-const btn2D = document.querySelector('#btn-2d');
 const btnStartRaioX = document.querySelectorAll('.btn-modal-raiox');
 const btnStartRessonancia = document.querySelectorAll('.btn-modal-ressonancia');
 const btnStartAmbos = document.querySelector('#btn-modal-ambos');
@@ -16,8 +15,6 @@ const initModalOpcoes2D = (typeModal) => {
     modal.style.display = 'block';
     closeCurrentModal(typeModal);
 }
-
-btn2D.addEventListener('click', () => initModalOpcoes2D('tipo-imagem'));
 
 export const initModalProntuario = (typeModal) => {
     const modalProntuario = document.querySelector('#modal-prontuario-container');
