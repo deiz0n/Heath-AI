@@ -3,7 +3,7 @@ import { closeCurrentModal } from "./script.js";
 
 const btn3d = document.querySelector('#btn-3d');
 const btnClose = document.querySelector('#modal-opcoes-container i');
-const modalOptions3D = document.querySelector('#modal-opcoes-container');
+export const modalOptions3D = document.querySelector('#modal-opcoes-container');
 
 if (btn3d) btn3d.addEventListener('click', openModalOptions3D);
 if (btnClose) btnClose.addEventListener('click', closeModalOptions3D);
