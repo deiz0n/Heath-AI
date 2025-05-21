@@ -3,10 +3,38 @@
 
   <nav id="navbar-container">
     <ul>
-      <li id="selecionado"><a href="#"></a>Página Inicial</li>
-      <li><a href="{% url 'dashboard' %}"></a>Dashboard</li>
-      <li><a href="#"></a>Sobre</li>
-      <li><a href="#"></a>Contato</li>
+      <li id="selecionado">
+          <a
+              hx-get="{% url 'home' %}"
+              hx-target=".main-container"
+              hx-push-url="true">
+              Página Inicial
+          </a>
+      </li>
+      <li>
+          <a
+              hx-get="{% url 'dashboard' %}"
+              hx-target=".main-container"
+              hx-push-url="true">
+              Dashboard
+          </a>
+      </li>
+      <li>
+          <a
+              hx-get="#"
+              hx-target=".main-container"
+              hx-push-url="true">
+              Sobre
+          </a>
+      </li>
+      <li>
+          <a
+              hx-get="#"
+              hx-target=".main-container"
+              hx-push-url="true">
+              Contato
+          </a>
+      </li>
     </ul>
   </nav>
 
