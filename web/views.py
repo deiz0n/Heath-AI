@@ -49,6 +49,12 @@ def render_create_user(request):
 
 @login_required(login_url='/login/', redirect_field_name='next')
 def render_dashboard(request):
+    if request.headers.get('Hx-Request') == 'true':
+        return render(
+            request,
+            'web/partials/main-dashboard.html',
+            status=200
+        )
     return render(
         request,
         'web/pages/dashboard.html',
