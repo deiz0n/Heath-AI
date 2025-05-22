@@ -79,6 +79,10 @@
     background-color: #0346A2;
 }
 
+#dashboard-modal {
+    align-items: normal;
+}
+
 #patients-title {
     margin-top: 1rem;
     margin-bottom: .5rem;
