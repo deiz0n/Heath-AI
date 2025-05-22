@@ -1,0 +1,109 @@
+<div style="display: none" id="modal-info-exam-container">
+    <div style="display: flex">
+        <button style="border: none">
+            <i class="btn-fechar material-icons">close</i>
+        </button>
+        <h5 class="modal-titulo">Informações do exame</h5>
+    </div>
+
+    <div class="exam-data">
+        <h2 class="exam-data-title">
+            Paciente
+        </h2>
+
+        <div class="data-container">
+            <div class="container-block">
+                <span>Nome</span>
+                <div class="container-content">
+                    Carlos Eduardo do Nascimento Silva
+                </div>
+            </div>
+
+            <div class="container-block">
+                <span>CPF</span>
+                <div class="container-content">
+                    123-456-789-10
+                </div>
+            </div>
+
+            <div class="container-block">
+                <span>Idade</span>
+                <div class="container-content">
+                    21 anos
+                </div>
+            </div>
+
+            <div class="container-block">
+                <span>Endereço</span>
+                <div class="container-content">
+                    Alameda José Quintino, 221 A, Prado, Cedro - CE
+                </div>
+            </div>
+        </div>
+
+        <h2 class="exam-data-title">
+            Exame
+        </h2>
+
+        <div class="data-container">
+            <div class="container-block">
+                <span>Médico</span>
+                <div class="container-content">
+                    José Alfredo Alves dos Santos
+                </div>
+            </div>
+
+            <div class="container-block">
+                <span>CRM</span>
+                <div class="container-content">
+                    12345-CE
+                </div>
+            </div>
+
+            <div class="container-block">
+                <span>Imagens enviadas</span>
+                <div class="container-content">
+                    Raio X
+                </div>
+            </div>
+
+            <div class="container-block">
+                <span>Data de exame</span>
+                <div class="container-content">
+                    15/04/1912
+                </div>
+            </div>
+        </div>
+
+        <div id="container-btns-modal-info-exam">
+            <button
+                hx-get="#"
+                hx-boost="true"
+                hx-target="this"
+                hx-swap="none"
+            >
+                Baixar prontuário
+            </button>
+
+            <button
+                hx-get="#"
+                hx-boost="true"
+                hx-target="this"
+                hx-swap="none"
+            >
+                Ver imagens
+            </button>
+
+            <button type="button">Enviar imagens</button>
+
+            <button
+                hx-get="#"
+                hx-boost="true"
+                hx-target="this"
+                hx-swap="none"
+            >
+                Diagnóstico
+            </button>
+        </div>
+    </div>
+</div>
