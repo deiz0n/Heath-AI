@@ -1,0 +1,181 @@
+{% load static %}
+
+<div id="main-container-dashboard">
+    <h1 id="container-dashboard-title">
+        Buscar pacientes
+    </h1>
+
+    <div id="search-bar-dashboard" hx-target="#main-container-dashboard">
+        <form hx-post="#">
+            {% csrf_token %}
+            <label>
+                <input type="text" placeholder="Nome ou CPF do paciente">
+            </label>
+
+            <button type="submit"><i id="btn-search" class="material-icons">search</i></button>
+        </form>
+
+        <nav id="filter-data">
+            <ul>
+                <li><a hx-post="#">Filtrar por data</a></li>
+                <li><a hx-post="#">7 dias</a></li>
+                <li><a hx-post="#">15 dias</a></li>
+                <li><a hx-post="#">1 mês</a></li>
+            </ul>
+        </nav>
+
+        <div id="patients">
+            <h2 id="patients-title">Pacientes</h2>
+
+            <div class="patient-data">
+                <p class="user-name">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/use-icon.svg' %}"
+                            alt="user icon">
+                        Nome:
+                    </span>
+                    Carlos Eduardo do Nascimento Silva
+                </p>
+                <div class="inline-data">
+                    <p class="user-cpf">
+                        <span>
+                            <img
+                                src="{% static 'web/assets/images/doc-icon.svg' %}"
+                                alt="doc icon">
+                            CPF:
+                        </span>
+                        123-456-789-10
+                    </p>
+                    <p class="user-age">
+                        <span>
+                            <img
+                                src="{% static 'web/assets/images/data-icon.svg' %}"
+                                alt="data icon">
+                            Idade:
+                        </span>
+                        23 anos
+                    </p>
+                </div>
+                <p class="user-address">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/address-icon.svg' %}"
+                            alt="address icon">
+                        Endereço:
+                    </span>
+                    Alameda José Quintino, 221 A, Prado, Cedro - CE
+                </p>
+                <p class="user-exam">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/exam-icon.svg' %}"
+                            alt="exam icon">
+                        Exame:
+                    </span>
+                    Raio X
+                </p>
+            </div>
+
+            <div class="patient-data">
+                <p class="user-name">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/use-icon.svg' %}"
+                            alt="user icon">
+                        Nome:
+                    </span>
+                    Carlos Eduardo do Nascimento Silva
+                </p>
+                <div class="inline-data">
+                    <p class="user-cpf">
+                        <span>
+                            <img
+                                src="{% static 'web/assets/images/doc-icon.svg' %}"
+                                alt="doc icon">
+                            CPF:
+                        </span>
+                        123-456-789-10
+                    </p>
+                    <p class="user-age">
+                        <span>
+                            <img
+                                src="{% static 'web/assets/images/data-icon.svg' %}"
+                                alt="data icon">
+                            Idade:
+                        </span>
+                        23 anos
+                    </p>
+                </div>
+                <p class="user-address">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/address-icon.svg' %}"
+                            alt="address icon">
+                        Endereço:
+                    </span>
+                    Alameda José Quintino, 221 A, Prado, Cedro - CE
+                </p>
+                <p class="user-exam">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/exam-icon.svg' %}"
+                            alt="exam icon">
+                        Exame:
+                    </span>
+                    Raio X
+                </p>
+            </div>
+
+            <div class="patient-data">
+                <p class="user-name">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/use-icon.svg' %}"
+                            alt="user icon">
+                        Nome:
+                    </span>
+                    Carlos Eduardo do Nascimento Silva
+                </p>
+                <div class="inline-data">
+                    <p class="user-cpf">
+                        <span>
+                            <img
+                                src="{% static 'web/assets/images/doc-icon.svg' %}"
+                                alt="doc icon">
+                            CPF:
+                        </span>
+                        123-456-789-10
+                    </p>
+                    <p class="user-age">
+                        <span>
+                            <img
+                                src="{% static 'web/assets/images/data-icon.svg' %}"
+                                alt="data icon">
+                            Idade:
+                        </span>
+                        23 anos
+                    </p>
+                </div>
+                <p class="user-address">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/address-icon.svg' %}"
+                            alt="address icon">
+                        Endereço:
+                    </span>
+                    Alameda José Quintino, 221 A, Prado, Cedro - CE
+                </p>
+                <p class="user-exam">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/exam-icon.svg' %}"
+                            alt="exam icon">
+                        Exame:
+                    </span>
+                    Raio X
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
