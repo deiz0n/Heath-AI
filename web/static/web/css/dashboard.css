@@ -1,0 +1,148 @@
+#main-container-dashboard {
+    background-color: #E1EEFF;
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+}
+
+#container-dashboard-title {
+    color: #2E2E2E;
+    font-size: 20px;
+    padding-block: 1rem;
+}
+
+#search-bar-dashboard form {
+    display: flex;
+}
+
+#search-bar-dashboard input {
+    width: 400px;
+    height: 35px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding-left: .7rem;
+    font-family: "IBM Plex Sans";
+    font-size: 18px;
+}
+
+#search-bar-dashboard button[type=submit] {
+    border: none;
+    background-color: transparent;
+    position: relative;
+    left: -2.3rem;
+}
+
+#btn-search {
+    bottom: -1px;
+    position: relative;
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 50%;
+    color: #0360D9;
+    transition: .3s ease-in-out;
+}
+
+#btn-search:hover {
+    background-color: #c7c4c4;
+}
+
+#filter-data {
+    align-items: center;
+    width: 400px;
+    margin-top: 1rem;
+    position: relative;
+}
+
+#filter-data ul {
+    display: flex;
+    justify-content: space-between;
+    margin-inline: .2rem;
+    gap: .3rem;
+}
+
+#filter-data ul li {
+    list-style: none;
+    background-color: #0360D9;
+    padding: .3rem 1rem;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+#filter-data ul li:hover {
+    background-color: #4087ea;
+}
+
+#patients-title {
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.patient-data {
+    padding: .5rem;
+    background-color: #fff;
+    width: 400px;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.patient-data:hover {
+    transform: scale(1.03);
+}
+
+.patient-data:last-child {
+    margin-bottom: 2.5rem;
+}
+
+.patient-data span {
+    font-weight: 500;
+}
+
+.inline-data {
+    display: flex;
+}
+
+.patient-data img {
+    width: 27px;
+    height: 27px;
+    margin-right: .1rem;
+    position: relative;
+    bottom: -7px;
+}
+
+.patient-data p {
+    font-size: 17px;
+}
+
+.user-name,
+.user-cpf,
+.user-age,
+.user-address,
+.user-exam {
+    display: inline-block;
+}
+
+.user-cpf {
+    margin-right: .5rem;
+}
+
+.user-exam {
+    margin-bottom: .5rem;
+    color: #0360D9;
+}
+
+.user-exam span {
+    color: #000;
+}
+
