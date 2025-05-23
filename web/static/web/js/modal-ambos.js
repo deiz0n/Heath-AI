@@ -1,3 +1,7 @@
+import { modalOptions2D } from "./modal-opcoes-2d.js";
+import { modalOptions3D } from "./modal-opcoes-3d.js";
+import { backgroundModal } from "./modal-tipo-analise.js";
+import { closeCurrentModal } from "./script.js";
 import {
     colorBlack,
     colorBlue,
@@ -14,7 +18,8 @@ export function startModalAmbos() {
     const inputs = document.querySelectorAll('#modal-ambos-container input[type=file]');
     const fileNames = document.querySelectorAll('.input-value-ambos');
 
-    const btnCloseModalRaioX = document.querySelector('#btn-close-ambos');
+    const btnOpenModalBoth = document.querySelector('#btn-modal-ambos');
+    const btnCloseModalBoth = document.querySelector('#btn-close-ambos');
     const btnNextStep = document.querySelector('#btn-next-step-ambos');
     const btnPrevStep = document.querySelector('#btn-prev-step-ambos');
     const btnSubmit = document.querySelector('#btn-submit-ambos');
@@ -27,9 +32,8 @@ export function startModalAmbos() {
     const totalSteps = steps.length - 1;
     let currentStep = 0;
 
-    initModal();
-
-    btnCloseModalRaioX.addEventListener('click', closeModa);
+    btnOpenModalBoth.addEventListener('click', openModalBoth);
+    btnCloseModalBoth.addEventListener('click', closeModaBoth);
     btnNextStep.addEventListener('click', nextElement);
     btnPrevStep.addEventListener('click', prevElement);
 
@@ -40,14 +44,22 @@ export function startModalAmbos() {
         });
     });
 
-    function initModal() {
+    function openModalBoth() {
+        resetComponents();
+
+        if (modalOptions2D.style.display === 'block') closeCurrentModal(modalOptions2D.id)
+        if (modalOptions3D.style.display === 'block') closeCurrentModal(modalOptions3D.id)
+
         modalAmbos.style.display = 'block';
+
+        updateEventBtnPrev();
 
         inputs[0].style.visibility = 'visible';
     }
 
-    function closeModa() {
+    function closeModaBoth() {
         modalAmbos.style.display = 'none';
+        backgroundModal.classList.remove('show');
         resetComponents();
     }
 
@@ -116,10 +128,6 @@ export function startModalAmbos() {
             // btnPrevStep.style.display = 'none';
             // btnSubmit.style.display = 'block';
         }
-        //     btnNextStep.style.display = 'block'; // Restaurar visibilidade
-        //     btnPrevStep.style.display = 'block'; // Restaurar visibilidade
-        //     btnSubmit.style.display = 'none';
-        // }
     };
 
     const updateTextButtons = () => {
@@ -128,6 +136,17 @@ export function startModalAmbos() {
         if (currentStep > 0) btnPrevStep.innerText = 'Voltar';
         else btnPrevStep.innerText = 'Fechar';
     };
+
+    const updateEventBtnPrev = () => {
+        if (currentStep === 0) {
+            btnPrevStep.removeEventListener('click', prevElement);
+            btnPrevStep.addEventListener('click', closeModaBoth);
+        }
+        else {
+            btnPrevStep.removeEventListener('click', closeModaBoth);
+            btnPrevStep.addEventListener('click', prevElement);
+        }
+    }
 
     const showCurrentInput = (index) => {
         if (index < inputs.length - 1) {
