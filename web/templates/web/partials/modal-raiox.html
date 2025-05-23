@@ -2,7 +2,7 @@
 
 <form method="post" enctype="multipart/form-data" action="{% url 'upload-multi-modal' %}">
   {% csrf_token %}
-  <div class="modal">
+
     <div style="display: none;" id="modal-raiox-container">
       <div class="form">
         <div class="modal-header">
@@ -150,9 +150,9 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal">
+
+
     <div style="display: none;" id="modal-prontuario-container-raiox">
       <h5 class="modal-titulo">
         Selecione o arquivo do <span>Prontuário</span>
@@ -176,5 +176,5 @@
         <button type="submit" class="btn-primary" id="btn-submit-raiox">Enviar</button>
       </div>
     </div>
-  </div>
+
 </form>
