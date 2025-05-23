@@ -1,4 +1,6 @@
-import { initModalProntuario } from "./script.js"
+import { modalOptions2D } from "./modal-opcoes-2d.js";
+import { modalOptions3D } from "./modal-opcoes-3d.js";
+import {backgroundModal} from "./modal-tipo-analise.js";
 import {
     colorBlack,
     colorBlue,
@@ -15,7 +17,8 @@ export function startModalRaioX() {
     const inputs = document.querySelectorAll('#modal-raiox-container input[type=file]');
     const fileNames = document.querySelectorAll('.input-value-raiox');
 
-    const btnCloseModalRaioX = document.querySelector('#btn-close-raiox');
+    const btnOpenModalXRay = document.querySelectorAll('.btn-modal-raiox');
+    const btnCloseModalXRay = document.querySelector('#btn-close-raiox');
     const btnNextStep = document.querySelector('#btn-next-step-raiox');
     const btnPrevStep = document.querySelector('#btn-prev-step-raiox');
     const btnSubmit = document.querySelector('#btn-submit-raiox');
@@ -28,13 +31,9 @@ export function startModalRaioX() {
     const totalSteps = steps.length;
     let currentStep = 0;
 
-    console.log(modalProntuarioRaioX)
-
-    initModal();
-
-    btnCloseModalRaioX.addEventListener('click', closeModa);
+    btnOpenModalXRay.forEach(btn => btn.addEventListener('click', openModalXRay));
+    btnCloseModalXRay.addEventListener('click', closeModaXRay);
     btnNextStep.addEventListener('click', nextElement);
-    btnPrevStep.addEventListener('click', prevElement);
 
     inputs.forEach(input => {
         input.addEventListener('change', () => {
@@ -42,14 +41,21 @@ export function startModalRaioX() {
         });
     });
 
-    function initModal() {
-        modalRaioX.style.display = 'block';
+    function openModalXRay() {
+        resetComponents();
 
+        if (modalOptions2D.style.display === 'block') modalOptions2D.style.display = 'none';
+        if (modalOptions3D.style.display === 'block') modalOptions3D.style.display = 'none';
+
+        updateEventBtnPrev();
+
+        modalRaioX.style.display = 'block';
         inputs[0].style.visibility = 'visible';
     }
 
-    function closeModa() {
+    function closeModaXRay() {
         modalRaioX.style.display = 'none';
+        backgroundModal.classList.remove('show');
         resetComponents();
     }
 
@@ -84,11 +90,6 @@ export function startModalRaioX() {
             btnPrevStep.style.display = 'none';
             btnSubmit.style.display = 'block';
         }
-        // } else {
-        //     btnNextStep.style.display = 'block';
-        //     btnPrevStep.style.display = 'block';
-
-        // }
     };
 
     const updateTextButtons = () => {
@@ -97,6 +98,17 @@ export function startModalRaioX() {
         if (currentStep > 0) btnPrevStep.innerText = 'Voltar';
         else btnPrevStep.innerText = 'Fechar';
     };
+
+    const updateEventBtnPrev = () => {
+        if (currentStep === 0) {
+            btnPrevStep.removeEventListener('click', prevElement);
+            btnPrevStep.addEventListener('click', closeModaXRay);
+        }
+        else {
+            btnPrevStep.removeEventListener('click', closeModaXRay);
+            btnPrevStep.addEventListener('click', prevElement);
+        }
+    }
 
     const showCurrentInput = (index) => {
         if (index < inputs.length - 1) {
@@ -179,6 +191,7 @@ export function startModalRaioX() {
         if (currentStep < totalSteps) {
             currentStep++;
 
+            updateEventBtnPrev();
             showCurrentLabel(currentStep);
             showCurrentStep(currentStep);
             showCurrentInput(currentStep);
@@ -197,9 +210,10 @@ export function startModalRaioX() {
         if (currentStep > 0) {
             currentStep--;
 
-            showCurrentLabel(currentStep)
+            updateEventBtnPrev();
+            showCurrentLabel(currentStep);
             showCurrentStep(currentStep);
-            showCurrentInput(currentStep)
+            showCurrentInput(currentStep);
 
             if (stepProgressValue >= 1) {
                 stepProgressValue--;
