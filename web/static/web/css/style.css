@@ -118,9 +118,8 @@ body {
     transition: all 300ms ease-in-out;
 }
 
-#modal-raiox-container,
 #modal-ambos-container {
-    background-color: white;
+    background-color: #fff;
     width: 90%;
     height: 370px;
     max-width: 700px;
@@ -309,66 +308,6 @@ body {
     height: 14px;
     width: 0;
     border-radius: 20px;
-}
-
-#modal-prontuario-container-raiox,
-#modal-prontuario-container-ressonancia,
-#modal-prontuario-container-ambos,
-#modal-prontuario-ressonancia {
-    z-index: 2;
-    position: fixed;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    padding: 1rem;
-    width: 430px;
-    border-radius: 20px;
-    flex-direction: column;
-    display: none;
-}
-
-#modal-prontuario-container-raiox h5,
-#modal-prontuario-container-ressonancia h5,
-#modal-prontuario-container-ambos h5,
-#modal-ressonancia-container h5 {
-    font-size: 22px;
-    margin-bottom: 2.7rem;
-}
-
-#modal-prontuario-container-raiox span,
-#modal-prontuario-container-ressonancia span,
-#modal-prontuario-container-ambos span,
-#modal-ressonancia-container span {
-    color: #0360D9;
-}
-
-#input-container-prontuario-raiox,
-#input-container-prontuario-ressonancia,
-#input-container-prontuario-ambos,
-#input-container-ressonancia {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#input-prontuario-raiox,
-#input-prontuario-ressonancia,
-#input-prontuario-ambos,
-#input-ressonancia {
-    opacity: 0;
-    position: absolute;
-    width: 249px;
-    height: 82px;
-    cursor: pointer;
-    z-index: 2;
-    transition: .3s all ease-in-out;
-}
-
-#input-prontuario-raiox+.custom-input,
-#input-prontuario-ressonancia+.custom-input,
-#input-prontuario-ambos+.custom-input,
-#input-ressonancia:hover+#custom-input-ressonancia {
-    background-color: #d1d1d1;
-    color: #0346A2;
 }
 
 .btn-container {
