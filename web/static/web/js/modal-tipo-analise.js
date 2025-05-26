@@ -1,24 +1,33 @@
-const btnStart = document.querySelector('#main-btn');
-
-export const modalAnalysisType = document.querySelector('#modal-tipo-imagem-container');
-export const backgroundModal = document.querySelector('#modal-backdrop');
-
-document.addEventListener('DOMContentLoaded', () => {
-    assignListenersModal();
-    if (btnStart) btnStart.addEventListener('click', openModalAnalysisType);
-})
-
 function openModalAnalysisType() {
-    modalAnalysisType.style.display = 'block';
-    backgroundModal.classList.add('show')
+    const modalAnalysisType = document.querySelector('#modal-tipo-imagem-container');
+    const backgroundModal = document.querySelector('#modal-backdrop');
+    if (modalAnalysisType && backgroundModal) {
+        modalAnalysisType.style.display = 'block';
+        backgroundModal.classList.add('show');
+    }
 }
 
 function closeModalAnalysisType() {
-    backgroundModal.classList.remove('show');
-    modalAnalysisType.style.display = 'none';
+    const modalAnalysisType = document.querySelector('#modal-tipo-imagem-container');
+    const backgroundModal = document.querySelector('#modal-backdrop');
+    if (modalAnalysisType && backgroundModal) {
+        backgroundModal.classList.remove('show');
+        modalAnalysisType.style.display = 'none';
+    }
 }
 
-function assignListenersModal() {
+export function assignListenersModal() {
     const btnClose = document.querySelector('#modal-tipo-imagem-container i');
-    if (btnClose) btnClose.addEventListener('click', closeModalAnalysisType);
+    const btnStart = document.querySelector('#main-btn');
+    if (btnClose) {
+        btnClose.removeEventListener('click', closeModalAnalysisType);
+        btnClose.addEventListener('click', closeModalAnalysisType);
+    }
+    if (btnStart) {
+        btnStart.removeEventListener('click', openModalAnalysisType);
+        btnStart.addEventListener('click', openModalAnalysisType);
+    }
 }
+
+document.addEventListener('DOMContentLoaded', assignListenersModal);
+document.body.addEventListener('htmx:afterSwap', assignListenersModal);

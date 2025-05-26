@@ -1,6 +1,6 @@
 import { modalOptions2D } from "./modal-opcoes-2d.js";
 import { modalOptions3D } from "./modal-opcoes-3d.js";
-import {backgroundModal} from "./modal-tipo-analise.js";
+
 import {
     colorBlack,
     colorBlue,
@@ -10,6 +10,8 @@ import {
 } from "./styles.js";
 
 export function startModalRaioX() {
+    const backgroundModal = document.querySelector('#modal-backdrop');
+
     const modalRaioX = document.querySelector('#modal-raiox-container');
     const modalProntuarioRaioX = document.querySelector('#modal-prontuario-container-raiox');
 

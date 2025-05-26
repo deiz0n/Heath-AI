@@ -1,5 +1,7 @@
-import { backgroundModal, modalAnalysisType } from "./modal-tipo-analise.js";
 import { closeCurrentModal } from "./script.js";
+
+const backgroundModal = document.querySelector('#modal-backdrop');
+const modalAnalysisType = document.querySelector('#modal-tipo-imagem-container');
 
 const btn3d = document.querySelector('#btn-3d');
 const btnClose = document.querySelector('#modal-opcoes-3d-container i');

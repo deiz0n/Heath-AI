@@ -1,6 +1,5 @@
 import { modalOptions2D } from "./modal-opcoes-2d.js";
 import { modalOptions3D } from "./modal-opcoes-3d.js";
-import { backgroundModal } from "./modal-tipo-analise.js";
 import { closeCurrentModal } from "./script.js";
 import {
     colorBlack,
@@ -11,6 +10,8 @@ import {
 } from "./styles.js";
 
 export function startModalAmbos() {
+    const backgroundModal = document.querySelector('#modal-backdrop');
+
     const modalAmbos = document.querySelector('#modal-ambos-container');
     const modalProntuarioAmbos = document.querySelector('#modal-prontuario-container-ambos');
 

@@ -1,7 +1,8 @@
 import { closeCurrentModal } from "./script.js";
 import { modalOptions2D } from "./modal-opcoes-2d.js";
 import { modalOptions3D } from "./modal-opcoes-3d.js";
-import { backgroundModal } from "./modal-tipo-analise.js";
+
+const backgroundModal = document.querySelector('#modal-backdrop');
 
 const btnNextStep = document.querySelector('#btn-next-step-ressonancia');
 const btnOpenModalResonance = document.querySelectorAll('.btn-modal-ressonancia');
