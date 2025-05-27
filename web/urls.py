@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import path
 
-from .views import render_home, UploadMultiModalRequestView, render_login, render_create_user, LoginRequestView, logout_view, CreateUserView, render_dashboard
+from .views import render_home, UploadMultiModalRequestView, render_login, render_create_user, LoginRequestView, logout_view, CreateUserView, render_dashboard, FindPatientsRequest
 
 urlpatterns = [
     path(
@@ -47,5 +47,10 @@ urlpatterns = [
         'upload-multi-modal/',
         view=UploadMultiModalRequestView.as_view(),
         name='upload-multi-modal'
+    ),
+    path(
+        'find_patients/',
+        view=FindPatientsRequest.as_view(),
+        name='find-patients'
     )
 ]
