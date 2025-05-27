@@ -1,4 +1,5 @@
 from cpf_field.validators import validate_cpf
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
@@ -7,11 +8,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponse
+from django.template.loader import render_to_string
 from django.views import View
+from django.db.models import Q
 
-from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico
+from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico, Paciente
 from .forms import ClinicianForm
 
+from datetime import date
 
 @login_required(login_url='/login/', redirect_field_name='next')
 def render_home(request):
@@ -309,3 +313,30 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
             'web/pages/pagina-inicial.html',
             status=200
         )
+
+class FindPatientsRequest(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+
+    def get(self, request):
+        field_patient = request.GET.get('patient', '')
+
+        if not field_patient:
+            patients = []
+        else:
+            patients = Paciente.objects.filter(
+                Q(nome__icontains=field_patient) | Q(cpf__icontains=field_patient)
+            )
+
+        list_ages = [self.to_age(p.data_nascimento) for p in patients]
+        template = render_to_string(
+            'web/partials/list-patients.html',
+            {'patients': patients, 'list_ages': list_ages},
+        )
+        return HttpResponse(template, status=200)
+
+    def to_age(self, data) -> int:
+        if not data:
+            return -1
+        today = date.today()
+        return today.year - data.year - ((today.month, today.day) < (data.month, data.day))
