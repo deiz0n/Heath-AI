@@ -56,7 +56,20 @@ class MultiModal(models.Model):
     def __str__(self):
         return str(self.id)
 
+class Paciente(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
+    nome = models.CharField(null=False, blank=False)
+    sobrenome = models.CharField(null=False, blank=False)
+    cpf = CPFField('cpf')
+    data_nascimento = models.DateField(null=False, blank=False)
+    endereco = models.CharField(null=False, blank=False)
+    exame = models.ManyToManyField(MultiModal, related_name='exames')
+
+    def __str__(self):
+        return str(f'{self.id} - {self.nome}')
+
 admin.site.register(MultiModal)
 admin.site.register(RaioX)
 admin.site.register(Ressonancia)
 admin.site.register(Clinico)
+admin.site.register(Paciente)
