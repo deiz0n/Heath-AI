@@ -1,0 +1,65 @@
+{% load static %}
+{% load zipper %}
+{% include 'web/partials/head.html' %}
+
+<h2 id="patients-title">Pacientes</h2>
+
+{% if patients and list_ages and patients|length > 0 and list_ages|length > 0 %}
+	{% for patient, age in patients|zip_lists:list_ages %}
+        <div class="patient-data">
+            <p class="user-name">
+                <span>
+                    <img
+                        src="{% static 'web/assets/images/use-icon.svg' %}"
+                        alt="user icon">
+                    Nome:
+                </span>
+                {{ patient.nome }} {{ patient.sobrenome }}
+            </p>
+            <div class="inline-data">
+                <p class="user-cpf">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/doc-icon.svg' %}"
+                            alt="doc icon">
+                        CPF:
+                    </span>
+                    {{ patient.cpf }}
+                </p>
+                <p class="user-age">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/data-icon.svg' %}"
+                            alt="data icon">
+                        Idade:
+                    </span>
+                    {{ age }} anos
+                </p>
+            </div>
+            <p class="user-address">
+                <span>
+                    <img
+                        src="{% static 'web/assets/images/address-icon.svg' %}"
+                        alt="address icon">
+                    Endereço:
+                </span>
+                {{ patient.endereco }}
+            </p>
+            <p class="user-exam">
+                <span>
+                    <img
+                        src="{% static 'web/assets/images/exam-icon.svg' %}"
+                        alt="exam icon">
+                    Exame:
+                </span>
+                Raio X
+            </p>
+        </div>
+
+        {% empty %}
+        <p>Nenhum paciente encontrado</p>
+    {% endfor %}
+{% else %}
+    <p>Nenhum paciente encontrado</p>
+{% endif %}
+
