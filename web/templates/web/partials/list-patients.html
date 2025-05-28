@@ -45,15 +45,27 @@
                 </span>
                 {{ patient.endereco }}
             </p>
-            <p class="user-exam">
-                <span>
-                    <img
-                        src="{% static 'web/assets/images/exam-icon.svg' %}"
-                        alt="exam icon">
-                    Exame:
-                </span>
-                Raio X
-            </p>
+            <div class="inline-data">
+                <p class="user-exam">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/exam-icon.svg' %}"
+                            alt="exam icon">
+                        Exame:
+                    </span>
+                    Raio X e Ressonância
+                </p>
+
+                <p class="exam-data">
+                    <span>
+                        <img
+                            src="{% static 'web/assets/images/data-icon.svg' %}"
+                            alt="exam icon">
+                        Data:
+                    </span>
+                    15/05/2023
+                </p>
+            </div>
         </div>
 
         {% empty %}
