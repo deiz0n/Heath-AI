@@ -6,7 +6,18 @@
 
 {% if patients and list_ages and patients|length > 0 and list_ages|length > 0 %}
 	{% for patient, age in patients|zip_lists:list_ages %}
-        <div class="patient-data">
+        <div
+            class="patient-data"
+
+            data-patient-name="{{ patient.nome }} {{ patient.sobrenome }}"
+            data-patient-cpf="{{ patient.cpf }}"
+            data-patient-age="{{ age }}"
+            data-patient-address="{{ patient.endereco }}"
+            data-clinician-name="José Alfredo Alves dos Santos"
+            data-clinician-crm="12345-CE"
+            data-exam-type="Raio X"
+            data-exam="15/04/1913"
+        >
             <p class="user-name">
                 <span>
                     <img
