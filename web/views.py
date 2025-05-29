@@ -15,7 +15,8 @@ from django.db.models import Q
 from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico, Paciente
 from .forms import ClinicianForm
 
-from datetime import date
+from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
 
 @login_required(login_url='/login/', redirect_field_name='next')
 def render_home(request):
@@ -328,15 +329,41 @@ class FindPatientsRequest(LoginRequiredMixin, View):
                 Q(nome__icontains=field_patient) | Q(cpf__icontains=field_patient)
             )
 
-        list_ages = [self.to_age(p.data_nascimento) for p in patients]
+        list_ages = [to_age(p.data_nascimento) for p in patients]
         template = render_to_string(
             'web/partials/list-patients.html',
             {'patients': patients, 'list_ages': list_ages},
         )
         return HttpResponse(template, status=200)
 
-    def to_age(self, data) -> int:
-        if not data:
-            return -1
+class FindPatientsByExamDate(LoginRequiredMixin, View):
+    def get(self, request):
         today = date.today()
-        return today.year - data.year - ((today.month, today.day) < (data.month, data.day))
+        date_start = None
+
+        if request.GET.get('last-7-days'):
+            date_start = today - timedelta(days=7)
+        elif request.GET.get('last-15-days'):
+            date_start = today - timedelta(days=15)
+        elif request.GET.get('last-1-month'):
+            date_start = today - relativedelta(months=1)
+
+        if date_start:
+            patients = Paciente.objects.filter(
+                exame__data__date__range=(date_start, today)
+            ).distinct()
+        else:
+            patients = Paciente.objects.none()
+
+        list_ages = [to_age(p.data_nascimento) for p in patients]
+        template = render_to_string(
+            'web/partials/list-patients.html',
+            {'patients': patients, 'list_ages': list_ages},
+        )
+        return HttpResponse(template, status=200)
+
+def to_age(data) -> int:
+    if not data:
+        return -1
+    today = date.today()
+    return today.year - data.year - ((today.month, today.day) < (data.month, data.day))

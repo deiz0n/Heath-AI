@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import path
 
-from .views import render_home, UploadMultiModalRequestView, render_login, render_create_user, LoginRequestView, logout_view, CreateUserView, render_dashboard, FindPatientsRequest
+from .views import render_home, UploadMultiModalRequestView, render_login, render_create_user, LoginRequestView, logout_view, CreateUserView, render_dashboard, FindPatientsRequest, FindPatientsByExamDate
 
 urlpatterns = [
     path(
@@ -52,5 +52,10 @@ urlpatterns = [
         'find_patients/',
         view=FindPatientsRequest.as_view(),
         name='find-patients'
+    ),
+    path(
+        'find_patients_by_data_exam/',
+        view=FindPatientsByExamDate.as_view(),
+        name='find-patients-by-data-exam'
     )
 ]
