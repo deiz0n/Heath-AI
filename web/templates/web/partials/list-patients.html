@@ -1,88 +1,104 @@
 {% load static %}
-{% load zipper %}
 {% include 'web/partials/head.html' %}
 
 <h2 id="patients-title">Pacientes</h2>
 
-{% if patients and list_ages and patients|length > 0 and list_ages|length > 0 %}
-	{% for patient, age in patients|zip_lists:list_ages %}
-        <div
-            class="patient-data"
+{% for data in result %}
+    <div
+        class="patient-data"
 
-            data-patient-name="{{ patient.nome }} {{ patient.sobrenome }}"
-            data-patient-cpf="{{ patient.cpf }}"
-            data-patient-age="{{ age }}"
-            data-patient-address="{{ patient.endereco }}"
-            data-clinician-name="José Alfredo Alves dos Santos"
-            data-clinician-crm="12345-CE"
-            data-exam-type="Raio X"
-            data-exam="15/04/1913"
-        >
-            <p class="user-name">
+        data-patient-name="{{ data.patient.name }}"
+        data-patient-cpf="{{ data.patient.cpf }}"
+        data-patient-age="{{ data.patient.age }}"
+        data-patient-address="{{ data.patient.address }}"
+        data-clinician-name="{{ data.clinician.name }}"
+        data-clinician-crm="{{ data.clinician.crm }}"
+        data-exam-type="
+            {% if data.exam.x_ray and data.exam.resonance %}
+                Raio X e Ressonância
+                {% elif data.exam.x_ray and not data.exam.resonance %}
+                    Raio X
+                    {% elif not data.exam.x_ray and data.exam.resonance %}
+                        Ressonância
+                        {% else %}
+                            Nenhum exame realizado
+            {% endif %}
+        "
+        data-exam="{{ data.exam.date }}"
+    >
+        <p class="user-name">
+            <span>
+                <img
+                    src="{% static 'web/assets/images/use-icon.svg' %}"
+                    alt="user icon">
+                Nome:
+            </span>
+            {{ data.patient.name }}
+        </p>
+        <div class="inline-data">
+            <p class="user-cpf">
                 <span>
                     <img
-                        src="{% static 'web/assets/images/use-icon.svg' %}"
-                        alt="user icon">
-                    Nome:
+                        src="{% static 'web/assets/images/doc-icon.svg' %}"
+                        alt="doc icon">
+                    CPF:
                 </span>
-                {{ patient.nome }} {{ patient.sobrenome }}
+                {{ data.patient.cpf }}
             </p>
-            <div class="inline-data">
-                <p class="user-cpf">
-                    <span>
-                        <img
-                            src="{% static 'web/assets/images/doc-icon.svg' %}"
-                            alt="doc icon">
-                        CPF:
-                    </span>
-                    {{ patient.cpf }}
-                </p>
-                <p class="user-age">
-                    <span>
-                        <img
-                            src="{% static 'web/assets/images/data-icon.svg' %}"
-                            alt="data icon">
-                        Idade:
-                    </span>
-                    {{ age }} anos
-                </p>
-            </div>
-            <p class="user-address">
+            <p class="user-age">
                 <span>
                     <img
-                        src="{% static 'web/assets/images/address-icon.svg' %}"
-                        alt="address icon">
-                    Endereço:
+                        src="{% static 'web/assets/images/data-icon.svg' %}"
+                        alt="data icon">
+                    Idade:
                 </span>
-                {{ patient.endereco }}
+                {{ data.patient.age }} anos
             </p>
-            <div class="inline-data">
-                <p class="user-exam">
-                    <span>
-                        <img
-                            src="{% static 'web/assets/images/exam-icon.svg' %}"
-                            alt="exam icon">
-                        Exame:
-                    </span>
-                    Raio X e Ressonância
-                </p>
-
-                <p class="exam-data">
-                    <span>
-                        <img
-                            src="{% static 'web/assets/images/data-icon.svg' %}"
-                            alt="exam icon">
-                        Data:
-                    </span>
-                    15/05/2023
-                </p>
-            </div>
         </div>
+        <p class="user-address">
+            <span>
+                <img
+                    src="{% static 'web/assets/images/address-icon.svg' %}"
+                    alt="address icon">
+                Endereço:
+            </span>
+            {{ data.patient.endereco }}
+        </p>
+        <div class="inline-data">
+            <p class="user-exam">
+                <span>
+                    <img
+                        src="{% static 'web/assets/images/exam-icon.svg' %}"
+                        alt="exam icon">
+                    Exame:
+                </span>
+                {% if data.exam.x_ray and data.exam.resonance %}
+                	Raio X e Ressonância
+                    {% elif data.exam.x_ray and not data.exam.resonance %}
+                        Raio X
+                        {% elif not data.exam.x_ray and data.exam.resonance %}
+                            Ressonância
+                            {% else %}
+                                Nenhum exame realizado
+                {% endif %} 
+            </p>
 
-        {% empty %}
-        <p>Nenhum paciente encontrado</p>
-    {% endfor %}
-{% else %}
+            <p class="exam-data">
+                <span>
+                    <img
+                        src="{% static 'web/assets/images/data-icon.svg' %}"
+                        alt="exam icon">
+                    Data:
+                </span>
+                {{ data.exam.date }}
+            </p>
+        </div>
+    </div>
+
+    {% empty %}
     <p>Nenhum paciente encontrado</p>
-{% endif %}
+{% endfor %}
+
+
+
 

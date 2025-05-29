@@ -321,18 +321,45 @@ class FindPatientsRequest(LoginRequiredMixin, View):
 
     def get(self, request):
         field_patient = request.GET.get('patient', '')
+        result_query = []
 
         if not field_patient:
             patients = []
         else:
-            patients = Paciente.objects.filter(
-                Q(nome__icontains=field_patient) | Q(cpf__icontains=field_patient)
+            patients = (
+                Paciente.objects
+                .filter(Q(nome__icontains=field_patient) | Q(cpf__icontains=field_patient))
+                .prefetch_related(
+                    'exame__clinico'
+                )
             )
 
-        list_ages = [to_age(p.data_nascimento) for p in patients]
+        for patient in patients:
+            for exam in patient.exame.all():
+                result_query.append({
+                    "patient": {
+                        "id": patient.id,
+                        "name": f"{patient.nome} {patient.sobrenome}",
+                        "cpf": patient.cpf,
+                        "age": to_age(patient.data_nascimento),
+                        "address": patient.endereco
+                    },
+                    "clinician": {
+                        "id": exam.clinico.id,
+                        "name": f"{exam.clinico.nome} {exam.clinico.sobrenome}",
+                        "crm": exam.clinico.crm,
+                    },
+                    "exam": {
+                        "id": exam.id,
+                        "date": exam.data.strftime('%d/%m/%Y'),
+                        "x_ray": exam.raio_x.id if exam.raio_x else None,
+                        "resonance": exam.raio_x.id if exam.raio_x else None,
+                    }
+                })
+
         template = render_to_string(
             'web/partials/list-patients.html',
-            {'patients': patients, 'list_ages': list_ages},
+            {'result': result_query},
         )
         return HttpResponse(template, status=200)
 
