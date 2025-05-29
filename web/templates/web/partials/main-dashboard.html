@@ -20,10 +20,49 @@
 
         <nav id="filter-data">
             <ul>
-                <li><a hx-post="#">Filtrar por data</a></li>
-                <li><a hx-post="#">7 dias</a></li>
-                <li><a hx-post="#">15 dias</a></li>
-                <li><a hx-post="#">1 mês</a></li>
+                <li>
+                    <button
+                        type="submit"
+                        name="filter-data-exam"
+                        hx-get="#"
+                        hx-target="#patients"
+                    >
+                        Filtar por data
+                    </button>
+                </li>
+                <li>
+                    <button
+                        type="submit"
+                        name="last-7-days"
+                        hx-get="{% url 'find-patients-by-data-exam' %}"
+                        hx-target="#patients"
+                        value="1"
+                    >
+                        7 dias
+                    </button>
+                </li>
+                <li>
+                    <button
+                        type="submit"
+                        name="last-15-days"
+                        hx-get="{% url 'find-patients-by-data-exam' %}"
+                        hx-target="#patients"
+                        value="1"
+                    >
+                        15 dias
+                    </button>
+                </li>
+                <li>
+                    <button
+                        type="submit"
+                        name="last-1-month"
+                        hx-get="{% url 'find-patients-by-data-exam' %}"
+                        hx-target="#patients"
+                        value="1"
+                    >
+                        1 mês
+                    </button>
+                </li>
             </ul>
         </nav>
 
