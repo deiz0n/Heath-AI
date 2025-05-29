@@ -365,6 +365,9 @@ class FindPatientsRequest(LoginRequiredMixin, View):
         )
 
 class FindPatientsByExamDate(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+
     def get(self, request):
         today = date.today()
         date_start = None
