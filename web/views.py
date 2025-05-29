@@ -357,10 +357,6 @@ class FindPatientsRequest(LoginRequiredMixin, View):
                     }
                 })
 
-        template = render_to_string(
-            'web/partials/list-patients.html',
-            {'result': result_query},
-        )
         return render(
             request,
             'web/partials/list-patients.html',
@@ -372,6 +368,7 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
     def get(self, request):
         today = date.today()
         date_start = None
+        result_query = []
 
         if request.GET.get('last-7-days'):
             date_start = today - timedelta(days=7)
@@ -385,13 +382,35 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
                 exame__data__date__range=(date_start, today)
             ).distinct()
         else:
-            patients = Paciente.objects.none()
+            return
 
-        list_ages = [to_age(p.data_nascimento) for p in patients]
+        for patient in patients:
+            for exam in patient.exame.all():
+                result_query.append({
+                    "patient": {
+                        "id": patient.id,
+                        "name": f"{patient.nome} {patient.sobrenome}",
+                        "cpf": patient.cpf,
+                        "age": to_age(patient.data_nascimento),
+                        "address": patient.endereco
+                    },
+                    "clinician": {
+                        "id": exam.clinico.id,
+                        "name": f"{exam.clinico.nome} {exam.clinico.sobrenome}",
+                        "crm": exam.clinico.crm,
+                    },
+                    "exam": {
+                        "id": exam.id,
+                        "date": exam.data.strftime('%d/%m/%Y'),
+                        "x_ray": exam.raio_x.id if exam.raio_x else None,
+                        "resonance": exam.raio_x.id if exam.raio_x else None,
+                    }
+                })
+
         return render(
             request,
             'web/partials/list-patients.html',
-            {'patients': patients, 'list_ages': list_ages},
+            {'result': result_query},
             status=200
         )
 
