@@ -31,9 +31,22 @@
 
 #search-bar-dashboard button[type=submit] {
     border: none;
-    background-color: transparent;
     position: relative;
-    left: -2.3rem;
+    background-color: #0360D9;
+    padding: .3rem 1rem;
+    color: #fff;
+    font-weight: 500;
+    font-family: "IBM Plex Sans";
+    font-size: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    outline: none;
+}
+
+#search-bar-dashboard button[type=submit]:hover {
+    background-color: #0346A2;
 }
 
 #btn-search {
@@ -66,18 +79,6 @@
 
 #filter-data ul li {
     list-style: none;
-    background-color: #0360D9;
-    padding: .3rem 1rem;
-    color: #fff;
-    font-weight: 500;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: .3s ease-in-out;
-    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
-}
-
-#filter-data ul li:hover {
-    background-color: #0346A2;
 }
 
 #dashboard-modal {
