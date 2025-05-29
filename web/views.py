@@ -361,7 +361,12 @@ class FindPatientsRequest(LoginRequiredMixin, View):
             'web/partials/list-patients.html',
             {'result': result_query},
         )
-        return HttpResponse(template, status=200)
+        return render(
+            request,
+            'web/partials/list-patients.html',
+            {'result': result_query},
+            status=200
+        )
 
 class FindPatientsByExamDate(LoginRequiredMixin, View):
     def get(self, request):
@@ -383,11 +388,12 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
             patients = Paciente.objects.none()
 
         list_ages = [to_age(p.data_nascimento) for p in patients]
-        template = render_to_string(
+        return render(
+            request,
             'web/partials/list-patients.html',
             {'patients': patients, 'list_ages': list_ages},
+            status=200
         )
-        return HttpResponse(template, status=200)
 
 def to_age(data) -> int:
     if not data:
