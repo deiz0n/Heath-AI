@@ -103,7 +103,7 @@ export function startModalAmbos() {
 
     const updateWidthModal = (index) => {
         if (index > 4) modalAmbos.style.width = '43%';
-        if (index <= 4) modalAmbos.style.width = '90%';
+        if (index <= 4 && modalAmbos.style.width === '43%') modalAmbos.style.width = '90%';
     }
 
     const updateProgress = () => {

@@ -65,7 +65,8 @@ container-btns-modal-info-exam {
 
 }
 
-#container-btns-modal-info-exam button {
+#container-btns-modal-info-exam button,
+#container-btns-modal-info-exam a {
     margin-top: 1rem;
     background-color: #0360D9;
     color: #fff;
@@ -77,6 +78,10 @@ container-btns-modal-info-exam {
     border-radius: 15px;
     cursor: pointer;
     transition: .3s all ease-in-out;
+}
+
+#container-btns-modal-info-exam a {
+    text-decoration: none;
 }
 
 #container-btns-modal-info-exam button:hover {
