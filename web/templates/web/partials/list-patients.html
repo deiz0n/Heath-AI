@@ -74,7 +74,7 @@
                     Exame:
                 </span>
                 {% if data.exam.x_ray and data.exam.resonance %}
-                	Raio X e Ressonância
+                	Raio X <span style="color: #2E2E2E">e</span> Ressonância
                     {% elif data.exam.x_ray and not data.exam.resonance %}
                         Raio X
                         {% elif not data.exam.x_ray and data.exam.resonance %}
