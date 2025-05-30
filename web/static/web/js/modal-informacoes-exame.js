@@ -6,7 +6,11 @@ function initializeEventListeners() {
 
     if (patientDataContainer.length) {
         patientDataContainer.forEach(patientData => {
-            patientData.removeEventListener('click', openModalInfoExam);
+            patientData.removeEventListener('click', function () {
+                setUrlButtons(this);
+                setDataModalInfoExam(this);
+                openModalInfoExam();
+            });
             patientData.addEventListener('click', function () {
                 setUrlButtons(this);
                 setDataModalInfoExam(this);
@@ -56,7 +60,22 @@ function initializeEventListeners() {
         const examId = patientData.dataset.examId
         const btnDownload = document.querySelector('#modal-info-btn-download');
 
-        if (btnDownload && examId) btnDownload.href = '/download_prontuario/' + examId;
+        if (btnDownload && examId && existsExamRecord(patientData))
+            btnDownload.href = '/download_record/' + examId;
+    }
+
+    function existsExamRecord(patientData) {
+        const examRecord = patientData.dataset.examRecord;
+        const btnDownload = document.querySelector('#modal-info-btn-download');
+
+        if (examRecord !== 'None') {
+            btnDownload.textContent = 'Baixar prontuário';
+            return true;
+        }
+        else {
+            btnDownload.textContent = "Enviar prontuário";
+            return false;
+        }
     }
 }
 
