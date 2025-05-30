@@ -408,6 +408,7 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
                         "date": exam.data.strftime('%d/%m/%Y'),
                         "x_ray": exam.raio_x.id if exam.raio_x else None,
                         "resonance": exam.raio_x.id if exam.raio_x else None,
+                        "record": exam.prontuario if exam.prontuario else None
                     }
                 })
 
@@ -419,7 +420,7 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
         )
 
 @login_required(login_url='/login/', redirect_field_name='next')
-def get_prontuatio_by_exam_id(self, id):
+def get_record_by_exam_id(self, id):
     try:
         multimodal = MultiModal.objects.get(id=id)
         prontuario = multimodal.prontuario
@@ -428,6 +429,7 @@ def get_prontuatio_by_exam_id(self, id):
         return FileResponse(prontuario.open('rb'), as_attachment=True, filename=prontuario.name)
     except MultiModal.DoesNotExist:
         raise Http404("Exame não encontrado.")
+
 
 def to_age(data) -> int:
     if not data:
