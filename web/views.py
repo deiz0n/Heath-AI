@@ -385,10 +385,11 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
                 exame__data__date__range=(date_start, today)
             ).distinct()
         else:
-            return
+            return None
 
         for patient in patients:
-            for exam in patient.exame.all():
+            exams = patient.exame.filter(data__date__range=(date_start, today))
+            for exam in exams:
                 result_query.append({
                     "patient": {
                         "id": patient.id,
