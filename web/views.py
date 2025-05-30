@@ -8,9 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponse
-from django.template.loader import render_to_string
 from django.views import View
 from django.db.models import Q
+from django.http import FileResponse, Http404
 
 from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico, Paciente
 from .forms import ClinicianForm
@@ -416,6 +416,17 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
             {'result': result_query},
             status=200
         )
+
+@login_required(login_url='/login/', redirect_field_name='next')
+def get_prontuatio_by_exam_id(self, id):
+    try:
+        multimodal = MultiModal.objects.get(id=id)
+        prontuario = multimodal.prontuario
+        if not prontuario:
+            raise Http404("Prontuário não encontrado.")
+        return FileResponse(prontuario.open('rb'), as_attachment=True, filename=prontuario.name)
+    except MultiModal.DoesNotExist:
+        raise Http404("Exame não encontrado.")
 
 def to_age(data) -> int:
     if not data:
