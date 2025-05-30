@@ -354,6 +354,7 @@ class FindPatientsRequest(LoginRequiredMixin, View):
                         "date": exam.data.strftime('%d/%m/%Y'),
                         "x_ray": exam.raio_x.id if exam.raio_x else None,
                         "resonance": exam.raio_x.id if exam.raio_x else None,
+                        "record": exam.prontuario if exam.prontuario else None
                     }
                 })
 
