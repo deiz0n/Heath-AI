@@ -359,7 +359,7 @@ class FindPatientsRequest(LoginRequiredMixin, View):
 
         return render(
             request,
-            'web/partials/list-patients.html',
+            'web/partials/main-dashboard-patients.html',
             {'result': result_query},
             status=200
         )
@@ -413,7 +413,7 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
 
         return render(
             request,
-            'web/partials/list-patients.html',
+            'web/partials/main-dashboard-patients.html',
             {'result': result_query},
             status=200
         )
