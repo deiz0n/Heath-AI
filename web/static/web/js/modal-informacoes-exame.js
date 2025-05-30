@@ -44,7 +44,7 @@ function initializeEventListeners() {
 
         document.querySelector(('#patient-name')).textContent = datasets.patientName;
         document.querySelector(('#patient-cpf')).textContent = datasets.patientCpf;
-        document.querySelector(('#patient-age')).textContent = datasets.patientAge;
+        document.querySelector(('#patient-age')).textContent = `${datasets.patientAge} anos`;
         document.querySelector(('#patient-address')).textContent = datasets.patientAddress;
         document.querySelector(('#clinician-name')).textContent = datasets.clinicianName;
         document.querySelector(('#clinician-crm')).textContent = datasets.clinicianCrm;
@@ -56,9 +56,8 @@ function initializeEventListeners() {
         const examId = patientData.dataset.examId
         const btnDownload = document.querySelector('#modal-info-btn-download');
 
-       if (btnDownload && examId) btnDownload.href = '/download_prontuario/' + examId;
+        if (btnDownload && examId) btnDownload.href = '/download_prontuario/' + examId;
     }
-
 }
 
 document.addEventListener('DOMContentLoaded', initializeEventListeners);
