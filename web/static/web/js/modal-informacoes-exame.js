@@ -8,6 +8,7 @@ function initializeEventListeners() {
         patientDataContainer.forEach(patientData => {
             patientData.removeEventListener('click', openModalInfoExam);
             patientData.addEventListener('click', function () {
+                setUrlButtons(this);
                 setDataModalInfoExam(this);
                 openModalInfoExam();
             });
@@ -49,6 +50,13 @@ function initializeEventListeners() {
         document.querySelector(('#clinician-crm')).textContent = datasets.clinicianCrm;
         document.querySelector(('#exam-type')).textContent = datasets.examType;
         document.querySelector(('#exam-data')).textContent = datasets.examData;
+    }
+
+    function setUrlButtons(patientData) {
+        const examId = patientData.dataset.examId
+        const btnDownload = document.querySelector('#modal-info-btn-download');
+
+       if (btnDownload && examId) btnDownload.href = '/download_prontuario/' + examId;
     }
 
 }
