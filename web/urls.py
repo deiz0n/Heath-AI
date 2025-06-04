@@ -1,7 +1,19 @@
 from django.shortcuts import redirect
 from django.urls import path
 
-from .views import render_home, UploadMultiModalRequestView, render_login, render_create_user, LoginRequestView, logout_view, CreateUserView, render_dashboard, FindPatientsRequest, FindPatientsByExamDate, RecordByExamIdRequest
+from .views import (
+    render_home,
+    UploadMultiModalRequestView,
+    render_login,
+    render_create_user,
+    LoginRequestView,
+    logout_view,
+    CreateUserView,
+    render_dashboard,
+    FindPatientsRequest,
+    FindPatientsByExamDate,
+    RecordByExamIdRequest
+)
 
 urlpatterns = [
     path(
