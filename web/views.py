@@ -18,6 +18,7 @@ from .forms import ClinicianForm
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 
+
 @login_required(login_url='/login/', redirect_field_name='next')
 def render_home(request):
     if request.headers.get('Hx-Request') == 'true':
@@ -32,6 +33,7 @@ def render_home(request):
         status=200
     )
 
+
 def render_login(request):
     return render(
         request,
@@ -39,11 +41,13 @@ def render_login(request):
         status=200
     )
 
+
 def logout_view(request):
     logout(request)
     response = HttpResponse(status=204)
     response['HX-Redirect'] = '/auth'
     return response
+
 
 def render_create_user(request):
     return render(
@@ -51,6 +55,7 @@ def render_create_user(request):
         'web/pages/cadastro-usuario.html',
         status=200
     )
+
 
 @login_required(login_url='/login/', redirect_field_name='next')
 def render_dashboard(request):
@@ -65,6 +70,7 @@ def render_dashboard(request):
         'web/pages/dashboard.html',
         status=200
     )
+
 
 class CreateUserView(View):
     def post(self, request):
@@ -189,6 +195,7 @@ class CreateUserView(View):
 
         return None
 
+
 class LoginRequestView(View):
     def post(self, request):
         data = request.POST
@@ -220,6 +227,7 @@ class LoginRequestView(View):
             'web/pages/login.html',
             status=200
         )
+
 
 class UploadMultiModalRequestView(LoginRequiredMixin, View):
     login_url = '/login/'
@@ -315,6 +323,7 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
             status=200
         )
 
+
 class FindPatientsRequest(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'next'
@@ -364,6 +373,7 @@ class FindPatientsRequest(LoginRequiredMixin, View):
             {'result': result_query},
             status=200
         )
+
 
 class FindPatientsByExamDate(LoginRequiredMixin, View):
     login_url = '/login/'
@@ -420,6 +430,7 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
             status=200
         )
 
+
 @login_required(login_url='/login/', redirect_field_name='next')
 def get_record_by_exam_id(self, id):
     try:
@@ -430,6 +441,32 @@ def get_record_by_exam_id(self, id):
         return FileResponse(prontuario.open('rb'), as_attachment=True, filename=prontuario.name)
     except MultiModal.DoesNotExist:
         raise Http404("Exame não encontrado.")
+
+
+class RecordByExamIdRequest(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+
+    def get(self, request, id):
+        multimodal = MultiModal.objects.get(id=id)
+        record = multimodal.prontuario
+        if record:
+            return FileResponse(
+                record.open('rb'),
+                as_attachment=True,
+                filename=record.name,
+                status=200
+            )
+        return None
+
+    def post(self, request, id):
+        multimodal = MultiModal.objects.get(id=id)
+        record = request.FILES.get('prontuario')
+
+        if record:
+            multimodal.prontuario = record
+            return HttpResponse(status=200)
+        return None
 
 
 def to_age(data) -> int:
