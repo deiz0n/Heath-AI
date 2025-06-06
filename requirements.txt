@@ -3,7 +3,6 @@ certifi==2025.1.31
 charset-normalizer==3.4.1
 colorclass==2.2.2
 Django==5.1.6
-djangorestframework==3.15.2
 docopt==0.6.2
 dotenv==0.9.9
 idna==3.10
