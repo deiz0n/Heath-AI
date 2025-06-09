@@ -53,6 +53,7 @@
     font-weight: 500;
     border: 2px solid #2E2E2E;
     padding: 0.4rem 1.3rem;
+    margin-top: -6px;
     border-radius: 16px;
     font-size: 18px;
     transition: .3s all ease-in-out;
