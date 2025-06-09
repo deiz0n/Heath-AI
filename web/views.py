@@ -24,12 +24,14 @@ def render_home(request):
     if request.headers.get('Hx-Request') == 'true':
         return render(
             request,
-            'web/partials/main.html',
+            'web/pages/pagina-inicial.html',
+            {'current_page': 'home'},
             status=200
         )
     return render(
         request,
         'web/pages/pagina-inicial.html',
+        {'current_page': 'home'},
         status=200
     )
 
@@ -62,12 +64,14 @@ def render_dashboard(request):
     if request.headers.get('Hx-Request') == 'true':
         return render(
             request,
-            'web/partials/main-dashboard.html',
+            'web/pages/dashboard.html',
+            {'current_page': 'dashboard'},
             status=200
         )
     return render(
         request,
         'web/pages/dashboard.html',
+        {'current_page': 'dashboard'},
         status=200
     )
 
