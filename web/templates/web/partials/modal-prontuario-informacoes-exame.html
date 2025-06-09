@@ -1,0 +1,29 @@
+{% load static %}
+
+<form id="prontuario-modal-info-form" hx-post="" enctype="multipart/form-data">>
+    {% csrf_token %}
+    <div id="modal-prontuario-container-informacoes-exame">
+
+          <h5 class="modal-titulo">
+            Selecione o arquivo do <span>Prontuário</span>
+          </h5>
+          <button style="border: none;">
+            <i class="btn-fechar material-icons">close</i>
+          </button>
+          <div id="input-container-prontuario-informacoes-exame">
+            <input type="file" id="input-prontuario-informacoes-exame" name="prontuario">
+            <div class="custom-input-prontuario">
+              <img
+                class="icone-upload"
+                src="{% static 'web/assets/images/upload-icon.svg' %}"
+                alt="Ícone de download"
+              />
+              Selecione o arquivo
+            </div>
+          </div>
+          <p id="valor-input-prontuario-info-exam" class="valor-input">Nenhum arquivo selecionado</p>
+          <div class="btn-container">
+            <button type="submit" class="btn-primary" id="btn-submit-raiox">Enviar</button>
+          </div>
+    </div>
+</form>
