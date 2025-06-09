@@ -403,8 +403,7 @@ body {
 #linha {
     width: 90%;
     border: 1px solid #fff;
-    margin: 0 auto;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem auto;
 }
 
 .footer-container p {
