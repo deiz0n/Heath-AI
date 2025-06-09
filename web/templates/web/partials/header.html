@@ -3,18 +3,18 @@
 
   <nav id="navbar-container">
     <ul>
-      <li id="selecionado">
+      <li {% if current_page == 'home' %}id="selecionado"{% endif %}>
           <a
               hx-get="{% url 'home' %}"
-              hx-target=".main-container"
+              hx-target=".page-container"
               hx-push-url="true">
               Página Inicial
           </a>
       </li>
-      <li>
+      <li {% if current_page == 'dashboard' %}id="selecionado"{% endif %}>
           <a
               hx-get="{% url 'dashboard' %}"
-              hx-target=".main-container"
+              hx-target=".page-container"
               hx-push-url="true">
               Dashboard
           </a>

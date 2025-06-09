@@ -61,7 +61,7 @@ function initializeEventListeners() {
         const btnDownload = document.querySelector('#modal-info-btn-download');
 
         if (btnDownload && examId && existsExamRecord(patientData))
-            btnDownload.href = '/download_record/' + examId;
+            btnDownload.href = '/record_by_exam_id/' + examId;
     }
 
     function existsExamRecord(patientData) {
@@ -74,6 +74,7 @@ function initializeEventListeners() {
         }
         else {
             btnDownload.textContent = "Enviar prontuário";
+            btnDownload.setAttribute('data-action', 'upload');
             return false;
         }
     }
