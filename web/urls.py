@@ -12,7 +12,9 @@ from .views import (
     render_dashboard,
     FindPatientsRequest,
     FindPatientsByExamDate,
-    RecordByExamIdRequest
+    RecordByExamIdRequest,
+    GetXRayListByPatient,
+    GetResonanceListByPatient
 )
 
 urlpatterns = [
@@ -74,5 +76,15 @@ urlpatterns = [
         'record_by_exam_id/<uuid:id>',
         view=RecordByExamIdRequest.as_view(),
         name='record-by-exam-id'
+    ),
+    path(
+        'get_x_ray_by_exam_id/<uuid:id>',
+        GetXRayListByPatient.as_view(),
+        name='get_x_ray_by_exam_id'
+    ),
+    path(
+        'get_resonance_by_exam_id/<uuid:id>',
+        GetResonanceListByPatient.as_view(),
+        name='get_resonance_by_exam_id'
     )
 ]

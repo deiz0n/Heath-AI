@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.db.models import Q
 from django.http import FileResponse, Http404
+from django.views.generic import ListView
 
 from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico, Paciente
 from .forms import ClinicianForm
@@ -472,6 +473,43 @@ class RecordByExamIdRequest(LoginRequiredMixin, View):
             return HttpResponse(status=200)
         return None
 
+class GetXRayListByPatient(ListView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+
+    model = RaioX
+    template_name = 'web/partials/imagens-raiox.html'
+    context_object_name = 'x_ray_list'
+
+    def get_queryset(self):
+        exam_id = self.kwargs.get('id')
+        try:
+            multimodal = MultiModal.objects.get(id=exam_id)
+            if multimodal.raio_x:
+                return RaioX.objects.filter(id=multimodal.raio_x.id)
+            else:
+                return RaioX.objects.none()
+        except MultiModal.DoesNotExist:
+            return RaioX.objects.none()
+
+class GetResonanceListByPatient(ListView):
+    login_url = '/login/'
+    redirect_field_name = 'next'
+
+    model = Ressonancia
+    template_name = 'web/partials/imagens-ressonancia.html'
+    context_object_name = 'resonance_list'
+
+    def get_queryset(self):
+        exam_id = self.kwargs.get('id')
+        try:
+            multimodal = MultiModal.objects.get(id=exam_id)
+            if multimodal.ressonancia:
+                return Ressonancia.objects.filter(id=multimodal.ressonancia.id)
+            else:
+                return Ressonancia.objects.none()
+        except MultiModal.DoesNotExist:
+            return Ressonancia.objects.none()
 
 def to_age(data) -> int:
     if not data:
