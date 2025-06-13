@@ -1,0 +1,25 @@
+<div id="modal-tipo-visualizacao-imagens">
+    <div style="display: flex">
+    <button style="border: none">
+      <i class="btn-fechar material-icons">close</i>
+    </button>
+    <h5 class="modal-titulo">Selecione uma das opções para visualização:</h5>
+  </div>
+
+    <nav id="opcoes">
+    <ul>
+      <li>
+          <button
+              hx-target=".list-images"
+              id="btn-x-ray"
+              type="submit"
+          >
+              Raio X
+          </button>
+      </li>
+      <li><button id="btn-resonance">Ressonância</button></li>
+    </ul>
+  </nav>
+</div>
+
+{% include 'web/partials/modal-visualizao-imagens.html' %}
