@@ -29,7 +29,7 @@
     font-size: 18px;
 }
 
-#filter-data button[type=submit] {
+.filter-data button[type=submit] {
     border: none;
     position: relative;
     background-color: #0360D9;
@@ -63,21 +63,21 @@
     background-color: #c7c4c4;
 }
 
-#filter-data {
+.filter-data {
     align-items: center;
     width: 400px;
     margin-top: 1rem;
     position: relative;
 }
 
-#filter-data ul {
+.filter-data ul {
     display: flex;
     justify-content: space-between;
     margin-inline: .2rem;
     gap: .3rem;
 }
 
-#filter-data ul li {
+.filter-data ul li {
     list-style: none;
 }
 
