@@ -22,6 +22,8 @@ from dateutil.relativedelta import relativedelta
 
 @login_required(login_url='/login/', redirect_field_name='next')
 def render_home(request):
+    if request.headers.get('Target') == 'teste':
+        redirect('find-patients')
     if request.headers.get('Hx-Request') == 'true':
         return render(
             request,
@@ -452,7 +454,11 @@ class RecordByExamIdRequest(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'next'
 
-    def get(self, request, id):
+    def get(self, request):
+        id = request.GET.get("id")
+        if not id:
+            return None
+
         multimodal = MultiModal.objects.get(id=id)
         record = multimodal.prontuario
         if record:
@@ -464,14 +470,19 @@ class RecordByExamIdRequest(LoginRequiredMixin, View):
             )
         return None
 
-    def post(self, request, id):
+    def post(self, request):
+        id = request.POST.get("id")
+        if not id:
+            return None
+
         multimodal = MultiModal.objects.get(id=id)
         record = request.FILES.get('prontuario')
-
         if record:
             multimodal.prontuario = record
-            return HttpResponse(status=200)
+            multimodal.save()
+            return redirect('find-patients')
         return None
+
 
 class GetXRayListByPatient(ListView):
     login_url = '/login/'

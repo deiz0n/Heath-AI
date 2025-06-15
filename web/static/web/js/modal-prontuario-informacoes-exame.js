@@ -12,19 +12,14 @@ function initializeEventListeners() {
     const fileName = document.querySelector('#valor-input-prontuario-info-exam');
     const input = document.querySelector('#input-prontuario-informacoes-exame');
 
-    input.addEventListener('change', (e) => {
-        updateFileName(e.target)
-    })
-
-    form.addEventListener('submit', function (e) {
-        setUrlForm();
-        console.log(e.target.getAttribute('hx-post'));
-    })
+    if (input)
+        input.addEventListener('change', (e) => {
+            updateFileName(e.target)
+        })
 
     if (btnOpen) {
         btnOpen.removeEventListener('click', handleBtnOpenClick);
         btnOpen.addEventListener('click', function (e) {
-            setUrlForm();
             handleBtnOpenClick(this, e);
         });
     }
@@ -44,6 +39,7 @@ function initializeEventListeners() {
     function openModalProntuarioInfoExam() {
         closeCurrentModal(modalInfoExam.id);
         modalProntuarioInfoExam.style.display = 'block';
+        console.log(form)
     }
 
     function closeModalProntuarioInfoExam() {
@@ -51,12 +47,11 @@ function initializeEventListeners() {
         background.classList.remove('show');
     }
 
-    function setUrlForm() {
-        const examId = sessionStorage.getItem('selectedExamId');
-        if (!examId) return;
-        form.setAttribute('hx-post', `/record_by_exam_id/${examId}`);
-        console.log(form.getAttribute('hx-post'));
-    }
+    // function setUrlForm() {
+    //     const examId = sessionStorage.getItem('selectedExamId');
+    //     if (!examId) return;
+    //     form.setAttribute('hx-post', `{% url 'record_by_exam_id/${examId}' %}`);
+    // }
 
     function updateFileName(input) {
         const value = input.value;

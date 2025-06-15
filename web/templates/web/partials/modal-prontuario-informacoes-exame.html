@@ -1,6 +1,11 @@
 {% load static %}
 
-<form id="prontuario-modal-info-form" hx-post="" enctype="multipart/form-data">>
+<form
+    id="prontuario-modal-info-form"
+    hx-post="{% url 'record-by-exam-id' %}"
+    hx-vals='js:{ id: document.querySelector("#modal-info-btn-show-images").dataset.examId }'
+    enctype="multipart/form-data"
+    >
     {% csrf_token %}
     <div id="modal-prontuario-container-informacoes-exame">
 

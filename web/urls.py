@@ -73,7 +73,7 @@ urlpatterns = [
         name='find-patients-by-data-exam'
     ),
     path(
-        'record_by_exam_id/<uuid:id>',
+        'record_by_exam_id/',
         view=RecordByExamIdRequest.as_view(),
         name='record-by-exam-id'
     ),

@@ -43,7 +43,8 @@ function initializeEventListeners() {
             clinicianName: patientData.dataset.clinicianName,
             clinicianCrm: patientData.dataset.clinicianCrm,
             examType: patientData.dataset.examType,
-            examData: patientData.dataset.exam
+            examData: patientData.dataset.exam,
+            examId: patientData.dataset.examId
         };
 
         document.querySelector(('#patient-name')).textContent = datasets.patientName;
@@ -54,14 +55,16 @@ function initializeEventListeners() {
         document.querySelector(('#clinician-crm')).textContent = datasets.clinicianCrm;
         document.querySelector(('#exam-type')).textContent = datasets.examType;
         document.querySelector(('#exam-data')).textContent = datasets.examData;
+        document.querySelector('#modal-info-btn-show-images').dataset.examId = datasets.examId;
     }
 
     function setUrlButtons(patientData) {
-        const examId = patientData.dataset.examId
+        const examId = patientData.dataset.examId;
         const btnDownload = document.querySelector('#modal-info-btn-download');
 
-        if (btnDownload && examId && existsExamRecord(patientData))
-            btnDownload.href = '/record_by_exam_id/' + examId;
+        if (btnDownload && examId && existsExamRecord(patientData)) {
+            btnDownload.href = `/record_by_exam_id/${examId}`;
+        }
     }
 
     function existsExamRecord(patientData) {
