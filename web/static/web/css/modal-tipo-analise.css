@@ -5,6 +5,7 @@
     padding: 1rem;
     border-radius: 20px;
     transform: translateY(-30px);
+    display: none;
 }
 
 #modal-tipo-imagem-container h5 {
