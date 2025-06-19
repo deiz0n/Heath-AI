@@ -1,0 +1,45 @@
+{% load static %}
+
+<div style="display: none" id="modal-visualizacao-imagens-container">
+    <div style="display: flex">
+        <button style="border: none">
+            <i class="btn-fechar material-icons">close</i>
+        </button>
+        <h5 class="modal-titulo">Visualização de imagens <span>2D</span></h5>
+    </div>
+
+    <nav class="filter-data" id="filter-data-view-images">
+        <ul>
+            <li>
+                <button
+                    type="submit"
+                    id="filter-img-x-ray"
+                    hx-get="{% url 'get_x_ray_by_exam_id' %}"
+                    hx-vals='js:{ id: document.querySelector("#modal-info-btn-show-images").dataset.examId }'
+                    hx-target=".container-img"
+                >
+                    Raio X
+                </button>
+            </li>
+            <li>
+                <button
+                    type="submit"
+                    id="filter-img-resonance"
+                    hx-get="{% url 'get_resonance_by_exam_id' %}"
+                    hx-vals='js:{ id: document.querySelector("#modal-info-btn-show-images").dataset.resonanceId }'
+                    hx-target=".container-img"
+                >
+                    Ressonância
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="images-container-render">
+        {% include 'web/partials/imagens-raio-x.html' %}
+    </div>
+
+    <div class="btn-container">
+        <button type="submit" class="btn-primary" id="btn-close-botton-modal-view-image">Fechar</button>
+    </div>
+</div>
