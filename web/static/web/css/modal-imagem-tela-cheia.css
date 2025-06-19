@@ -1,0 +1,23 @@
+#modal-img-fullscreen {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 11;
+    transition: opacity 0.2s;
+    cursor: zoom-out;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#img-fullscreen {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+    cursor: zoom-in;
+}
