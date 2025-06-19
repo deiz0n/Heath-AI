@@ -8,8 +8,6 @@ function initializeModalTypeView() {
    const background = document.querySelector('#modal-backdrop');
    const modalInfoExam = document.querySelector('#modal-info-exam-container');
 
-   console.log(modalTypeView)
-
    if (btnOpenModalTypeView) {
        btnOpenModalTypeView.removeEventListener('click', openModalTypeView)
        btnOpenModalTypeView.addEventListener('click', openModalTypeView)
