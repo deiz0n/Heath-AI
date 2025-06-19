@@ -13,8 +13,8 @@ from .views import (
     FindPatientsRequest,
     FindPatientsByExamDate,
     RecordByExamIdRequest,
-    GetXRayListByPatient,
-    GetResonanceListByPatient
+    get_ressonance_by_exam_id,
+    GetXRayListByPatient
 )
 
 urlpatterns = [
@@ -78,13 +78,13 @@ urlpatterns = [
         name='record-by-exam-id'
     ),
     path(
-        'get_x_ray_by_exam_id/<uuid:id>',
+        'get_x_ray_by_exam_id/',
         GetXRayListByPatient.as_view(),
         name='get_x_ray_by_exam_id'
     ),
     path(
-        'get_resonance_by_exam_id/<uuid:id>',
-        GetResonanceListByPatient.as_view(),
+        'get_resonance_by_exam_id/',
+        get_ressonance_by_exam_id,
         name='get_resonance_by_exam_id'
     )
 ]

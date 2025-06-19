@@ -425,7 +425,7 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
                         "id": exam.id,
                         "date": exam.data.strftime('%d/%m/%Y'),
                         "x_ray": exam.raio_x.id if exam.raio_x else None,
-                        "resonance": exam.raio_x.id if exam.raio_x else None,
+                        "resonance": exam.ressonancia.id if exam.ressonancia else None,
                         "record": exam.prontuario if exam.prontuario else None
                     }
                 })
@@ -484,16 +484,17 @@ class RecordByExamIdRequest(LoginRequiredMixin, View):
         return None
 
 
-class GetXRayListByPatient(ListView):
+class GetXRayListByPatient(LoginRequiredMixin, ListView):
     login_url = '/login/'
     redirect_field_name = 'next'
-
     model = RaioX
-    template_name = 'web/partials/imagens-raiox.html'
+    template_name = 'web/partials/imagens-raio-x.html'
     context_object_name = 'x_ray_list'
 
     def get_queryset(self):
-        exam_id = self.kwargs.get('id')
+        exam_id = self.request.GET.get('id')
+        if not exam_id:
+            return RaioX.objects.none()
         try:
             multimodal = MultiModal.objects.get(id=exam_id)
             if multimodal.raio_x:
@@ -501,26 +502,25 @@ class GetXRayListByPatient(ListView):
             else:
                 return RaioX.objects.none()
         except MultiModal.DoesNotExist:
-            return RaioX.objects.none()
+            return None
 
-class GetResonanceListByPatient(ListView):
-    login_url = '/login/'
-    redirect_field_name = 'next'
+@login_required(login_url='/login/', redirect_field_name='next')
+def get_ressonance_by_exam_id(request):
+    id = request.GET.get('id')
+    print(str(id))
+    if not id:
+        return HttpResponse(status=404)
+    model = Ressonancia.objects.get(id=id)
+    if model:
+        print(model.imagens)
+        return render(
+            request,
+            'web/partials/imagens-ressonancia.html',
+            context={"resonance": model},
+            status=200
+        )
+    return HttpResponse(status=404)
 
-    model = Ressonancia
-    template_name = 'web/partials/imagens-ressonancia.html'
-    context_object_name = 'resonance_list'
-
-    def get_queryset(self):
-        exam_id = self.kwargs.get('id')
-        try:
-            multimodal = MultiModal.objects.get(id=exam_id)
-            if multimodal.ressonancia:
-                return Ressonancia.objects.filter(id=multimodal.ressonancia.id)
-            else:
-                return Ressonancia.objects.none()
-        except MultiModal.DoesNotExist:
-            return Ressonancia.objects.none()
 
 def to_age(data) -> int:
     if not data:
