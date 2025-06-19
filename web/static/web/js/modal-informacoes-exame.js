@@ -44,7 +44,8 @@ function initializeEventListeners() {
             clinicianCrm: patientData.dataset.clinicianCrm,
             examType: patientData.dataset.examType,
             examData: patientData.dataset.exam,
-            examId: patientData.dataset.examId
+            examId: patientData.dataset.examId,
+            resonance: patientData.dataset.examResonance
         };
 
         document.querySelector(('#patient-name')).textContent = datasets.patientName;
@@ -56,6 +57,7 @@ function initializeEventListeners() {
         document.querySelector(('#exam-type')).textContent = datasets.examType;
         document.querySelector(('#exam-data')).textContent = datasets.examData;
         document.querySelector('#modal-info-btn-show-images').dataset.examId = datasets.examId;
+        document.querySelector('#modal-info-btn-show-images').dataset.resonanceId = datasets.resonance;
     }
 
     function setUrlButtons(patientData) {
