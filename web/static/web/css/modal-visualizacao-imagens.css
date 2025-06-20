@@ -28,7 +28,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 }
 
 #images-container-render {
@@ -47,7 +47,6 @@
 .image-view p {
     margin: 1rem auto 0 auto;
     height: min-content;
-    margin: 1rem auto 0 auto;
     cursor: pointer;
 }
 
