@@ -9,6 +9,7 @@ function initializeModalViewImages() {
     const modalViewImagesOptions = document.querySelector('#modal-tipo-visualizacao-container');
     const modalViewImages = document.querySelector('#modal-visualizacao-imagens-container');
     const backgroundModal = document.querySelector('#modal-backdrop');
+    const containerImg = document.querySelector('.container-img');
 
     if (btnOpenModalViewImages2D) {
         btnOpenModalViewImages2D.removeEventListener('click', openModalViewImages);
@@ -33,6 +34,8 @@ function initializeModalViewImages() {
     function closeModalViewImages() {
         modalViewImages.style.display = 'none';
         backgroundModal.classList.remove('show');
+
+        if (containerImg) containerImg.innerHTML = '<p>Nenhum tipo de imagem foi selecionado</p>';
     }
 }
 
