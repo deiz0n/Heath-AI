@@ -12,7 +12,8 @@
                     name="nome" 
                     value="{{ form_data.nome|default:'' }}"
                     required
-                    >
+                    placeholder="João"
+                >
             </div>
 
             <div class="container-input-bloco">
@@ -22,6 +23,7 @@
                     name="sobrenome" 
                     value="{{ form_data.sobrenome|default:'' }}"
                     required
+                    placeholder="da Silva"
                 >
             </div>
         </div>
@@ -42,6 +44,7 @@
                                 {% endfor %}
                             {% endif %}"
                     required
+                    placeholder="0000-XX"
                 >
             
                 <label for="cpf">CPF</label>
@@ -56,6 +59,7 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}"
+                       placeholder="XXX.XXX.XXX-XX"
                     required
                 >
             
@@ -90,6 +94,7 @@
                                 {% endfor %}
                             {% endif %}"
                     required
+                    placeholder="email@example.com"
                 >
             </div>
 
@@ -107,6 +112,7 @@
                                 {% endfor %}
                             {% endif %}"
                     required
+                    placeholder="email@example.com"
                 >
             </div>
         </div>
