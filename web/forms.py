@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import RaioX, ImagensRessonancia, Ressonancia, Clinico, MultiModal
+from .models import RaioX, ImagensRessonancia, Ressonancia, Clinico, MultiModal, Paciente
 
 class XRayForm(ModelForm):
     class Meta:
@@ -26,4 +26,8 @@ class MultiModalForm(ModelForm):
         model = MultiModal
         fields = ["raio_x", "ressonancia", "prontuario", "clinico"]
 
+class PacienteForm(ModelForm):
+    class Meta:
+        model = Paciente
+        fields = ["nome", "sobrenome", "cpf", "data_nascimento", "endereco"]
 
