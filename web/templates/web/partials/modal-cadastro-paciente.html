@@ -1,0 +1,121 @@
+{% load static %}
+
+<form id="form-register-patient" hx-post="{% url 'register_patient' %}">
+  {% csrf_token %}
+
+    <div style="display: none;" id="modal-register-patient-container">
+        <div class="modal-header">
+          <h5 class="modal-titulo">
+            Insira as informações do paciente
+          </h5>
+          <button><i id="btn-close-raiox" class="btn-fechar material-icons">close</i></button>
+        </div>
+
+        <div id="modal-register-patient-container">
+          <div class="container-inline">
+            <div class="container-input-bloco">
+                <label for="nome">Nome</label>
+                <input
+                    type="text"
+                    name="nome"
+                    id="nome"
+                    value="{{ form_data.nome|default:'' }}"
+                    class="{% if messages %}
+                                {% for message in messages %}
+                                    {% if 'name-invalid' in message.extra_tags   %}
+                                        error
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}"
+                    required
+                    placeholder="João"
+                >
+            </div>
+
+            <div class="container-input-bloco">
+                <label for="sobrenome">Sobrenome</label>
+                <input
+                    type="text"
+                    name="sobrenome"
+                    id="sobrenome"
+                    value="{{ form_data.sobrenome|default:'' }}"
+                    class="{% if messages %}
+                                {% for message in messages %}
+                                    {% if 'name-invalid' in message.extra_tags   %}
+                                        error
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}"
+                    required
+                    placeholder="Silva"
+                >
+            </div>
+        </div>
+
+        {% if messages %}
+            <div id="message-cadastro">
+                {% for message in messages %}
+                    <p class="message-error">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="container-inline">
+           <div class="container-input-bloco">
+               <label for="cpf">CPF</label>
+               <input
+                   type="text"
+                   name="cpf"
+                   id="cpf"
+                   class="{% if messages %}
+                                {% for message in messages %}
+                                    {% if 'cpf-invalid' in message.extra_tags or 'cpf-exist' in message.extra_tags   %}
+                                        error
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}"
+                   value="{{ form_data.cpf|default:'' }}"
+                   required
+                   placeholder="XXX.XXX.XXX-XX"
+                   maxlength="14"
+               >
+           </div>
+
+          <div class="container-input-bloco">
+               <label for="endereco">Endereço</label>
+               <input
+                   type="text"
+                   name="endereco"
+                   id="endereco"
+                   class="{% if messages %}
+                                {% for message in messages %}
+                                    {% if 'address-invalid' in message.extra_tags %}
+                                        error
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}"
+                   value="{{form_data.endereco|default:'' }}"
+                   required
+                   placeholder="Seu endereço"
+               >
+          </div>
+        </div>
+
+        <div id="input-data-register-patient" class="container-input-bloco">
+           <label for="data_nascimento">Data de nascimento</label>
+           <input
+               type="date"
+               name="data_nascimento"
+               value="{{form_data.data_nascimento }}"
+               id="data_nascimento"
+               required
+           >
+        </div>
+      </div>
+
+      <div id="btn-container-modal-cadastro-paciente">
+        <button type="button" class="btn-secondary" id="btn-close-modal-register-patient">Fechar</button>
+        <button type="submit" class="btn-primary" id="btn-submit-modal-register-patient">Próximo</button>
+      </div>
+    </div>
+</form>

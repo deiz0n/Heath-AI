@@ -1,0 +1,34 @@
+#modal-register-patient-container {
+    background-color: #fff;
+    width: 700px;
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+#modal-register-patient-container .modal-header {
+    height: 60px;
+}
+
+#modal-register-patient-container h5 {
+    font-size: 22px;
+    margin-bottom: 2.7rem;
+}
+
+#input-data-register-patient {
+    margin: 0 auto;
+    width: 200px;
+}
+
+#modal-register-patient-container .btn-container {
+    margin-top: 1.5rem;
+    padding: 0 1rem 1rem 0;
+}
+
+#btn-container-modal-cadastro-paciente {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px 10px 0;
+}
