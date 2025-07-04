@@ -1,36 +1,32 @@
 import { closeCurrentModal } from "./script.js";
-import { modalOptions2D } from "./modal-opcoes-2d.js";
-import { modalOptions3D } from "./modal-opcoes-3d.js";
 
 const backgroundModal = document.querySelector('#modal-backdrop');
 
 const btnNextStep = document.querySelector('#btn-next-step-ressonancia');
-const btnOpenModalResonance = document.querySelectorAll('.btn-modal-ressonancia');
+const btnOpenModalResonance = document.querySelector('#btn-submit-modal-register-patient');
 const btnCloseModalResonance = document.querySelector('#modal-ressonancia-container i');
 
 const modalResonance = document.querySelector('#modal-ressonancia-container');
+const modalRegisterPatient = document.querySelector('#modal-register-patient-container');
+
 const initModalProntuarioRessonancia = document.querySelector('#modal-prontuario-container-ressonancia');
 const input = document.querySelector('#input-ressonancia');
 
 
-if (input)
-    input.addEventListener('change', (e) => {
-        updateQuantityFiles(e.target.files.length);
-    });
+input?.addEventListener('change', (e) => {
+    updateQuantityFiles(e.target.files.length);
+});
+btnOpenModalResonance?.addEventListener('click', () => {
+    const targetModal = btnOpenModalResonance.getAttribute('data-target-modal');
+    if (targetModal === 'modal-resonance-2d' || targetModal === 'modal-resonance-3d')
+        openModalResonance();
+})
+btnCloseModalResonance?.addEventListener('click', closeModalResonance);
+btnNextStep?.addEventListener('click', initModalProntuario);
 
-if (btnOpenModalResonance)
-    btnOpenModalResonance
-        .forEach(btn => btn.addEventListener('click', openModalResonance))
-
-if (btnCloseModalResonance) btnCloseModalResonance.addEventListener('click', closeModalResonance);
-
-
-if (btnNextStep) btnNextStep.addEventListener('click', initModalProntuario);
 
 function openModalResonance() {
-    if (modalOptions2D.style.display === 'block') closeCurrentModal(modalOptions2D.id);
-    if (modalOptions3D.style.display === 'block') closeCurrentModal(modalOptions3D.id);
-
+    closeCurrentModal(modalRegisterPatient.id);
     modalResonance.style.display = 'block';
 }
 

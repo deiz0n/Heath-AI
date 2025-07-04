@@ -1,5 +1,3 @@
-import { modalOptions2D } from "./modal-opcoes-2d.js";
-import { modalOptions3D } from "./modal-opcoes-3d.js";
 import { closeCurrentModal } from "./script.js";
 import {
     colorBlack,
@@ -14,16 +12,16 @@ export function startModalAmbos() {
 
     const modalAmbos = document.querySelector('#modal-ambos-container');
     const modalProntuarioAmbos = document.querySelector('#modal-prontuario-container-ambos');
+    const modalRegisterPatient = document.querySelector('#modal-register-patient-container');
 
     const labels = document.querySelectorAll('#modal-ambos-container [id^="label"]');
     const inputs = document.querySelectorAll('#modal-ambos-container input[type=file]');
     const fileNames = document.querySelectorAll('.input-value-ambos');
 
-    const btnOpenModalBoth = document.querySelector('#btn-modal-ambos');
+    const btnOpenModalBoth = document.querySelector('#btn-submit-modal-register-patient');
     const btnCloseModalBoth = document.querySelector('#btn-close-ambos');
     const btnNextStep = document.querySelector('#btn-next-step-ambos');
     const btnPrevStep = document.querySelector('#btn-prev-step-ambos');
-    const btnSubmit = document.querySelector('#btn-submit-ambos');
 
     const progressBar = document.querySelector('#modal-ambos-container #progress-bar');
     const valueProgress = document.querySelector('#modal-ambos-container #progress-title span');
@@ -33,12 +31,16 @@ export function startModalAmbos() {
     const totalSteps = steps.length - 1;
     let currentStep = 0;
 
-    btnOpenModalBoth.addEventListener('click', openModalBoth);
-    btnCloseModalBoth.addEventListener('click', closeModaBoth);
-    btnNextStep.addEventListener('click', nextElement);
-    btnPrevStep.addEventListener('click', prevElement);
+    btnOpenModalBoth?.addEventListener('click', () => {
+        const modalTarget = btnOpenModalBoth.getAttribute('data-target-modal');
+        if (modalTarget === 'modal-both')
+            openModalBoth();
+    });
+    btnCloseModalBoth?.addEventListener('click', closeModaBoth);
+    btnNextStep?.addEventListener('click', nextElement);
+    btnPrevStep?.addEventListener('click', prevElement);
 
-    inputs.forEach(input => {
+    inputs?.forEach(input => {
         input.addEventListener('change', () => {
             updateFileName(currentStep);
             console.log(input.id);
@@ -47,14 +49,9 @@ export function startModalAmbos() {
 
     function openModalBoth() {
         resetComponents();
-
-        if (modalOptions2D.style.display === 'block') closeCurrentModal(modalOptions2D.id)
-        if (modalOptions3D.style.display === 'block') closeCurrentModal(modalOptions3D.id)
-
+        closeCurrentModal(modalRegisterPatient.id)
         modalAmbos.style.display = 'block';
-
         updateEventBtnPrev();
-
         inputs[0].style.visibility = 'visible';
     }
 

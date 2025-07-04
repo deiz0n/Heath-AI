@@ -1,5 +1,4 @@
-import { modalOptions2D } from "./modal-opcoes-2d.js";
-import { modalOptions3D } from "./modal-opcoes-3d.js";
+import { closeCurrentModal } from "./script.js";
 
 import {
     colorBlack,
@@ -14,12 +13,13 @@ export function startModalRaioX() {
 
     const modalRaioX = document.querySelector('#modal-raiox-container');
     const modalProntuarioRaioX = document.querySelector('#modal-prontuario-container-raiox');
+    const modalRegisterPatient = document.querySelector('#modal-register-patient-container');
 
     const labels = document.querySelectorAll('#modal-raiox-container [id^="label"]');
     const inputs = document.querySelectorAll('#modal-raiox-container input[type=file]');
     const fileNames = document.querySelectorAll('.input-value-raiox');
 
-    const btnOpenModalXRay = document.querySelectorAll('.btn-modal-raiox');
+    const btnOpenModalXRay = document.querySelector('#btn-submit-modal-register-patient');
     const btnCloseModalXRay = document.querySelector('#btn-close-raiox');
     const btnNextStep = document.querySelector('#btn-next-step-raiox');
     const btnPrevStep = document.querySelector('#btn-prev-step-raiox');
@@ -33,7 +33,12 @@ export function startModalRaioX() {
     const totalSteps = steps.length;
     let currentStep = 0;
 
-    btnOpenModalXRay.forEach(btn => btn.addEventListener('click', openModalXRay));
+    btnOpenModalXRay?.addEventListener('click', () => {
+        const modalTarget = btnOpenModalXRay.getAttribute('data-target-modal');
+        if (modalTarget === 'modal-x-ray-2d' || modalTarget === 'modal-x-ray-target-3d')
+            openModalXRay();
+    });
+
     btnCloseModalXRay.addEventListener('click', closeModaXRay);
     btnNextStep.addEventListener('click', nextElement);
 
@@ -45,10 +50,7 @@ export function startModalRaioX() {
 
     function openModalXRay() {
         resetComponents();
-
-        if (modalOptions2D.style.display === 'block') modalOptions2D.style.display = 'none';
-        if (modalOptions3D.style.display === 'block') modalOptions3D.style.display = 'none';
-
+        closeCurrentModal(modalRegisterPatient.id);
         updateEventBtnPrev();
 
         modalRaioX.style.display = 'block';
