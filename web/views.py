@@ -14,7 +14,7 @@ from django.http import FileResponse, Http404
 from django.views.generic import ListView
 
 from .models import RaioX, Ressonancia, ImagensRessonancia, MultiModal, Clinico, Paciente
-from .forms import ClinicianForm
+from .forms import ClinicianForm, PacienteForm
 
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
@@ -520,6 +520,16 @@ def get_ressonance_by_exam_id(request):
             status=200
         )
     return HttpResponse(status=404)
+
+
+class RegisterPatient(LoginRequiredMixin, View):
+    def post(self, request):
+        form = PacienteForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse(status=201)
+        return HttpResponse(status=400)
 
 
 def to_age(data) -> int:
