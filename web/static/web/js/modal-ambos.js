@@ -99,10 +99,10 @@ export function startModalAmbos() {
         }
     }
 
-    // const updateWidthModal = (index) => {
-    //     if (index > 4) modalAmbos.style.width = '43%';
-    //     if (index <= 4 && modalAmbos.style.width === '43%') modalAmbos.style.width = '90%';
-    // }
+    const updateWidthModal = (index) => {
+        if (index > 4) modalAmbos.style.width = '550px';
+        if (index <= 4 && modalAmbos.style.width === '550px') modalAmbos.style.width = '700px';
+    }
 
     const updateProgress = () => {
         const percent = (currentStep / totalSteps) * 100;
@@ -238,7 +238,7 @@ export function startModalAmbos() {
             updateTitleModal(currentStep);
             updateVisibilityLabels(currentStep);
             updateVisibilityProgressBar(currentStep);
-            // updateWidthModal(currentStep);
+            updateWidthModal(currentStep);
 
             if (stepProgressValue < inputs.length) {
                 stepProgressValue++;
@@ -259,7 +259,7 @@ export function startModalAmbos() {
             updateTitleModal(currentStep);
             updateVisibilityLabels(currentStep);
             updateVisibilityProgressBar(currentStep);
-            // updateWidthModal(currentStep);
+            updateWidthModal(currentStep);
 
             if (stepProgressValue >= 1) {
                 stepProgressValue--;
