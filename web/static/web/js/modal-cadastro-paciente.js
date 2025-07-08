@@ -16,24 +16,26 @@ function initializeModalRegisterPatient() {
 
     const inputCpf = document.querySelector('#modal-register-patient-container input[name=cpf]')
 
+    const formRegisterPatient = document.querySelector('#form-register-patient');
+
     inputCpf?.addEventListener('input', (e) => formatterCpf(e.target));
 
     if (btnOpenModalXRay || btnOpenModalResonance || btnOpenModalBoth) {
-        btnOpenModalXRay.forEach(btn =>
+        btnOpenModalXRay?.forEach(btn =>
             btn.addEventListener('click', (e) => {
                 openModalRegisterPatient();
                 setBtnOpenNextModal(e.target);
             })
         )
 
-        btnOpenModalResonance.forEach(btn =>
+        btnOpenModalResonance?.forEach(btn =>
             btn.addEventListener('click', (e) => {
                 openModalRegisterPatient();
                 setBtnOpenNextModal(e.target);
             })
         )
 
-        btnOpenModalBoth.addEventListener('click', (e) => {
+        btnOpenModalBoth?.addEventListener('click', (e) => {
             openModalRegisterPatient();
             setBtnOpenNextModal(e.target);
         });
@@ -69,6 +71,7 @@ function initializeModalRegisterPatient() {
         else if (cpfValue.length > 3) valueFormatted = cpfValue.replace(/(\d{3})(\d{1,3})/, "$1.$2");
 
         input.value = valueFormatted;
+        formRegisterPatient.setAttribute('data-patient', valueFormatted);
     }
 
     function setBtnOpenNextModal(btnTarget) {
@@ -83,7 +86,6 @@ function initializeModalRegisterPatient() {
         if (btnTarget.id === 'btn-modal-resonance-3d')
             btnOpenNextModal.setAttribute('data-target-modal', 'modal-resonance-3d')
     }
-
 }
 
 document.addEventListener('DOMContentLoaded', initializeModalRegisterPatient);

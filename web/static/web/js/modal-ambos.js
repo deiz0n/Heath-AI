@@ -48,6 +48,7 @@ export function startModalAmbos() {
     });
 
     function openModalBoth() {
+        setInputPatientModalBoth();
         resetComponents();
         closeCurrentModal(modalRegisterPatient.id)
         modalAmbos.style.display = 'block';
@@ -267,6 +268,11 @@ export function startModalAmbos() {
 
             updateProgress();
         }
+    }
+
+    function setInputPatientModalBoth() {
+        const formRegisterPatient = document.querySelector('#form-register-patient');
+        document.querySelector('#input-patient-modal-both').value = formRegisterPatient.getAttribute('data-patient')
     }
 
     function initModalProntuario() {

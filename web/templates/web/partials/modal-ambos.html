@@ -1,7 +1,12 @@
 {% load static %}
 
-<form class="form"  method="post" enctype="multipart/form-data" action="{% url "upload-multi-modal" %}">
-  {% csrf_token %} 
+<form
+    class="form"
+    method="post"
+    enctype="multipart/form-data"
+    action="{% url "upload-multi-modal" %}"
+    >
+    {% csrf_token %}
   <div class="modal">
       <div style="display: none;" id="modal-ambos-container">
     
@@ -36,6 +41,10 @@
             Ambos: Cima
           </li>
         </ul>
+      </div>
+
+      <div>
+          <input type="hidden" name="patient" id="input-patient-modal-both">
       </div>
 
       <div class="form-step active" data-step="0">

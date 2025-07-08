@@ -1,7 +1,11 @@
 {% load static %}
 
-<form method="post" enctype="multipart/form-data" action="{% url 'upload-multi-modal' %}">
-  {% csrf_token %}
+<form
+    method="post"
+    enctype="multipart/form-data"
+    hx-post="{% url 'upload-multi-modal' %}"
+>
+    {% csrf_token %}
 
     <div style="display: none;" id="modal-raiox-container">
       <div class="form">
@@ -35,6 +39,10 @@
               Ambos: Cima
             </li>
           </ul>
+        </div>
+
+        <div>
+          <input type="hidden" name="patient" id="input-patient-modal-x-ray">
         </div>
 
         <div class="form-step active" data-step="0">

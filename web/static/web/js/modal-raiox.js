@@ -52,6 +52,7 @@ export function startModalRaioX() {
         resetComponents();
         closeCurrentModal(modalRegisterPatient.id);
         updateEventBtnPrev();
+        setInputPatientModalXRay();
 
         modalRaioX.style.display = 'block';
         inputs[0].style.visibility = 'visible';
@@ -226,6 +227,11 @@ export function startModalRaioX() {
 
             updateProgress();
         }
+    }
+
+    function setInputPatientModalXRay() {
+        const formRegisterPatient = document.querySelector('#form-register-patient');
+        document.querySelector('#input-patient-modal-x-ray').value = formRegisterPatient.getAttribute('data-patient')
     }
 
     function initModalProntuario() {

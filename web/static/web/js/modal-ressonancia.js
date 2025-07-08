@@ -27,6 +27,7 @@ btnNextStep?.addEventListener('click', initModalProntuario);
 
 function openModalResonance() {
     closeCurrentModal(modalRegisterPatient.id);
+    setInputPatientModalResonance();
     modalResonance.style.display = 'block';
 }
 
@@ -38,6 +39,11 @@ function closeModalResonance() {
 function updateQuantityFiles(quantity) {
     const quantityFiles = document.querySelector('#valor-input-ressonancia span');
     quantityFiles.innerText = `${quantity}`;
+}
+
+function setInputPatientModalResonance() {
+    const formRegisterPatient = document.querySelector('#form-register-patient');
+    document.querySelector('#input-patient-modal-resonance').value = formRegisterPatient.getAttribute('data-patient')
 }
 
 function initModalProntuario() {
