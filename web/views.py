@@ -549,4 +549,6 @@ def to_age(data) -> int:
     if not data:
         return -1
     today = date.today()
+    if data > today:
+        return 0
     return today.year - data.year - ((today.month, today.day) < (data.month, data.day))
