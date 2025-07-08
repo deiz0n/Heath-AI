@@ -1,3 +1,5 @@
+from struct import pack_into
+
 from cpf_field.validators import validate_cpf
 
 from django.shortcuts import render, redirect
@@ -9,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponse
 from django.views import View
-from django.db.models import Q
+from django.db.models import Q, Max
 from django.http import FileResponse, Http404
 from django.views.generic import ListView
 
@@ -243,6 +245,10 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
     def post(self, request):
         files = request.FILES
 
+        cpf_patient = request.POST.get('patient')
+        print(str(request.POST.get))
+        patient = Paciente.objects.get(cpf=cpf_patient)
+
         user = request.user
         clinician = Clinico.objects.get(email=user.email)
 
@@ -263,12 +269,14 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
             ]
             ImagensRessonancia.objects.bulk_create(images)
 
-            MultiModal.objects.create(
-                raio_x=x_ray,
-                ressonancia=resonance,
-                prontuario=files.get('prontuario'),
-                clinico=clinician
-            )
+            exam = MultiModal.objects.create(
+                    raio_x=x_ray,
+                    ressonancia=resonance,
+                    prontuario=files.get('prontuario'),
+                    clinico=clinician
+                )
+
+            patient.exame.add(exam)
 
             return render(
                 request,
@@ -345,9 +353,9 @@ class FindPatientsRequest(LoginRequiredMixin, View):
             patients = (
                 Paciente.objects
                 .filter(Q(nome__icontains=field_patient) | Q(cpf__icontains=field_patient))
-                .prefetch_related(
-                    'exame__clinico'
-                )
+                .annotate(latest_exam_date=Max('exame__data'))
+                .prefetch_related('exame__clinico')
+                .order_by('-latest_exam_date')
             )
 
         for patient in patients:
@@ -399,9 +407,14 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
             date_start = today - relativedelta(months=1)
 
         if date_start:
-            patients = Paciente.objects.filter(
-                exame__data__date__range=(date_start, today)
-            ).distinct()
+            patients = (
+                Paciente.objects
+                .filter(exame__data__date__range=(date_start, today))
+                .annotate(latest_exam_date=Max('exame__data'))
+                .order_by('-latest_exam_date')
+                .distinct()
+            )
+
         else:
             return None
 
