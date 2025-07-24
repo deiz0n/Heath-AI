@@ -1,75 +1,96 @@
-from django.contrib import admin
 from django.db import models
 import uuid
 from cpf_field.models import CPFField
 
-from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
-class RaioX(models.Model):
+
+class ExamType(models.TextChoices):
+    _2D = "2D", "2D"
+    _3D = "3D", "3D"
+
+class XRay(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    img_pd_cima = models.ImageField(upload_to="imagens/raiox/")
-    img_pd_lateral = models.ImageField(upload_to="imagens/raiox/")
-    img_pe_cima = models.ImageField(upload_to="imagens/raiox/")
-    img_pe_lateral = models.ImageField(upload_to="imagens/raiox/")
-    img_ambos_cima = models.ImageField(upload_to="imagens/raiox/")
-    prontuario = models.FileField(upload_to="prontuario/raiox", default="Prontuário não informado", null=True)
+    record = models.FileField(upload_to="exams/%Y/%m/%d/records", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"X-Ray {self.id}"
+
+class ImagesXRay(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    image = models.FileField(upload_to="exams/xray/images")
+    xray = models.ForeignKey(XRay, related_name="images", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Image for X-Ray {self.xray.id}"
+
+class Resonance(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    record = models.FileField(upload_to="exams/%Y/%m/%d/records", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Resonance {self.id}"
+
+class ImagesResonance(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    image = models.FileField(upload_to="exams/resonance/images")
+    resonance = models.ForeignKey(Resonance, related_name="images", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Image for Resonance {self.resonance.id}"
+
+class Clinician(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    cpf = CPFField(unique=True)
+    crm = models.CharField(max_length=50, unique=True)
+    birthday = models.DateField()
+    email = models.EmailField()
+    password = models.CharField(max_length=128)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk or not Clinician.objects.filter(pk=self.pk, password=self.password).exists():
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Dr(a). {self.first_name} {self.last_name}"
+
+class Patient(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    cpf = CPFField()
+    birthday = models.DateField()
+    address = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+class Exam(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    type = models.CharField(max_length=3, choices=ExamType.choices)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="exams")
+    clinician = models.ForeignKey(Clinician, on_delete=models.CASCADE, related_name="exams")
+    xray = models.ForeignKey(XRay, on_delete=models.CASCADE, null=True, blank=True, related_name="exams")
+    resonance = models.ForeignKey(Resonance, on_delete=models.CASCADE, null=True, blank=True, related_name="exams")
+    record = models.FileField(upload_to="exams/%Y/%m/%d/records", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Exam {self.id} for {self.patient}"
+
+class ExamResult(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    result = models.FileField(upload_to="exams/results", null=True, blank=True)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name="results")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Result for Exam {self.exam.id}"
     
-    def __str__(self):
-        return str(self.id)
-
-class ImagensRessonancia(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    imagem = models.ImageField(upload_to="imagens/ressonancia")
-    
-    def __str__(self):
-        return str(self.id)
-
-class Ressonancia(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    imagens = models.ManyToManyField(ImagensRessonancia)
-    prontuario = models.FileField(upload_to="prontuario/ressonancia", default="Prontuário não informado", null=True)
-    
-    def __str__(self):
-        return str(self.id)
-
-class Clinico(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    nome = models.CharField(null=False, blank=False)
-    sobrenome = models.CharField(null=False, blank=False)
-    cpf = CPFField('cpf')
-    crm = models.CharField(null=False, blank=False, unique=True)
-    data_aniversario = models.DateField(null=False)
-    email = models.EmailField(null=False, blank=False)
-    senha = models.CharField(null=False, blank=False)
-
-    def __str__(self):
-        return str(f'{self.id} - {self.nome}')
-
-class MultiModal(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    raio_x = models.OneToOneField(RaioX, on_delete=models.CASCADE, related_name='multimodal', null=True)
-    ressonancia = models.OneToOneField(Ressonancia, on_delete=models.CASCADE, related_name='multimodal', null=True)
-    data = models.DateTimeField(auto_now_add=True)
-    prontuario = models.FileField(upload_to="prontuario/geral", default="Prontuário não informado", null=True)
-    clinico = models.ForeignKey(Clinico, on_delete=models.CASCADE, related_name='exames', null=True, blank=False)
-    
-    def __str__(self):
-        return str(self.id)
-
-class Paciente(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
-    nome = models.CharField(null=False, blank=False)
-    sobrenome = models.CharField(null=False, blank=False)
-    cpf = CPFField('cpf')
-    data_nascimento = models.DateField(null=False, blank=False)
-    endereco = models.CharField(null=False, blank=False)
-    exame = models.ManyToManyField(MultiModal, related_name='exames')
-
-    def __str__(self):
-        return str(f'{self.id} - {self.nome}')
-
-admin.site.register(MultiModal)
-admin.site.register(RaioX)
-admin.site.register(Ressonancia)
-admin.site.register(Clinico)
-admin.site.register(Paciente)

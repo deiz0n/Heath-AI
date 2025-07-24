@@ -1,33 +1,37 @@
 from django.forms import ModelForm
-from .models import RaioX, ImagensRessonancia, Ressonancia, Clinico, MultiModal, Paciente
+from .models import XRay, ImagesXRay, Resonance, ImagesResonance, Clinician, Patient, Exam
 
 class XRayForm(ModelForm):
     class Meta:
-        model = RaioX
-        fields = ["img_pd_cima", "img_pd_lateral", "img_pe_cima", "img_pe_lateral", "img_ambos_cima", "prontuario"]
+        model = XRay
+        fields = ['record']
 
-class ResonanceImagesForm(ModelForm):
+class ImagesXRayForm(ModelForm):
     class Meta:
-        model = ImagensRessonancia
-        fields = ["imagem"]
+        model = ImagesXRay
+        fields = ['image', 'xray']
 
 class ResonanceForm(ModelForm):
     class Meta:
-        model = Ressonancia
-        fields = ["imagens", "prontuario"]
+        model = Resonance
+        fields = ["record"]
+
+class ResonanceImagesForm(ModelForm):
+    class Meta:
+        model = ImagesResonance
+        fields = ["image", "resonance"]
 
 class ClinicianForm(ModelForm):
     class Meta:
-        model = Clinico
-        fields = ["nome", "sobrenome", "cpf", "crm", "data_aniversario", "email"]
+        model = Clinician
+        fields = ["first_name", "last_name", "cpf", "crm", "birthday", "email", "password"]
 
-class MultiModalForm(ModelForm):
+class PatientForm(ModelForm):
     class Meta:
-        model = MultiModal
-        fields = ["raio_x", "ressonancia", "prontuario", "clinico"]
+        model = Patient
+        fields = ["first_name", "last_name", "cpf", "birthday", "address"]
 
-class PacienteForm(ModelForm):
+class ExamForm(ModelForm):
     class Meta:
-        model = Paciente
-        fields = ["nome", "sobrenome", "cpf", "data_nascimento", "endereco"]
-
+        model = Exam
+        fields = ["type", "patient", "clinician", "xray", "resonance", "record"]
