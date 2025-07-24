@@ -1,11 +1,6 @@
 from django.views import View
-from datetime import timedelta, date
-from dateutil.relativedelta import relativedelta
-from django.db.models import Max, Q
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web.models import Patient
 from web.forms import PatientForm
 
 
