@@ -14,12 +14,12 @@
         <div id="modal-register-patient-container">
           <div class="container-inline">
             <div class="container-input-bloco">
-                <label for="nome">Nome</label>
+                <label for="first_name">Nome</label>
                 <input
                     type="text"
-                    name="nome"
-                    id="nome"
-                    value="{{ form_data.nome|default:'' }}"
+                    name="first_name"
+                    id="first_name"
+                    value="{{ form_data.fist_name|default:'' }}"
                     class="{% if messages %}
                                 {% for message in messages %}
                                     {% if 'name-invalid' in message.extra_tags   %}
@@ -36,9 +36,9 @@
                 <label for="sobrenome">Sobrenome</label>
                 <input
                     type="text"
-                    name="sobrenome"
+                    name="last_name"
                     id="sobrenome"
-                    value="{{ form_data.sobrenome|default:'' }}"
+                    value="{{ form_data.last_name|default:'' }}"
                     class="{% if messages %}
                                 {% for message in messages %}
                                     {% if 'name-invalid' in message.extra_tags   %}
@@ -85,7 +85,7 @@
                <label for="endereco">Endereço</label>
                <input
                    type="text"
-                   name="endereco"
+                   name="address"
                    id="endereco"
                    class="{% if messages %}
                                 {% for message in messages %}
@@ -94,7 +94,7 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}"
-                   value="{{form_data.endereco|default:'' }}"
+                   value="{{form_data.address|default:'' }}"
                    required
                    placeholder="Seu endereço"
                >
@@ -105,8 +105,8 @@
            <label for="data_nascimento">Data de nascimento</label>
            <input
                type="date"
-               name="data_nascimento"
-               value="{{form_data.data_nascimento }}"
+               name="birthday"
+               value="{{form_data.birthday }}"
                id="data_nascimento"
                required
            >
