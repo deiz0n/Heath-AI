@@ -3,6 +3,7 @@
     margin-top: 3rem;
     color: #fff;
     text-align: center;
+    user-select: none;
 }
 
 #footer-conteudo {
@@ -18,10 +19,12 @@
 #container-conteudo-footer h4 {
     margin-block: 1rem;
     font-size: 22px;
+    cursor: text;
 }
 
 #container-conteudo-footer p {
     width: 400px;
+    cursor: text;
 }
 
 #container-conteudo-footer li {
@@ -47,4 +50,5 @@
 
 .footer-container p {
     padding-bottom: 1rem;
+    cursor: text;
 }
