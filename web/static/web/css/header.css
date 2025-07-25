@@ -7,6 +7,7 @@
     align-content: center;
     flex-wrap: wrap;
     padding-bottom: 10px;
+    user-select: none;
 }
 
 #navbar-container ul {
@@ -40,6 +41,7 @@
     top: -8px;
     position: relative;
     color: #2E2E2E;
+    cursor: pointer;
 }
 
 #header-title span {
@@ -56,6 +58,7 @@
     margin-top: -6px;
     border-radius: 16px;
     font-size: 18px;
+    cursor: pointer;
     transition: .3s all ease-in-out;
 }
 
@@ -67,6 +70,5 @@
 }
 
 #btn-sair button:hover {
-    color: #0360D9;
-    border-color: #0360D9;
+    background-color: #dedede;
 }
