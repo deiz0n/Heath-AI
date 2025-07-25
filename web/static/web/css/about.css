@@ -46,7 +46,8 @@
 }
 
 .content-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(33, 150, 243, 0.2);
 }
 
 .card-title {
