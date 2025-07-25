@@ -6,6 +6,6 @@ def render_about(request):
     return render(
         request,
         'web/pages/about.html',
-        {'current_page': 'about'},
+        {'current_page': 'about', 'title_page': 'Sobre'},
         status=200
     )

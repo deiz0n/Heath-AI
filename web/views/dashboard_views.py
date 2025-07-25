@@ -6,6 +6,6 @@ def render_dashboard(request):
     return render(
         request,
         'web/pages/dashboard.html',
-        {'current_page': 'dashboard'},
+        {'current_page': 'dashboard', 'title_page': 'Dashboard'},
         status=200
     )

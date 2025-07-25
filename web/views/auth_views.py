@@ -1,6 +1,5 @@
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
@@ -35,11 +34,11 @@ def logout_view(request):
 
 
 def render_login(request):
-    return render(request, 'web/pages/login.html')
+    return render(request, 'web/pages/login.html', {"title_page": 'Login'})
 
 
 def render_create_user(request):
-    return render(request, 'web/pages/cadastro-usuario.html')
+    return render(request, 'web/pages/cadastro-usuario.html', {'title_page': 'Cadastro'})
 
 
 class CreateUserView(View):

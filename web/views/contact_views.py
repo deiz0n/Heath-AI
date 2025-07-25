@@ -6,6 +6,6 @@ def render_contact(request):
     return render(
         request,
         'web/pages/contact.html',
-        {'current_page': 'contact'},
+        {'current_page': 'contact', 'title_page': 'Contato'},
         status=200
     )

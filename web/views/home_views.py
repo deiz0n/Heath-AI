@@ -10,6 +10,6 @@ def render_home(request):
     return render(
         request,
         'web/pages/pagina-inicial.html',
-        {'current_page': 'home'},
+        {'current_page': 'home', 'title_page': 'Página inicial'},
         status=200
     )
