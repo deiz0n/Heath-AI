@@ -3,8 +3,7 @@
     <div id="container-conteudo-footer">
       <h4>Heath-AI</h4>
       <p>
-        It is a long established fact that a reader will be distracted by the
-        readable content of a page when looking at its layout.
+        Revolucionando o diagnóstico médico através da Inteligência Artificial. Nossa missão é tornar a medicina mais precisa, rápida e acessível para todos.
       </p>
     </div>
 
@@ -12,9 +11,33 @@
       <h4>Links Úteis</h4>
       <nav>
         <ul>
-          <li><a href="#">Sobre nós</a></li>
-          <li><a href="#">Política de privacidade</a></li>
-          <li><a href="#">Nossa missão</a></li>
+          <li>
+              <a
+                 hx-get="{% url 'about' %}"
+                 hx-target=".page-container"
+                 hx-push-url="true"
+              >
+                  Sobre nós
+              </a>
+          </li>
+          <li>
+              <a
+                 hx-get="{% url 'about' %}"
+                 hx-target=".page-container"
+                 hx-push-url="true"
+              >
+                  Política de privacidade
+              </a>
+          </li>
+          <li>
+              <a
+                 hx-get="{% url 'about' %}"
+                 hx-target=".page-container"
+                 hx-push-url="true"
+              >
+                 Nossa missão
+              </a>
+          </li>
         </ul>
       </nav>
     </div>
