@@ -19,10 +19,10 @@
               Dashboard
           </a>
       </li>
-      <li>
+      <li {% if current_page == 'about' %}id="selecionado"{% endif %}>
           <a
-              hx-get="#"
-              hx-target=".main-container"
+              hx-get="{% url 'about' %}"
+              hx-target=".page-container"
               hx-push-url="true">
               Sobre
           </a>
