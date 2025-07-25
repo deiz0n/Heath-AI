@@ -1,5 +1,12 @@
 <header class="header-container">
-  <h1 id="header-title">Heath-<span>AI</span></h1>
+  <h1 id="header-title">
+      <a
+          hx-get="{% url 'home' %}"
+          hx-target=".page-container"
+          hx-push-url="true">
+           Heath-<span>AI</span>
+      </a>
+  </h1>
 
   <nav id="navbar-container">
     <ul>
