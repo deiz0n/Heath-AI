@@ -27,10 +27,10 @@
               Sobre
           </a>
       </li>
-      <li>
+      <li {% if current_page == 'contact' %}id="selecionado"{% endif %}>
           <a
-              hx-get="#"
-              hx-target=".main-container"
+              hx-get="{% url 'contact' %}"
+              hx-target=".page-container"
               hx-push-url="true">
               Contato
           </a>
