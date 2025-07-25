@@ -31,6 +31,7 @@
 #container-conteudo-footer li a {
     color: #fff;
     text-decoration: none;
+    cursor: pointer;
 }
 
 #container-conteudo-footer li a:hover {
