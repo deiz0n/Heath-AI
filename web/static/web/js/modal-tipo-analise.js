@@ -16,7 +16,7 @@ function closeModalAnalysisType() {
     }
 }
 
-export function assignListenersModal() {
+function assignListenersModalTypeAnalysis() {
     const btnClose = document.querySelector('#modal-tipo-imagem-container i');
     const btnOpenModalAnalysisType = document.querySelector('#main-btn');
 
@@ -30,5 +30,5 @@ export function assignListenersModal() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', assignListenersModal);
-document.body.addEventListener('htmx:afterSwap', assignListenersModal);
+document.addEventListener('DOMContentLoaded', assignListenersModalTypeAnalysis);
+document.body.addEventListener('htmx:afterSwap', assignListenersModalTypeAnalysis);
