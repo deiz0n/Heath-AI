@@ -1,53 +1,93 @@
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from web.models import XRay, Resonance, ImagesResonance, Exam, Clinician, Patient
+from django.shortcuts import redirect, render
+from django.db import transaction
 
+from web.forms import (
+    ImagesXRayForm, 
+    ResonanceForm, 
+    ResonanceImagesForm, 
+    XRayForm
+)
+from web.models import ExamType,Exam, Clinician, Patient
+
+
+from datetime import date
 
 class UploadMultiModalRequestView(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'next'
 
     def post(self, request):
-        files = request.FILES
+        files       = request.FILES
         cpf_patient = request.POST.get('patient')
-        patient = Patient.objects.get(cpf=cpf_patient)
+        exam_kind   = request.POST.get('type-exam') 
+
+        patient   = Patient.objects.get(cpf=cpf_patient)
         clinician = Clinician.objects.get(email=request.user.email)
 
-        if 'ambos_img_pd_cima' in files and 'ambos_ressonancia' in files:
-            x_ray = XRay.objects.create(
-                img_pd_cima=files.get('ambos_img_pd_cima'),
-                img_pd_lateral=files.get('ambos_img_pd_lateral'),
-                img_pe_cima=files.get('ambos_img_pe_cima'),
-                img_pe_lateral=files.get('ambos_img_pe_lateral'),
-                img_ambos_cima=files.get('ambos_img_ambos_cima')
+        exam_type_map = {
+            'x-ray':      ExamType._2D,
+            'resonance':  ExamType._3D,
+            'both':       ExamType._2D,
+        }
+        exam_type = exam_type_map.get(exam_kind)
+
+        with transaction.atomic():
+
+            if exam_kind in ('x-ray','both'):
+                xray_form = XRayForm(request.POST, request.FILES)
+                if not xray_form.is_valid():
+                    return render(request, 'web/pages/pagina-inicial.html', {
+                        'success': False,
+                        'errors_xray': xray_form.errors
+                    }, status=400)
+
+                xray = xray_form.save(commit=False)
+                xray.save()
+
+                imgs_xray = []
+                for f in files.getlist('images_xray'):  
+                    imgs_xray.append(
+                        ImagesXRayForm(
+                            {'xray': xray.id},
+                            {'image': f}
+                        ).save(commit=False)
+                    )
+                ImagesXRayForm.Meta.model.objects.bulk_create(imgs_xray)
+
+            if exam_kind in ('resonance','both'):
+                res_form = ResonanceForm(request.POST, request.FILES)
+                if not res_form.is_valid():
+                    return render(request, 'web/pages/pagina-inicial.html', {
+                        'success': False,
+                        'errors_resonance': res_form.errors
+                    }, status=400)
+
+                resonance = res_form.save(commit=False)
+                resonance.save()
+
+                imgs_res = []
+                for f in files.getlist('images_resonance'):
+                    imgs_res.append(
+                        ResonanceImagesForm(
+                            {'resonance': resonance.id},
+                            {'image': f}
+                        ).save(commit=False)
+                    )
+                ResonanceImagesForm.Meta.model.objects.bulk_create(imgs_res)
+
+            exam = Exam(
+                type      = exam_type,
+                patient   = patient,
+                clinician = clinician,
+                xray      = locals().get('xray', None),
+                resonance = locals().get('resonance', None),
+                record    = request.FILES.get('record')
             )
-            resonance = Resonance.objects.create()
-            images = [ImagesResonance(ressonancia=resonance, imagem=img) for img in files.getlist('ambos_ressonancia')]
-            ImagesResonance.objects.bulk_create(images)
-            Exam.objects.create(x_ray=x_ray, resonance=resonance, record=files.get('prontuario'), clinician=clinician, patient=patient)
-            return render(request, 'web/pages/pagina-inicial.html', {'success': True}, status=201)
+            exam.save()
 
-        if 'raio_x_img_pd_cima' in files:
-            XRay.objects.create(
-                img_pd_cima=files.get('raio_x_img_pd_cima'),
-                img_pd_lateral=files.get('raio_x_img_pd_lateral'),
-                img_pe_cima=files.get('raio_x_img_pe_cima'),
-                img_pe_lateral=files.get('raio_x_img_pe_lateral'),
-                img_ambos_cima=files.get('raio_x_img_ambos_cima'),
-                prontuario=files.get('prontuario')
-            )
-            return render(request, 'web/pages/pagina-inicial.html', {'success': True}, status=201)
-
-        if 'imagens_ressonancia' in files:
-            resonance = Resonance.objects.create()
-            images = [ImagesResonance(ressonancia=resonance, imagem=img) for img in files.getlist('imagens_ressonancia')]
-            ImagesResonance.objects.bulk_create(images)
-            resonance.record = files.get('prontuario')
-            resonance.save()
-            return render(request, 'web/pages/pagina-inicial.html', {'success': True}, status=201)
-
-        return render(request, 'web/pages/pagina-inicial.html', {'success': False}, status=400)
-
+        return render(request, 'web/pages/pagina-inicial.html', {'success': True}, status=201)
+    
     def get(self, request):
-        return render(request, 'web/pages/pagina-inicial.html', status=200)
+        return redirect('home')
