@@ -8,16 +8,16 @@
     >
   {% csrf_token %}
   <div class="modal">
-      <div style="display: none" id="modal-ressonancia-container">
+      <div style="display: none" class="modal-send-images">
         <h5 class="modal-titulo">
             Selecione os arquivos da <span>Ressonância</span>
         </h5>
-        <button style="border: none;">
+        <button type="" style="border: none;">
           <i class="btn-fechar material-icons">close</i>
         </button>
-        <div id="input-container-ressonancia">
-          <input type="file" id="input-ressonancia" name="imagens_ressonancia" multiple>
-          <div id="custom-input-ressonancia">
+        <div class="input-container-images">
+          <input type="file" class="input-images" name="images" multiple>
+          <div class="custom-input-send-images">
             <img
               class="icone-upload"
               src="{% static 'web/assets/images/upload-icon.svg' %}"
@@ -28,13 +28,14 @@
         </div>
         <p id="valor-input-ressonancia" class="valor-input"><span>0</span> Arquivos selecionados</p>
         <div class="btn-container">
-          <button type="button" class="btn-primary" id="btn-next-step-ressonancia">Avançar</button>
+          <button disabled type="button" class="btn-primary" id="btn-submit-images">Avançar</button>
         </div>
       </div>
     </div>
 
     <div>
         <input type="hidden" name="patient" id="input-patient-modal-resonance">
+        <input type="hidden" name="type-exam" id="input-type-exam">
     </div>
 
     <div class="modal">
@@ -46,7 +47,7 @@
           <i class="btn-fechar material-icons">close</i>
         </button>
         <div id="input-container-prontuario-ressonancia">
-          <input type="file" id="input-prontuario-ressonancia" name="prontuario">
+          <input type="file" id="input-prontuario-ressonancia" name="record">
           <div class="custom-input-prontuario">
             <img
               class="icone-upload"
@@ -58,7 +59,7 @@
         </div>
         <p id="valor-input-prontuario" class="valor-input">Nenhum arquivo selecionado</p>
         <div class="btn-container">
-          <button type="submit" class="btn-primary" id="btn-submit-ressonancia">Enviar</button>
+          <button type="submit" class="btn-primary" id="btn-submit-record">Enviar</button>
         </div>
       </div>
     </div>
