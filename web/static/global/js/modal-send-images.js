@@ -1,31 +1,25 @@
 import { closeCurrentModal } from "../../web/js/script.js";
 
 function openModalResonance(e) {
-  const modalResonance = document.querySelector(".modal-send-images");
+  const btn = e?.currentTarget || e?.target;
+  const dataTarget = btn?.getAttribute("data-target-modal");
   const modalRegisterPatient = document.querySelector(
     "#modal-register-patient-container"
   );
   const backgroundModal = document.querySelector("#modal-backdrop");
 
-  if (!e || !e.target) return;
-
-  const target = e.target;
-
-  if (target.id.includes("3d")) {
-    closeCurrentModal("modal-opcoes-3d-container");
-  } else if (target.id.includes("2d")) {
-    closeCurrentModal("modal-opcoes-2d-container");
-  }
-
   closeCurrentModal(modalRegisterPatient?.id);
-  setInputPatientModalResonance();
-  updateTitleModal(target);
-  setValueInputHidden(target);
-  setNameInputImages(target);
 
-  if (modalResonance && backgroundModal) {
-    modalResonance.style.display = "block";
-    backgroundModal.classList.add("show");
+  if (dataTarget === "modal-x-ray" || dataTarget === "modal-resonance") {
+    const modalResonance = document.querySelector(".modal-send-images");
+    setInputPatientModalResonance();
+    updateTitleModal(dataTarget);
+    setValueInputHidden(dataTarget);
+    setNameInputImages(dataTarget);
+    if (modalResonance && backgroundModal) {
+      modalResonance.style.display = "block";
+      backgroundModal.classList.add("show");
+    }
   }
 }
 
@@ -73,24 +67,24 @@ function updateTitleModal(target) {
   );
 
   if (titleModal) {
-    if (target.id.includes("x-ray")) titleModal.innerText = "Raio X";
-    else if (target.id.includes("resonance"))
-      titleModal.innerText = "Ressonância";
+    if (target.includes("x-ray")) titleModal.innerText = "Raio X";
+    else if (target.includes("resonance")) titleModal.innerText = "Ressonância";
   }
 }
 
 function assignListenersModalResonance() {
   const btnSubmitImages = document.querySelector("#btn-submit-images");
-  const btnOpenModalResonance = document.querySelectorAll(
-    "#btn-modal-resonance-2d, #btn-modal-resonance-3d, #btn-modal-x-ray-2d, #btn-modal-x-ray-3d"
+  const btnOpenModalSendImages = document.querySelector(
+    "#btn-submit-modal-register-patient"
   );
   const btnCloseModalResonance = document.querySelector(".modal-send-images i");
   const input = document.querySelector(".modal-send-images .input-images");
 
-  btnOpenModalResonance?.forEach((btn) => {
-    btn.removeEventListener("click", openModalResonance);
-    btn.addEventListener("click", openModalResonance);
-  });
+  // Corrige o listener para abrir o modal de envio de imagens ao clicar no botão "próximo" do cadastro do paciente
+  if (btnOpenModalSendImages) {
+    btnOpenModalSendImages.removeEventListener("click", openModalResonance);
+    btnOpenModalSendImages.addEventListener("click", openModalResonance);
+  }
 
   if (btnCloseModalResonance) {
     btnCloseModalResonance.removeEventListener("click", () => {
@@ -132,16 +126,16 @@ function handleInputSubmitImages(e) {
 }
 
 function setValueInputHidden(target) {
-  const inputHidden = document.querySelector("#input-type-exam");
+  const inputHidden = document.querySelector("#input-type");
 
-  if (target.id.includes("x-ray")) inputHidden.value = "x-ray";
+  if (target.includes("x-ray")) inputHidden.value = "x-ray";
   else inputHidden.value = "resonance";
 }
 
 function setNameInputImages(target) {
   const inputImages = document.querySelector(".input-images");
 
-  if (target.id.includes("x-ray")) inputImages.name = "images_xray";
+  if (target.includes("x-ray")) inputImages.name = "images_xray";
   else inputImages.name = "images_resonance";
 }
 

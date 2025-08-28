@@ -65,3 +65,32 @@
   background-color: #d1d1d1;
   color: #0346a2;
 }
+
+#modal-prontuario-container-ressonancia {
+  z-index: 2;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  width: 430px;
+  border-radius: 20px;
+  position: fixed;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#modal-prontuario-container-ressonancia h5 {
+  font-size: 22px;
+  margin-bottom: 2.2rem;
+}
+
+#modal-prontuatio-container-ressonancia span {
+  color: #0360d9;
+}
+
+#input-container-prontuario-ressonancia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
