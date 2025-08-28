@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import FileResponse, HttpResponse, Http404
 from web.models import Exam, XRay, Resonance
+import os
 
 
 class RecordByExamIdRequest(LoginRequiredMixin, View):
@@ -14,15 +15,27 @@ class RecordByExamIdRequest(LoginRequiredMixin, View):
     def get(self, request):
         id = request.GET.get("id")
         if not id:
-            return HttpResponse(status=400)
+            return HttpResponse("ID do exame é obrigatório", status=400)
 
         try:
             exam = Exam.objects.get(id=id)
+            
             if not exam.record:
                 raise Http404("Prontuário não encontrado.")
-            return FileResponse(exam.record.open('rb'), as_attachment=True, filename=exam.record.name, status=200)
+            
+            if not os.path.exists(exam.record.path):
+                raise Http404("Arquivo do prontuário não encontrado no servidor.")
+        
+            return FileResponse(
+                exam.record.open('rb'), 
+                as_attachment=True, 
+                filename=os.path.basename(exam.record.name), 
+                status=200
+            )
         except Exam.DoesNotExist:
             raise Http404("Exame não encontrado.")
+        except Exception as e:
+            return HttpResponse("Erro interno do servidor", status=500)
 
     def post(self, request):
         id = request.POST.get("id")
