@@ -294,9 +294,9 @@ body {
     justify-content: flex-end;
 }
 
-.btn-container button[type=submit] {
+/* .btn-container button[type=submit] {
     margin-top: 0;
-}
+} */
 
 #main-conteudo {
     margin-top: 3.6rem;
