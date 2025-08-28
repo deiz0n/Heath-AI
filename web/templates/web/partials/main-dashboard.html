@@ -34,7 +34,7 @@
                     <button
                         type="submit"
                         name="last-7-days"
-                        hx-get="{% url 'find-patients-by-data-exam' %}"
+                        hx-get="{% url 'find-patients-by-data-exam' %}?range=last-7-days"
                         hx-target="#patients"
                         value="1"
                     >
@@ -45,7 +45,7 @@
                     <button
                         type="submit"
                         name="last-15-days"
-                        hx-get="{% url 'find-patients-by-data-exam' %}"
+                        hx-get="{% url 'find-patients-by-data-exam' %}?range=last-15-days"
                         hx-target="#patients"
                         value="1"
                     >
@@ -56,7 +56,7 @@
                     <button
                         type="submit"
                         name="last-1-month"
-                        hx-get="{% url 'find-patients-by-data-exam' %}"
+                        hx-get="{% url 'find-patients-by-data-exam' %}?range=last-1-month"
                         hx-target="#patients"
                         value="1"
                     >
