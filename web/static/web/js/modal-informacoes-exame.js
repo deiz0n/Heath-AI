@@ -72,7 +72,7 @@ function initializeEventListeners() {
     const btnDownload = document.querySelector("#modal-info-btn-download");
 
     if (btnDownload && examId && existsExamRecord(patientData)) {
-      btnDownload.href = `/record_by_exam_id/${examId}`;
+      btnDownload.href = `/exam/record/?id=${examId}`;
     }
   }
 
