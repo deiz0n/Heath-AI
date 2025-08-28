@@ -3,13 +3,10 @@ from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from web.forms import PatientForm
 from django.shortcuts import render
-from web.models import Exam
-
-from datetime import datetime
-
-from django.shortcuts import render
-from web.models import Patient, Exam
 from django.db.models import Q
+
+from web.models import Exam, Patient
+
 from datetime import datetime
 
 class FindPatientsRequest(LoginRequiredMixin, View):
