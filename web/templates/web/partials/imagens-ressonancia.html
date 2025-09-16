@@ -1,34 +1,14 @@
 {% load static %}
 
- <div class="container-img">
-    <div class="image-view">
-        <p>Ressonância</p>
-        <img src="{% static 'web/assets/images/img-teste.png' %}" alt="Imagem da ressonância">
-    </div>
-
-    <div class="image-view">
-        <p>Ressonância</p>
-        <img src="{% static 'web/assets/images/img-teste.png' %}" alt="Imagem da ressonância">
-    </div>
-
-    <div class="image-view">
-        <p>Ressonância</p>
-        <img src="{% static 'web/assets/images/img-teste.png' %}" alt="Imagem da ressonância">
-    </div>
-
-    <div class="image-view">
-        <p>Ressonância</p>
-        <img src="{% static 'web/assets/images/img-teste.png' %}" alt="Imagem da ressonância">
-    </div>
-
-    <div class="image-view">
-        <p>Ressonância</p>
-        <img src="{% static 'web/assets/images/img-teste.png' %}" alt="Imagem da ressonância">
-    </div>
-
-    <div class="image-view">
-        <p>Ressonância</p>
-        <img src="{% static 'web/assets/images/img-teste.png' %}" alt="Imagem da ressonância">
-    </div>
- </div>
-
+<div class="container-img">
+  {% if images %} {% for image in images %}
+  <div class="image-view">
+    <img
+      src="{% url 'serve_resonance_image' image.id %}"
+      alt="Imagem da ressonância"
+    />
+  </div>
+  {% endfor %} {% else %}
+  <p>Nenhuma imagem de ressonância foi encontrada para este exame</p>
+  {% endif %}
+</div>
