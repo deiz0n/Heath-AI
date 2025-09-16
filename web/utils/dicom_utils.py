@@ -11,11 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 def is_dicom_file(file_path):
-    """
-    Verifica se o arquivo é um DICOM válido
-    Considera diferentes extensões e magic numbers
-    Melhorada para lidar com DICOMDIR e arquivos sem extensão
-    """
     try:
         # Primeiro verifica pela extensão comum
         common_dicom_extensions = ['.dcm', '.dicom', '.dic']
@@ -84,11 +79,6 @@ def is_dicom_file(file_path):
 
 
 def dicom_to_image_response(file_path, format='PNG'):
-    """
-    Converte arquivo DICOM para resposta HTTP com imagem
-    Usa PNG para preservar melhor qualidade
-    Melhorado para lidar com DICOMDIR e arquivos problemáticos
-    """
     try:
         logger.info(f"Iniciando conversão DICOM para imagem: {file_path}")
         
@@ -171,9 +161,6 @@ def dicom_to_image_response(file_path, format='PNG'):
 
 
 def apply_window_level(pixel_array, ds):
-    """
-    Aplica transformação de janela/nível para melhor visualização de imagens médicas
-    """
     try:
         # Tenta obter window center e window width do DICOM
         if hasattr(ds, 'WindowCenter') and hasattr(ds, 'WindowWidth'):
@@ -194,9 +181,6 @@ def apply_window_level(pixel_array, ds):
 
 
 def normalize_pixel_array(pixel_array):
-    """
-    Normaliza o array de pixels com melhor preservação de qualidade
-    """
     try:
         # Converte para float64 para melhor precisão
         pixel_array = pixel_array.astype(np.float64)
@@ -226,10 +210,6 @@ def normalize_pixel_array(pixel_array):
 
 
 def convert_dicom_to_png_buffer(file_path):
-    """
-    Converte arquivo DICOM para buffer PNG com alta qualidade
-    Útil para casos onde você precisa do buffer em vez da resposta HTTP
-    """
     try:
         ds = pydicom.dcmread(file_path)
 
@@ -269,9 +249,6 @@ def convert_dicom_to_png_buffer(file_path):
 
 
 def get_dicom_metadata(file_path):
-    """
-    Extrai metadados importantes de um arquivo DICOM
-    """
     try:
         ds = pydicom.dcmread(file_path, force=True)
         metadata = {
@@ -308,10 +285,6 @@ def get_dicom_metadata(file_path):
 
 
 def preprocess_uploaded_dicom(uploaded_file, convert_to_web_format=False):
-    """
-    Preprocessa um arquivo DICOM enviado via upload
-    Opcionalmente converte para formato web-friendly
-    """
     try:
         # Salva temporariamente o arquivo
         temp_path = f"/tmp/temp_dicom_{uploaded_file.name}"
@@ -350,9 +323,6 @@ def preprocess_uploaded_dicom(uploaded_file, convert_to_web_format=False):
 
 
 def handle_dicomdir_file(file_path):
-    """
-    Trata especialmente arquivos DICOMDIR que podem referenciar outras imagens
-    """
     try:
         logger.info(f"Processando arquivo DICOMDIR: {file_path}")
         
@@ -395,9 +365,6 @@ def handle_dicomdir_file(file_path):
 
 
 def is_likely_dicom_by_content(file_path):
-    """
-    Verifica se um arquivo é DICOM baseado no conteúdo binário inicial
-    """
     try:
         with open(file_path, 'rb') as f:
             # Lê os primeiros bytes
