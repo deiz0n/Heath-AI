@@ -1,0 +1,508 @@
+{% load static %}
+
+<!-- Modal de Visualização DICOM Avançada -->
+<div
+  class="modal fade"
+  id="dicomViewerModal"
+  tabindex="-1"
+  aria-labelledby="dicomViewerModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dicomViewerModalLabel">
+          Visualizador DICOM
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- Área da Imagem -->
+            <div class="col-md-8">
+              <div class="dicom-image-container">
+                <img
+                  id="dicomImage"
+                  src=""
+                  alt="Imagem DICOM"
+                  class="dicom-image"
+                  onerror="this.style.display='none'; document.getElementById('errorMessage').style.display='block';"
+                />
+
+                <div id="errorMessage" class="dicom-error-message">
+                  ❌ Erro ao carregar imagem
+                </div>
+
+                <!-- Loading spinner -->
+                <div
+                  id="loadingSpinner"
+                  class="text-center dicom-loading-spinner"
+                >
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Carregando...</span>
+                  </div>
+                  <p>Processando imagem DICOM...</p>
+                </div>
+              </div>
+
+              <!-- Informações da imagem -->
+              <div class="mt-2 text-center">
+                <small id="imageInfo" class="text-muted"></small>
+              </div>
+            </div>
+
+            <!-- Controles DICOM -->
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="mb-0">Controles de Visualização</h6>
+                </div>
+                <div class="card-body">
+                  <!-- Presets de Window/Level -->
+                  <div class="mb-3">
+                    <label class="form-label">Presets</label>
+                    <select
+                      id="presetSelect"
+                      class="form-select form-select-sm"
+                    >
+                      <option value="">Automático</option>
+                    </select>
+                  </div>
+
+                  <!-- Window Center -->
+                  <div class="mb-3">
+                    <label for="windowCenter" class="form-label"
+                      >Window Center: <span id="wcValue">Auto</span></label
+                    >
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="windowCenter"
+                      min="-1000"
+                      max="3000"
+                      step="10"
+                    />
+                    <input
+                      type="number"
+                      class="form-control form-control-sm mt-1"
+                      id="windowCenterInput"
+                      placeholder="Valor manual"
+                    />
+                  </div>
+
+                  <!-- Window Width -->
+                  <div class="mb-3">
+                    <label for="windowWidth" class="form-label"
+                      >Window Width: <span id="wwValue">Auto</span></label
+                    >
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="windowWidth"
+                      min="1"
+                      max="4000"
+                      step="10"
+                    />
+                    <input
+                      type="number"
+                      class="form-control form-control-sm mt-1"
+                      id="windowWidthInput"
+                      placeholder="Valor manual"
+                    />
+                  </div>
+
+                  <!-- Contraste Automático -->
+                  <div class="mb-3">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="autoContrast"
+                      />
+                      <label class="form-check-label" for="autoContrast">
+                        Contraste Automático
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Botões de Ação -->
+                  <div class="mb-3">
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      id="applySettings"
+                    >
+                      Aplicar
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary btn-sm"
+                      id="resetSettings"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-info btn-sm"
+                      id="showMetadata"
+                    >
+                      Metadados
+                    </button>
+                  </div>
+
+                  <!-- Formato de Saída -->
+                  <div class="mb-3">
+                    <label class="form-label">Formato</label>
+                    <select
+                      id="formatSelect"
+                      class="form-select form-select-sm"
+                    >
+                      <option value="PNG">PNG (sem perdas)</option>
+                      <option value="JPEG">JPEG (menor tamanho)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Metadados DICOM -->
+              <div class="card mt-3 dicom-metadata-card" id="metadataCard">
+                <div class="card-header">
+                  <h6 class="mb-0">Metadados DICOM</h6>
+                </div>
+                <div class="card-body dicom-metadata-content">
+                  <div id="metadataContent">
+                    <div class="text-center">
+                      <div
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                      >
+                        <span class="visually-hidden">Carregando...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  class DicomViewer {
+    constructor() {
+      this.currentImageId = null;
+      this.currentImageType = null;
+      this.currentUrl = null;
+      this.metadata = null;
+
+      this.initializeEvents();
+    }
+
+    initializeEvents() {
+      // Botões de ação
+      document
+        .getElementById("applySettings")
+        .addEventListener("click", () => this.applySettings());
+      document
+        .getElementById("resetSettings")
+        .addEventListener("click", () => this.resetSettings());
+      document
+        .getElementById("showMetadata")
+        .addEventListener("click", () => this.toggleMetadata());
+
+      // Presets
+      document
+        .getElementById("presetSelect")
+        .addEventListener("change", (e) => this.applyPreset(e.target.value));
+
+      // Contraste automático
+      document
+        .getElementById("autoContrast")
+        .addEventListener("change", () => this.applySettings());
+
+      // Inputs manuais
+      document
+        .getElementById("windowCenterInput")
+        .addEventListener("change", (e) => {
+          document.getElementById("windowCenter").value = e.target.value;
+          this.updateValueDisplay();
+        });
+
+      document
+        .getElementById("windowWidthInput")
+        .addEventListener("change", (e) => {
+          document.getElementById("windowWidth").value = e.target.value;
+          this.updateValueDisplay();
+        });
+
+      // Sliders
+      document
+        .getElementById("windowCenter")
+        .addEventListener("input", () => this.updateValueDisplay());
+      document
+        .getElementById("windowWidth")
+        .addEventListener("input", () => this.updateValueDisplay());
+    }
+
+    showImage(imageId, imageType, baseUrl) {
+      this.currentImageId = imageId;
+      this.currentImageType = imageType;
+      this.currentUrl = baseUrl;
+
+      // Mostra o modal
+      const modal = new bootstrap.Modal(
+        document.getElementById("dicomViewerModal")
+      );
+      modal.show();
+
+      // Carrega a imagem e metadados
+      this.loadImage();
+      this.loadMetadataAsync();
+      this.loadPresets();
+    }
+
+    loadImage() {
+      const img = document.getElementById("dicomImage");
+      const spinner = document.getElementById("loadingSpinner");
+      const errorMsg = document.getElementById("errorMessage");
+
+      // Mostra spinner
+      spinner.style.display = "block";
+      img.style.display = "none";
+      errorMsg.style.display = "none";
+
+      // Constrói URL com parâmetros
+      const url = this.buildImageUrl();
+
+      img.onload = () => {
+        spinner.style.display = "none";
+        img.style.display = "block";
+        this.updateImageInfo();
+      };
+
+      img.onerror = () => {
+        spinner.style.display = "none";
+        errorMsg.style.display = "block";
+      };
+
+      img.src = url;
+    }
+
+    buildImageUrl() {
+      const params = new URLSearchParams();
+
+      // Window Center/Width
+      const wc = document.getElementById("windowCenter").value;
+      const ww = document.getElementById("windowWidth").value;
+
+      if (wc && wc !== "0") params.set("wc", wc);
+      if (ww && ww !== "0") params.set("ww", ww);
+
+      // Auto contrast
+      if (document.getElementById("autoContrast").checked) {
+        params.set("auto_contrast", "true");
+      }
+
+      // Format
+      const format = document.getElementById("formatSelect").value;
+      params.set("format", format);
+
+      // Cache busting para forçar reload
+      params.set("t", Date.now());
+
+      return `${this.currentUrl}?${params.toString()}`;
+    }
+
+    async loadMetadataAsync() {
+      try {
+        const response = await fetch(
+          `/exam/${this.currentImageType}/${this.currentImageId}/metadata/`
+        );
+        this.metadata = await response.json();
+
+        if (this.metadata.success) {
+          this.populateMetadata();
+          this.setDefaultWindowLevel();
+        }
+      } catch (error) {
+        console.error("Erro ao carregar metadados:", error);
+      }
+    }
+
+    async loadPresets() {
+      if (!this.metadata?.metadata?.modality) return;
+
+      try {
+        const response = await fetch(
+          `/exam/window-presets/${this.metadata.metadata.modality}/`
+        );
+        const presets = await response.json();
+
+        if (presets.success) {
+          this.populatePresets(presets.presets);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar presets:", error);
+      }
+    }
+
+    populatePresets(presets) {
+      const select = document.getElementById("presetSelect");
+      select.innerHTML = '<option value="">Automático</option>';
+
+      Object.entries(presets).forEach(([key, preset]) => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = preset.name;
+        option.dataset.center = preset.center;
+        option.dataset.width = preset.width;
+        select.appendChild(option);
+      });
+    }
+
+    applyPreset(presetKey) {
+      if (!presetKey) return;
+
+      const option = document.querySelector(
+        `#presetSelect option[value="${presetKey}"]`
+      );
+      if (option) {
+        const center = option.dataset.center;
+        const width = option.dataset.width;
+
+        if (center && center !== "null") {
+          document.getElementById("windowCenter").value = center;
+          document.getElementById("windowCenterInput").value = center;
+        }
+
+        if (width && width !== "null") {
+          document.getElementById("windowWidth").value = width;
+          document.getElementById("windowWidthInput").value = width;
+        }
+
+        this.updateValueDisplay();
+        this.applySettings();
+      }
+    }
+
+    setDefaultWindowLevel() {
+      if (!this.metadata?.metadata) return;
+
+      const wc = this.metadata.metadata.window_center;
+      const ww = this.metadata.metadata.window_width;
+
+      if (wc && wc !== "N/A") {
+        const centerValue = Array.isArray(wc) ? wc[0] : wc;
+        document.getElementById("windowCenter").value = centerValue;
+        document.getElementById("windowCenterInput").value = centerValue;
+      }
+
+      if (ww && ww !== "N/A") {
+        const widthValue = Array.isArray(ww) ? ww[0] : ww;
+        document.getElementById("windowWidth").value = widthValue;
+        document.getElementById("windowWidthInput").value = widthValue;
+      }
+
+      this.updateValueDisplay();
+    }
+
+    populateMetadata() {
+      const container = document.getElementById("metadataContent");
+      const metadata = this.metadata.metadata;
+
+      let html = '<div class="row small">';
+
+      Object.entries(metadata).forEach(([key, value]) => {
+        if (value && value !== "N/A") {
+          const label = this.formatLabel(key);
+          html += `
+          <div class="col-12 mb-1">
+            <strong>${label}:</strong> ${value}
+          </div>
+        `;
+        }
+      });
+
+      html += "</div>";
+      container.innerHTML = html;
+    }
+
+    formatLabel(key) {
+      const labels = {
+        patient_name: "Nome do Paciente",
+        patient_id: "ID do Paciente",
+        study_date: "Data do Estudo",
+        modality: "Modalidade",
+        manufacturer: "Fabricante",
+        rows: "Linhas",
+        columns: "Colunas",
+        window_center: "Window Center",
+        window_width: "Window Width",
+        pixel_spacing: "Espaçamento do Pixel",
+        slice_thickness: "Espessura do Corte",
+      };
+
+      return (
+        labels[key] ||
+        key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
+      );
+    }
+
+    applySettings() {
+      this.loadImage();
+    }
+
+    resetSettings() {
+      document.getElementById("windowCenter").value = 0;
+      document.getElementById("windowWidth").value = 0;
+      document.getElementById("windowCenterInput").value = "";
+      document.getElementById("windowWidthInput").value = "";
+      document.getElementById("autoContrast").checked = false;
+      document.getElementById("presetSelect").value = "";
+      document.getElementById("formatSelect").value = "PNG";
+
+      this.updateValueDisplay();
+      this.loadImage();
+    }
+
+    toggleMetadata() {
+      const card = document.getElementById("metadataCard");
+      card.style.display = card.style.display === "none" ? "block" : "none";
+    }
+
+    updateValueDisplay() {
+      const wc = document.getElementById("windowCenter").value;
+      const ww = document.getElementById("windowWidth").value;
+
+      document.getElementById("wcValue").textContent = wc || "Auto";
+      document.getElementById("wwValue").textContent = ww || "Auto";
+    }
+
+    updateImageInfo() {
+      let info = "";
+      if (this.metadata?.metadata) {
+        const meta = this.metadata.metadata;
+        info = `${meta.modality || "DICOM"} - ${meta.rows}x${meta.columns}`;
+        if (meta.manufacturer) info += ` - ${meta.manufacturer}`;
+      }
+      document.getElementById("imageInfo").textContent = info;
+    }
+  }
+
+  // Inicializa o visualizador
+  const dicomViewer = new DicomViewer();
+
+  // Função global para abrir o visualizador
+  function openDicomViewer(imageId, imageType, baseUrl) {
+    dicomViewer.showImage(imageId, imageType, baseUrl);
+  }
+</script>
