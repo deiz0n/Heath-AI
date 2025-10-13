@@ -12,33 +12,38 @@
     <ul>
       <li {% if current_page == 'home' %}id="selecionado"{% endif %}>
           <a
-              hx-get="{% url 'home' %}"
+             href="{% url 'home' %}">
+
+              {% comment %} hx-get="{% url 'home' %}"
               hx-target=".page-container"
-              hx-push-url="true">
+              hx-push-url="true"> {% endcomment %}
               Página Inicial
           </a>
       </li>
       <li {% if current_page == 'dashboard' %}id="selecionado"{% endif %}>
           <a
-              hx-get="{% url 'dashboard' %}"
+              href="{% url 'dashboard' %}">
+              {% comment %} hx-get="{% url 'dashboard' %}"
               hx-target=".page-container"
-              hx-push-url="true">
+              hx-push-url="true"> {% endcomment %}
               Dashboard
           </a>
       </li>
       <li {% if current_page == 'about' %}id="selecionado"{% endif %}>
           <a
-              hx-get="{% url 'about' %}"
+              href="{% url 'about' %}">
+              {% comment %} hx-get="{% url 'about' %}"
               hx-target=".page-container"
-              hx-push-url="true">
+              hx-push-url="true"> {% endcomment %}
               Sobre
           </a>
       </li>
       <li {% if current_page == 'contact' %}id="selecionado"{% endif %}>
           <a
-              hx-get="{% url 'contact' %}"
+                href="{% url 'contact' %}">
+              {% comment %} hx-get="{% url 'contact' %}"
               hx-target=".page-container"
-              hx-push-url="true">
+              hx-push-url="true"> {% endcomment %}
               Contato
           </a>
       </li>

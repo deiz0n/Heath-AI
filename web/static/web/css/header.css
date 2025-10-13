@@ -17,13 +17,13 @@
     gap: 4rem;
 }
 
-#navbar-container ul #selecionado {
+#navbar-container ul #selecionado a {
     color: #0360D9;
     border-bottom: 2px solid #0360D9;
     font-weight: 600;
 }
 
-#navbar-container ul li {
+#navbar-container ul li a {
     color: #2E2E2E;
     padding-bottom: 0.3rem;
     border-bottom: none;
@@ -32,7 +32,11 @@
     transition: 0.2s all ease-in-out;
 }
 
-#navbar-container ul li:hover {
+#navbar-container ul li a {
+    text-decoration: none;
+}
+
+#navbar-container ul li a:hover {
     color: #0360D9;
     font-weight: 600;
 }
