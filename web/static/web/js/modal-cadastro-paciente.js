@@ -1,35 +1,27 @@
 import { closeCurrentModal } from "./script.js";
 
 function initializeModalRegisterPatient() {
+  const linkOpenModalRegisterPatient = document.querySelector('#register-patient-link');
   const btnOpenModalXRay = document.querySelectorAll(".btn-modal-raiox");
-  const btnOpenModalResonance = document.querySelectorAll(
-    ".btn-modal-ressonancia"
-  );
+  const btnOpenModalResonance = document.querySelectorAll(".btn-modal-ressonancia");
   const btnOpenModalBoth = document.querySelector("#btn-modal-ambos");
-  const btnOpenNextModal = document.querySelector(
-    "#btn-submit-modal-register-patient"
-  );
+  const btnOpenNextModal = document.querySelector("#btn-submit-modal-register-patient");
 
-  const btnCloseModalRegisterPatient = document.querySelector(
-    "#modal-register-patient-container i"
-  );
-  const btnCloseBottomRegisterPatient = document.querySelector(
-    "#btn-close-modal-register-patient"
-  );
+  const btnCloseModalRegisterPatient = document.querySelector("#modal-register-patient-container i");
+  const btnCloseBottomRegisterPatient = document.querySelector("#btn-close-modal-register-patient");
 
   const background = document.querySelector("#modal-backdrop");
   const modalOptions2D = document.querySelector("#modal-opcoes-2d-container");
   const modalOptions3D = document.querySelector("#modal-opcoes-3d-container");
-  const modalRegisterPatient = document.querySelector(
-    "#modal-register-patient-container"
-  );
+  const modalRegisterPatient = document.querySelector("#modal-register-patient-container");
+  const modalSearchPatient = document.querySelector('#modal-search-patient-container');
+  const patientDetail = document.querySelector('#result-search-patient-modal');
 
-  const inputCpf = document.querySelector(
-    "#modal-register-patient-container input[name=cpf]"
-  );
+  const inputCpf = document.querySelector("#modal-register-patient-container input[name=cpf]");
 
   const formRegisterPatient = document.querySelector("#form-register-patient");
 
+  linkOpenModalRegisterPatient?.addEventListener('click', openModalRegisterPatient);
   inputCpf?.addEventListener("input", (e) => formatterCpf(e.target));
 
   if (btnOpenModalXRay || btnOpenModalResonance || btnOpenModalBoth) {
@@ -66,6 +58,7 @@ function initializeModalRegisterPatient() {
   }
 
   function openModalRegisterPatient() {
+    if (modalSearchPatient) modalSearchPatient.style.display = "none";
     if (modalOptions2D.style.display !== "none")
       closeCurrentModal(modalOptions2D.id);
     if (modalOptions3D.style.display !== "none")
@@ -101,18 +94,20 @@ function initializeModalRegisterPatient() {
   }
 
   function setBtnOpenNextModal(btnTarget) {
-    if (btnTarget.id.includes("ambos"))
+    if (btnTarget.id.includes("ambos")) {
       btnOpenNextModal.setAttribute("data-target-modal", "modal-both");
-    else if (btnTarget.id.includes("x-ray"))
+      patientDetail.setAttribute("data-target-modal", "modal-both");
+    }
+    else if (btnTarget.id.includes("x-ray")) {
       btnOpenNextModal.setAttribute("data-target-modal", "modal-x-ray");
-    else if (btnTarget.id.includes("resonance"))
+      patientDetail.setAttribute("data-target-modal", "modal-x-ray");
+    }
+    else if (btnTarget.id.includes("resonance")) {
       btnOpenNextModal.setAttribute("data-target-modal", "modal-resonance");
-    console.log(btnOpenNextModal.getAttribute("data-target-modal"));
+      patientDetail.setAttribute("data-target-modal", "modal-resonance");
+    }
   }
 }
 
 document.addEventListener("DOMContentLoaded", initializeModalRegisterPatient);
-document.body.addEventListener(
-  "htmx:afterSwap",
-  initializeModalRegisterPatient
-);
+document.body.addEventListener("htmx:afterSwap", initializeModalRegisterPatient);

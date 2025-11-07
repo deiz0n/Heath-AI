@@ -17,7 +17,8 @@ class FindPatientsRequest(LoginRequiredMixin, View):
         query = request.GET.get('patient', '').strip()
     
         if not query:
-            patients = Patient.objects.filter(exams__isnull=False).distinct()
+            patients = Patient.objects.none()
+            return
         else:
             clean_cpf = ''.join(filter(str.isdigit, query))
             
@@ -48,26 +49,41 @@ class FindPatientsRequest(LoginRequiredMixin, View):
                 seen_patients.add(patient_id)
 
         result = []
-        for exam in unique_exams:
-            result.append({
-                'patient': {
-                    'name': f"{exam.patient.first_name} {exam.patient.last_name}",
-                    'cpf': exam.patient.cpf,
-                    'age': (datetime.now().date() - exam.patient.birthday).days // 365,
-                    'address': exam.patient.address,
-                },
-                'clinician': {
-                    'name': f"{exam.clinician.first_name} {exam.clinician.last_name}",
-                    'crm': exam.clinician.crm,
-                },
-                'exam': {
-                    'date': exam.created_at.strftime('%Y-%m-%d'),
-                    'id': str(exam.id),
-                    'record': exam.record.url if exam.record else '',
-                    'resonance': bool(exam.resonance),
-                    'x_ray': bool(exam.xray),
-                }
-            })
+         
+        extra_values = request.GET.get('extra_values')
+        if extra_values is not None:
+            for exam in unique_exams:
+                result.append({
+                    'patient': {
+                        'name': f"{exam.patient.first_name} {exam.patient.last_name}",
+                        'cpf': exam.patient.cpf,
+                        'age': (datetime.now().date() - exam.patient.birthday).days // 365,
+                        'address': exam.patient.address,
+                    }
+                })
+
+            return render(request, 'web/partials/main-modal-search-patients.html', {'result': result})
+        else:
+            for exam in unique_exams:
+                result.append({
+                    'patient': {
+                        'name': f"{exam.patient.first_name} {exam.patient.last_name}",
+                        'cpf': exam.patient.cpf,
+                        'age': (datetime.now().date() - exam.patient.birthday).days // 365,
+                        'address': exam.patient.address,
+                    },
+                    'clinician': {
+                        'name': f"{exam.clinician.first_name} {exam.clinician.last_name}",
+                        'crm': exam.clinician.crm,
+                    },
+                    'exam': {
+                        'date': exam.created_at.strftime('%Y-%m-%d'),
+                        'id': str(exam.id),
+                        'record': exam.record.url if exam.record else '',
+                        'resonance': bool(exam.resonance),
+                        'x_ray': bool(exam.xray),
+                    }
+                })
 
         return render(request, 'web/partials/main-dashboard-patients.html', {'result': result})
 

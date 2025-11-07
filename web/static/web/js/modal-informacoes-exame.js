@@ -1,5 +1,5 @@
 function initializeEventListeners() {
-  const patientDataContainer = document.querySelectorAll(".patient-data");
+  const patientDataContainer = document.querySelectorAll("#main-container-dashboard .patient-data");
   const modalInfoExam = document.querySelector("#modal-info-exam-container");
   const btnClose = document.querySelector("#modal-info-exam-container i");
   const backgroundModal = document.querySelector("#modal-backdrop");

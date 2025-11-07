@@ -31,8 +31,21 @@
   padding: 0 1rem 1rem 0;
 }
 
+.search-patient-container {
+  margin-top: 1.7rem;
+  text-align: center;
+}
+
+.search-patient-container a {
+  text-decoration: none;
+  color: #0360d9;
+}
+
+.search-patient-container a:hover {
+  font-weight: 600;
+}
+
 #btn-container-modal-cadastro-paciente {
-  margin-top: 1rem;
   display: flex;
   justify-content: flex-end;
   padding: 0 10px 10px 0;

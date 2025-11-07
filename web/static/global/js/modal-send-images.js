@@ -1,14 +1,18 @@
 import { closeCurrentModal } from "../../web/js/script.js";
 
-function openModalResonance(e) {
+export function openModalResonance(e) {
   const btn = e?.currentTarget || e?.target;
-  const dataTarget = btn?.getAttribute("data-target-modal");
-  const modalRegisterPatient = document.querySelector(
-    "#modal-register-patient-container"
-  );
+  let dataTarget = btn?.getAttribute("data-target-modal");
+  const modalRegisterPatient = document.querySelector("#modal-register-patient-container");
+  const patientDetailTarget = document.querySelector("#result-search-patient-modal");
   const backgroundModal = document.querySelector("#modal-backdrop");
+  const modalSearchPatient = document.querySelector('#modal-search-patient-container');
+
+  if (!dataTarget) 
+    dataTarget = patientDetailTarget.getAttribute('data-target-modal');
 
   closeCurrentModal(modalRegisterPatient?.id);
+  closeCurrentModal(modalSearchPatient?.id);
 
   if (dataTarget === "modal-x-ray" || dataTarget === "modal-resonance") {
     const modalResonance = document.querySelector(".modal-send-images");
@@ -54,11 +58,16 @@ function updateQuantityFiles(quantity) {
 
 function setInputPatientModalResonance() {
   const formRegisterPatient = document.querySelector("#form-register-patient");
+  const modalSearchPatient = document.querySelector("#result-search-patient-modal");
   const inputPatient = document.querySelector("#input-patient-modal-resonance");
 
-  if (formRegisterPatient && inputPatient) {
+  if (formRegisterPatient && inputPatient)
     inputPatient.value = formRegisterPatient.getAttribute("data-patient") || "";
-  }
+  
+  if (modalSearchPatient && inputPatient)
+    inputPatient.value = modalSearchPatient.getAttribute("data-patient") || "";
+
+  console.log(`cpf value: ${modalSearchPatient.getAttribute("data-patient")}`)
 }
 
 function updateTitleModal(target) {
@@ -80,7 +89,6 @@ function assignListenersModalResonance() {
   const btnCloseModalResonance = document.querySelector(".modal-send-images i");
   const input = document.querySelector(".modal-send-images .input-images");
 
-  // Corrige o listener para abrir o modal de envio de imagens ao clicar no botão "próximo" do cadastro do paciente
   if (btnOpenModalSendImages) {
     btnOpenModalSendImages.removeEventListener("click", openModalResonance);
     btnOpenModalSendImages.addEventListener("click", openModalResonance);

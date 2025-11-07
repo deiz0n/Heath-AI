@@ -1,0 +1,47 @@
+{% load static %}
+
+<div style="display: none" id="modal-search-patient-container">
+  <div class="modal-header">
+    <h5 class="modal-titulo">Buscar paciente</h5>
+    <button>
+      <i id="btn-close-raiox" class="btn-fechar material-icons">close</i>
+    </button>
+  </div>
+
+  <div>
+    <div class="container-inline">
+      <div class="container-input-bloco">
+        <label for="cpf">CPF</label>
+        <input
+          type="text"
+          name="patient"
+          id="cpf"
+          placeholder="111-111-111-11"
+          hx-get="{% url 'find-patients' %}"
+          hx-trigger="keyup changed delay:300ms"
+          hx-target="#result-search-patient-modal"
+          hx-vals='{"extra_values": "false"}'
+        />
+      </div>
+    </div>
+
+    <div id="result-search-patient-modal">
+      {% include "web/partials/main-modal-search-patients.html" %}
+    </div>
+  </div>
+
+  <div class="search-patient-container" id="register-patient-link">
+    Paciente não encontrado? Cadastre
+    <a><span>aqui</span></a>
+  </div>
+
+  <div id="btn-container-modal-cadastro-paciente">
+    <button
+      type="button"
+      class="btn-secondary"
+      id="btn-close-modal-search-patient"
+    >
+      Fechar
+    </button>
+  </div>
+</div>

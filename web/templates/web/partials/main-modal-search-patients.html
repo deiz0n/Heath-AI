@@ -1,0 +1,55 @@
+{% load static %}
+
+{% for data in result %}
+<div class="patient-data result-patient-search">
+  <p class="user-name">
+    <span>
+      <img
+        src="{% static 'web/assets/images/use-icon.svg' %}"
+        alt="user icon"
+      />
+      Nome:
+    </span>
+    {{ data.patient.name }}
+  </p>
+
+  <div class="inline-data">
+    <p class="user-cpf">
+      <span>
+        <img
+          src="{% static 'web/assets/images/doc-icon.svg' %}"
+          alt="doc icon"
+        />
+        CPF:
+      </span>
+      {{ data.patient.cpf }}
+    </p>
+
+    <p class="user-age">
+      <span>
+        <img
+          src="{% static 'web/assets/images/data-icon.svg' %}"
+          alt="data icon"
+        />
+        Idade:
+      </span>
+      {{ data.patient.age }} anos
+    </p>
+  </div>
+
+  <p class="user-address">
+    <span>
+      <img
+        src="{% static 'web/assets/images/address-icon.svg' %}"
+        alt="address icon"
+      />
+      Endereço:
+    </span>
+    {{ data.patient.address }}
+  </p>
+</div>
+{% empty %}
+<div id="patient-not-found">
+  <p>Nenhum paciente encontrado</p>
+</div>
+{% endfor %}

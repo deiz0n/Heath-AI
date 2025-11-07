@@ -1,17 +1,27 @@
 import { closeCurrentModal } from "./script.js";
 
-function openModalExamXRay(e) {
+export function openModalExamXRay(e) {
+  const patientDetailTarget = document.querySelector("#result-search-patient-modal");
+
   const btn = e?.currentTarget || e?.target;
-  const dataTarget = btn?.getAttribute("data-target-modal");
-  if (dataTarget !== "modal-both") {
-    return;
-  }
+
+  let dataTarget = btn?.getAttribute("data-target-modal");
+  
+  if (!dataTarget) 
+    dataTarget = patientDetailTarget.getAttribute('data-target-modal');
+  
+  if (dataTarget !== "modal-both") return;
+  
+  
   const modalXray = document.querySelector("#modal-exam-xray");
   const backgroundModal = document.querySelector("#modal-backdrop");
-  const modalRegisterPatient = document.querySelector(
-    "#modal-register-patient-container"
-  );
+  const modalRegisterPatient = document.querySelector("#modal-register-patient-container");
+  
+  const modalSearchPatient = document.querySelector('#modal-register-patient-container');
+
   if (modalRegisterPatient) closeCurrentModal(modalRegisterPatient.id);
+  if (modalSearchPatient) closeCurrentModal(modalSearchPatient.id)
+
   if (modalXray && backgroundModal) {
     modalXray.style.display = "block";
     backgroundModal.classList.add("show");
@@ -93,13 +103,15 @@ function updateQuantityFiles(
 
 function setValueInputHidden() {
   const formRegisterPatient = document.querySelector("#form-register-patient");
+  const modalSearchPatient = document.querySelector("#modal-search-patient-container");
   const inputPatient = document.querySelector("#input-patient-modal-both");
   const inputTypeExam = document.querySelector("#input-type-exam");
 
-  if (formRegisterPatient && inputPatient) {
-    console.log(formRegisterPatient.getAttribute("data-patient"));
+  if (formRegisterPatient && inputPatient) 
     inputPatient.value = formRegisterPatient.getAttribute("data-patient") || "";
-  }
+  if (modalSearchPatient && inputPatient)
+    inputPatient.value = modalSearchPatient.getAttribute("data-patient") || "";
+  
   if (inputTypeExam) inputTypeExam.value = "both";
 }
 

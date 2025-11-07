@@ -1,0 +1,55 @@
+#modal-search-patient-container {
+  background-color: #fff;
+  width: 550px;
+  height: auto;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 2;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+#modal-search-patient-container .modal-header {
+  height: 60px;
+}
+
+#modal-search-patient-container h5 {
+  font-size: 22px;
+  margin-bottom: 2.7rem;
+}
+
+#result-search-patient {
+  margin: 1.5rem auto;
+  background-color: #e1eeff;
+}
+
+#result-search-patient-modal {
+    display: flex;
+    flex-direction: column;
+    margin: 1.5rem auto 0 auto;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.patient-data.result-patient-search {
+  background-color: #E1EEFF;
+  margin: 0;
+}
+
+#patient-not-found {
+  margin: 1.5rem auto;
+  text-align: center;
+  text-decoration: underline;
+}
+
+#modal-register-patient-container .btn-container {
+  margin-top: 1.5rem;
+  padding: 0 1rem 1rem 0;
+}
