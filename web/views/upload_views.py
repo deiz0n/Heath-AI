@@ -11,7 +11,7 @@ from web.forms import (
 )
 from web.models import ExamType,Exam, Clinician, Patient
 from web.utils.upload_processors import process_multiple_images, save_conversion_log, is_conversion_enabled
-
+from web.views.mobile_net import analisar_imagem_bytes
 
 from datetime import date
 
@@ -34,6 +34,9 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
         }
         exam_type = exam_type_map.get(exam_kind)
 
+        xray_files_original = []
+        resonance_files_original = []
+
         with transaction.atomic():
 
             if exam_kind in ('x-ray','both'):
@@ -47,8 +50,15 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
                 xray = xray_form.save(commit=False)
                 xray.save()
 
-                # Processa imagens de X-Ray com conversão DICOM automática
                 xray_files = files.getlist('images_xray')
+                
+                if len(xray_files) == 0:
+                    for alt_name in ['images', 'image', 'file']:
+                        xray_files = files.getlist(alt_name)
+                        if len(xray_files) > 0:
+                            break
+                
+                xray_files_original = list(xray_files)
                 
                 if is_conversion_enabled():
                     processed_results = process_multiple_images(xray_files, "xray")
@@ -60,20 +70,17 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
                             {'image': processed_file}
                         ).save(commit=False)
                         imgs_xray.append(img_obj)
-                        
                     
                     ImagesXRayForm.Meta.model.objects.bulk_create(imgs_xray)
                     
                 else:
-
                     imgs_xray = []
                     for f in xray_files:  
-                        imgs_xray.append(
-                            ImagesXRayForm(
-                                {'xray': xray.id},
-                                {'image': f}
-                            ).save(commit=False)
-                        )
+                        img_obj = ImagesXRayForm(
+                            {'xray': xray.id},
+                            {'image': f}
+                        ).save(commit=False)
+                        imgs_xray.append(img_obj)
                     ImagesXRayForm.Meta.model.objects.bulk_create(imgs_xray)
 
             if exam_kind in ('resonance','both'):
@@ -87,8 +94,15 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
                 resonance = res_form.save(commit=False)
                 resonance.save()
 
-                # Processa imagens de Ressonância com conversão DICOM automática
                 resonance_files = files.getlist('images_resonance')
+                
+                if len(resonance_files) == 0:
+                    for alt_name in ['images', 'image', 'file']:
+                        resonance_files = files.getlist(alt_name)
+                        if len(resonance_files) > 0:
+                            break
+                
+                resonance_files_original = list(resonance_files)
                 
                 if is_conversion_enabled():
                     processed_results = process_multiple_images(resonance_files, "resonance")
@@ -100,25 +114,20 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
                             {'image': processed_file}
                         ).save(commit=False)
                         imgs_res.append(img_obj)
-                        
-                        # Log da conversão se houver
                     
                     ResonanceImagesForm.Meta.model.objects.bulk_create(imgs_res)
                     
-                    # Salva logs de conversão para todas as imagens
                     for img_obj, (_, metadata) in zip(imgs_res, processed_results):
                         save_conversion_log(img_obj, metadata)
                         
                 else:
-                    # Processamento original sem conversão
                     imgs_res = []
                     for f in resonance_files:
-                        imgs_res.append(
-                            ResonanceImagesForm(
-                                {'resonance': resonance.id},
-                                {'image': f}
-                            ).save(commit=False)
-                        )
+                        img_obj = ResonanceImagesForm(
+                            {'resonance': resonance.id},
+                            {'image': f}
+                        ).save(commit=False)
+                        imgs_res.append(img_obj)
                     ResonanceImagesForm.Meta.model.objects.bulk_create(imgs_res)
 
             exam = Exam(
@@ -130,6 +139,21 @@ class UploadMultiModalRequestView(LoginRequiredMixin, View):
                 record    = request.FILES.get('record')
             )
             exam.save()
+
+            # ===== ANÁLISE AUTOMÁTICA COM MOBILENET (APENAS 1 IMAGEM) =====
+            
+            if exam_kind in ('x-ray', 'both'):
+                if len(xray_files_original) > 0:
+                    img_file = xray_files_original[0]
+                    img_file.seek(0)
+                    analisar_imagem_bytes(img_file, str(exam.id))
+            
+            if exam_kind in ('resonance', 'both'):
+                if len(resonance_files_original) > 0:
+                    img_file = resonance_files_original[0]
+                    img_file.seek(0)
+                    analisar_imagem_bytes(img_file, str(exam.id))
+            
 
         return render(request, 'web/pages/pagina-inicial.html', {'success': True}, status=201)
     
