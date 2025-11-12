@@ -87,10 +87,9 @@ class Exam(models.Model):
 
 class ExamResult(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    result = models.FileField(upload_to="exams/results", null=True, blank=True)
+    result = models.TextField(null=True, blank=True)  # Alterado de FileField para TextField
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name="results")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Result for Exam {self.exam.id}"
-    
