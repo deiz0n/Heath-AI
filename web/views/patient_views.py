@@ -1,5 +1,5 @@
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from web.forms import PatientForm
 from django.shortcuts import render
@@ -161,5 +161,7 @@ class RegisterPatient(LoginRequiredMixin, View):
         form = PatientForm(request.POST)
         if form.is_valid():
             form.save()
+           
             return HttpResponse(status=201)
-        return HttpResponse(status=400)
+        
+        return JsonResponse(form.errors, status=400)
