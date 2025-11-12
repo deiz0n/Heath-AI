@@ -97,12 +97,10 @@ function initializeModalRegisterPatient() {
     if (btnTarget.id.includes("ambos")) {
       btnOpenNextModal.setAttribute("data-target-modal", "modal-both");
       patientDetail.setAttribute("data-target-modal", "modal-both");
-    }
-    else if (btnTarget.id.includes("x-ray")) {
+    } else if (btnTarget.id.includes("x-ray")) {
       btnOpenNextModal.setAttribute("data-target-modal", "modal-x-ray");
       patientDetail.setAttribute("data-target-modal", "modal-x-ray");
-    }
-    else if (btnTarget.id.includes("resonance")) {
+    } else if (btnTarget.id.includes("resonance")) {
       btnOpenNextModal.setAttribute("data-target-modal", "modal-resonance");
       patientDetail.setAttribute("data-target-modal", "modal-resonance");
     }
@@ -110,4 +108,7 @@ function initializeModalRegisterPatient() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeModalRegisterPatient);
-document.body.addEventListener("htmx:afterSwap", initializeModalRegisterPatient);
+document.body.addEventListener(
+  "htmx:afterSwap",
+  initializeModalRegisterPatient
+);

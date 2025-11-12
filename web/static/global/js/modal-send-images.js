@@ -3,13 +3,19 @@ import { closeCurrentModal } from "../../web/js/script.js";
 export function openModalResonance(e) {
   const btn = e?.currentTarget || e?.target;
   let dataTarget = btn?.getAttribute("data-target-modal");
-  const modalRegisterPatient = document.querySelector("#modal-register-patient-container");
-  const patientDetailTarget = document.querySelector("#result-search-patient-modal");
+  const modalRegisterPatient = document.querySelector(
+    "#modal-register-patient-container"
+  );
+  const patientDetailTarget = document.querySelector(
+    "#result-search-patient-modal"
+  );
   const backgroundModal = document.querySelector("#modal-backdrop");
-  const modalSearchPatient = document.querySelector('#modal-search-patient-container');
+  const modalSearchPatient = document.querySelector(
+    "#modal-search-patient-container"
+  );
 
-  if (!dataTarget) 
-    dataTarget = patientDetailTarget.getAttribute('data-target-modal');
+  if (!dataTarget)
+    dataTarget = patientDetailTarget.getAttribute("data-target-modal");
 
   closeCurrentModal(modalRegisterPatient?.id);
   closeCurrentModal(modalSearchPatient?.id);
@@ -19,7 +25,12 @@ export function openModalResonance(e) {
     setInputPatientModalResonance();
     updateTitleModal(dataTarget);
     setValueInputHidden(dataTarget);
-    setNameInputImages(dataTarget);
+    setNameInputImages(dataTarget); // Atualiza o nome do input ANTES de abrir o modal
+
+    // Debug: verificar se o nome foi atualizado
+    const inputImages = document.querySelector(".input-images");
+    console.log("📝 Nome do input após setNameInputImages:", inputImages?.name);
+
     if (modalResonance && backgroundModal) {
       modalResonance.style.display = "block";
       backgroundModal.classList.add("show");
@@ -53,21 +64,22 @@ function updateQuantityFiles(quantity) {
   const quantityFiles = document.querySelector(
     ".modal-send-images #valor-input-ressonancia span"
   );
-  quantityFiles.innerText = `${quantity}`;
+  // Mostra "1 arquivo" se apenas 1 for selecionado
+  const texto = quantity === 1 ? "arquivo" : "arquivos";
+  quantityFiles.innerText = `${quantity} ${texto}`;
 }
 
 function setInputPatientModalResonance() {
   const formRegisterPatient = document.querySelector("#form-register-patient");
-  const modalSearchPatient = document.querySelector("#result-search-patient-modal");
+  const modalSearchPatient = document.querySelector(
+    "#result-search-patient-modal"
+  );
   const inputPatient = document.querySelector("#input-patient-modal-resonance");
 
-  if (formRegisterPatient && inputPatient)
-    inputPatient.value = formRegisterPatient.getAttribute("data-patient") || "";
-  
-  if (modalSearchPatient && inputPatient)
-    inputPatient.value = modalSearchPatient.getAttribute("data-patient") || "";
+  inputPatient.value = formRegisterPatient?.getAttribute("data-patient") || "";
 
-  console.log(`cpf value: ${modalSearchPatient.getAttribute("data-patient")}`)
+  if (!inputPatient.value)
+    inputPatient.value = modalSearchPatient?.getAttribute("data-patient") || "";
 }
 
 function updateTitleModal(target) {
@@ -127,6 +139,14 @@ function handleInputSubmitImages(e) {
   if (!btnSubmitImages) return;
 
   let quantityFiles = e.target.files.length;
+
+  // Validação: apenas 1 arquivo permitido
+  if (quantityFiles > 1) {
+    alert("Por favor, selecione apenas 1 imagem para análise.");
+    e.target.value = ""; // Limpa o input
+    quantityFiles = 0;
+  }
+
   updateQuantityFiles(quantityFiles);
   if (btnSubmitImages.offsetParent !== null) {
     btnSubmitImages.disabled = quantityFiles === 0;
@@ -143,8 +163,21 @@ function setValueInputHidden(target) {
 function setNameInputImages(target) {
   const inputImages = document.querySelector(".input-images");
 
-  if (target.includes("x-ray")) inputImages.name = "images_xray";
-  else inputImages.name = "images_resonance";
+  if (!inputImages) {
+    console.error("❌ Input de imagens não encontrado!");
+    return;
+  }
+
+  if (target.includes("x-ray")) {
+    inputImages.name = "images_xray";
+    console.log("✓ Input configurado para X-Ray: images_xray");
+  } else {
+    inputImages.name = "images_resonance";
+    console.log("✓ Input configurado para Ressonância: images_resonance");
+  }
+
+  // Força o atributo name no HTML
+  inputImages.setAttribute("name", inputImages.name);
 }
 
 document.addEventListener("DOMContentLoaded", assignListenersModalResonance);
