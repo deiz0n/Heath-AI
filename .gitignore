@@ -140,3 +140,6 @@ GitHub.sublime-settings
 
 # Imagens carregadas
 media/imagens/
+
+# modelo de deep learning
+*.h5
