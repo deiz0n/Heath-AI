@@ -90,13 +90,11 @@ def analisar_imagem_bytes(image_file: UploadedFile, exam_id: str) -> bool:
         prediction_class_name = CLASS_NAMES.get(prediction_class_index, "Desconhecido")
         confianca = prediction_proba if prediction_class_index == 1 else (1 - prediction_proba)
 
-        # Cria o texto do diagnóstico
-        diagnostic_text = f'diagnostic="{prediction_class_name}"'
         
         # Cria o ExamResult com o diagnóstico no campo result
         exam_result = ExamResult.objects.create(
             exam_id=exam_id,
-            result=diagnostic_text
+            result=prediction_class_name
         )
 
         return True
