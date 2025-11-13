@@ -5,7 +5,7 @@ from web.forms import PatientForm
 from django.shortcuts import render
 from django.db.models import Q
 
-from web.models import Exam, Patient
+from web.models import Exam, Patient, ExamResult
 
 from datetime import datetime
 
@@ -65,6 +65,11 @@ class FindPatientsRequest(LoginRequiredMixin, View):
             return render(request, 'web/partials/main-modal-search-patients.html', {'result': result})
         else:
             for exam in unique_exams:
+                # Get the latest exam result
+                exam_result = ExamResult.objects.filter(exam=exam).order_by('-created_at').first()
+                
+                print(f"Result: ", str(exam_result) )
+
                 result.append({
                     'patient': {
                         'name': f"{exam.patient.first_name} {exam.patient.last_name}",
@@ -82,6 +87,7 @@ class FindPatientsRequest(LoginRequiredMixin, View):
                         'record': exam.record.url if exam.record else '',
                         'resonance': bool(exam.resonance),
                         'x_ray': bool(exam.xray),
+                        'result': exam_result.result if exam_result else None,
                     }
                 })
 
@@ -130,6 +136,9 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
 
         result = []
         for exam in unique_exams:
+            # Get the latest exam result
+            exam_result = ExamResult.objects.filter(exam=exam).order_by('-created_at').first()
+            
             result.append({
                 'patient': {
                     'name': f"{exam.patient.first_name} {exam.patient.last_name}",
@@ -147,6 +156,7 @@ class FindPatientsByExamDate(LoginRequiredMixin, View):
                     'record': exam.record.url if exam.record else '',
                     'resonance': bool(exam.resonance),
                     'x_ray': bool(exam.xray),
+                    'result': exam_result.result if exam_result else None,
                 }
             })
 
